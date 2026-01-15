@@ -115,13 +115,13 @@ CatPaws/
 
 ### Implementation for User Story 3
 
-- [ ] T037 [P] [US3] Create placeholder test file in CatPawsTests/ViewModelTests/AppViewModelTests.swift
-- [ ] T038 [P] [US3] Create placeholder test file in CatPawsTests/ModelTests/AppStateTests.swift
-- [ ] T039 [P] [US3] Create placeholder test file in CatPawsTests/ServiceTests/.gitkeep (empty, ready for services)
-- [ ] T040 [P] [US3] Create placeholder UI test file in CatPawsUITests/MenuBarTests/MenuBarUITests.swift
-- [ ] T041 [US3] Configure CatPawsTests target to host CatPaws app in Xcode project settings
-- [ ] T042 [US3] Configure CatPawsUITests target to host CatPaws app in Xcode project settings
-- [ ] T043 [US3] Verify test suite runs successfully via xcodebuild test command
+- [x] T037 [P] [US3] Create placeholder test file in CatPawsTests/ViewModelTests/AppViewModelTests.swift
+- [x] T038 [P] [US3] Create placeholder test file in CatPawsTests/ModelTests/AppStateTests.swift
+- [x] T039 [P] [US3] Create placeholder test file in CatPawsTests/ServiceTests/.gitkeep (empty, ready for services)
+- [x] T040 [P] [US3] Create placeholder UI test file in CatPawsUITests/MenuBarTests/MenuBarUITests.swift
+- [x] T041 [US3] Configure CatPawsTests target to host CatPaws app in Xcode project settings
+- [x] T042 [US3] Configure CatPawsUITests target to host CatPaws app in Xcode project settings
+- [x] T043 [US3] Verify test suite runs successfully via xcodebuild test command
 
 **Checkpoint**: All test targets configured, tests run (pass trivially), structure mirrors app
 
@@ -131,11 +131,11 @@ CatPaws/
 
 **Purpose**: Final validation and cleanup
 
-- [ ] T044 Verify Info.plist contains all required keys (LSUIElement, bundle ID, version) in CatPaws/Configuration/Info.plist
-- [ ] T045 Verify entitlements contain sandbox and input-monitoring in CatPaws/Configuration/CatPaws.entitlements
-- [ ] T046 Run SwiftLint and confirm zero violations
-- [ ] T047 Run full build and test suite, confirm zero errors and zero warnings
-- [ ] T048 Validate against quickstart.md instructions (clone, open, build, run tests)
+- [x] T044 Verify Info.plist contains all required keys (LSUIElement, bundle ID, version) in CatPaws/Configuration/Info.plist
+- [x] T045 Verify entitlements contain sandbox and input-monitoring in CatPaws/Configuration/CatPaws.entitlements
+- [x] T046 Run SwiftLint and confirm zero violations
+- [x] T047 Run full build and test suite, confirm zero errors and zero warnings
+- [x] T048 Validate against quickstart.md instructions (clone, open, build, run tests)
 
 ---
 
