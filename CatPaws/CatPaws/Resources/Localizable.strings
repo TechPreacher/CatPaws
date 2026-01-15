@@ -1,0 +1,23 @@
+/*
+  Localizable.strings
+  CatPaws
+
+  Created on 2026-01-15.
+*/
+
+// MARK: - General
+"app.name" = "CatPaws";
+
+// MARK: - Menu Bar
+"menubar.active" = "Active";
+"menubar.inactive" = "Inactive";
+
+// MARK: - Settings
+"settings.title" = "Settings";
+"settings.general" = "General";
+"settings.about" = "About";
+"settings.launch_at_login" = "Launch at login";
+
+// MARK: - Actions
+"action.quit" = "Quit";
+"action.settings" = "Settings";

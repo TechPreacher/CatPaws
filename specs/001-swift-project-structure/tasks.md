@@ -95,13 +95,13 @@ CatPaws/
 
 ### Implementation for User Story 2
 
-- [ ] T030 [P] [US2] Create Assets.xcassets with AppIcon placeholder in CatPaws/Resources/Assets.xcassets
-- [ ] T031 [P] [US2] Add MenuBarIcon image set (template, outlined) in CatPaws/Resources/Assets.xcassets/MenuBarIcon.imageset
-- [ ] T032 [P] [US2] Add MenuBarIconActive image set (template, filled) in CatPaws/Resources/Assets.xcassets/MenuBarIconActive.imageset
-- [ ] T033 [P] [US2] Add MenuBarIconDisabled image set (template, grayed) in CatPaws/Resources/Assets.xcassets/MenuBarIconDisabled.imageset
-- [ ] T034 [P] [US2] Add AccentColor color set in CatPaws/Resources/Assets.xcassets/AccentColor.colorset
-- [ ] T035 [P] [US2] Create Localizable.strings placeholder in CatPaws/Resources/Localizable.strings
-- [ ] T036 [US2] Verify all placeholder groups are visible in Xcode navigator
+- [x] T030 [P] [US2] Create Assets.xcassets with AppIcon placeholder in CatPaws/Resources/Assets.xcassets
+- [x] T031 [P] [US2] Add MenuBarIcon image set (template, outlined) in CatPaws/Resources/Assets.xcassets/MenuBarIcon.imageset
+- [x] T032 [P] [US2] Add MenuBarIconActive image set (template, filled) in CatPaws/Resources/Assets.xcassets/MenuBarIconActive.imageset
+- [x] T033 [P] [US2] Add MenuBarIconDisabled image set (template, grayed) in CatPaws/Resources/Assets.xcassets/MenuBarIconDisabled.imageset
+- [x] T034 [P] [US2] Add AccentColor color set in CatPaws/Resources/Assets.xcassets/AccentColor.colorset
+- [x] T035 [P] [US2] Create Localizable.strings placeholder in CatPaws/Resources/Localizable.strings
+- [x] T036 [US2] Verify all placeholder groups are visible in Xcode navigator
 
 **Checkpoint**: All architectural folders visible, assets catalog ready, developer can add code to appropriate locations
 

@@ -18,6 +18,7 @@
 		A1000007001 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000007000 /* AppViewModel.swift */; };
 		A1000008001 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000008000 /* AppState.swift */; };
 		A1000009001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000009000 /* Assets.xcassets */; };
+		A100000D001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A100000D000 /* Localizable.strings */; };
 		/* Test Target Files */
 		B1000001001 /* AppViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000001000 /* AppViewModelTests.swift */; };
 		B1000002001 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000002000 /* AppStateTests.swift */; };
@@ -55,6 +56,7 @@
 		A1000007000 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		A1000008000 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		A1000009000 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A100000D000 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		A100000A000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A100000B000 /* CatPaws.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatPaws.entitlements; sourceTree = "<group>"; };
 		/* Test Target */
@@ -189,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				A1000009000 /* Assets.xcassets */,
+				A100000D000 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1000009001 /* Assets.xcassets in Resources */,
+				A100000D001 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
