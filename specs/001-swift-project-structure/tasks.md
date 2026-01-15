@@ -31,12 +31,12 @@ CatPaws/
 
 **Purpose**: Create Xcode project and basic structure
 
-- [ ] T001 Create CatPaws.xcodeproj with macOS app target, deployment target macOS 14.0, Swift 5.9
-- [ ] T002 Configure project as menu bar app (LSUIElement=true) in CatPaws/Configuration/Info.plist
-- [ ] T003 [P] Configure SwiftLint with project-specific rules in .swiftlint.yml
-- [ ] T004 [P] Create entitlements file with sandbox and input-monitoring in CatPaws/Configuration/CatPaws.entitlements
-- [ ] T005 [P] Add unit test target CatPawsTests to CatPaws.xcodeproj
-- [ ] T006 [P] Add UI test target CatPawsUITests to CatPaws.xcodeproj
+- [x] T001 Create CatPaws.xcodeproj with macOS app target, deployment target macOS 14.0, Swift 5.9
+- [x] T002 Configure project as menu bar app (LSUIElement=true) in CatPaws/Configuration/Info.plist
+- [x] T003 [P] Configure SwiftLint with project-specific rules in .swiftlint.yml
+- [x] T004 [P] Create entitlements file with sandbox and input-monitoring in CatPaws/Configuration/CatPaws.entitlements
+- [x] T005 [P] Add unit test target CatPawsTests to CatPaws.xcodeproj
+- [x] T006 [P] Add UI test target CatPawsUITests to CatPaws.xcodeproj
 
 ---
 
@@ -46,19 +46,19 @@ CatPaws/
 
 **⚠️ CRITICAL**: Complete this phase before any user story implementation
 
-- [ ] T007 [P] Create CatPaws/App/ group in Xcode project
-- [ ] T008 [P] Create CatPaws/MenuBar/ group in Xcode project
-- [ ] T009 [P] Create CatPaws/Views/ group in Xcode project
-- [ ] T010 [P] Create CatPaws/ViewModels/ group in Xcode project
-- [ ] T011 [P] Create CatPaws/Models/ group in Xcode project
-- [ ] T012 [P] Create CatPaws/Services/ group with .gitkeep placeholder
-- [ ] T013 [P] Create CatPaws/Utilities/ group with .gitkeep placeholder
-- [ ] T014 [P] Create CatPaws/Resources/ group in Xcode project
-- [ ] T015 [P] Create CatPaws/Configuration/ group in Xcode project
-- [ ] T016 [P] Create CatPawsTests/ViewModelTests/ group with .gitkeep placeholder
-- [ ] T017 [P] Create CatPawsTests/ModelTests/ group with .gitkeep placeholder
-- [ ] T018 [P] Create CatPawsTests/ServiceTests/ group with .gitkeep placeholder
-- [ ] T019 [P] Create CatPawsUITests/MenuBarTests/ group with .gitkeep placeholder
+- [x] T007 [P] Create CatPaws/App/ group in Xcode project
+- [x] T008 [P] Create CatPaws/MenuBar/ group in Xcode project
+- [x] T009 [P] Create CatPaws/Views/ group in Xcode project
+- [x] T010 [P] Create CatPaws/ViewModels/ group in Xcode project
+- [x] T011 [P] Create CatPaws/Models/ group in Xcode project
+- [x] T012 [P] Create CatPaws/Services/ group with .gitkeep placeholder
+- [x] T013 [P] Create CatPaws/Utilities/ group with .gitkeep placeholder
+- [x] T014 [P] Create CatPaws/Resources/ group in Xcode project
+- [x] T015 [P] Create CatPaws/Configuration/ group in Xcode project
+- [x] T016 [P] Create CatPawsTests/ViewModelTests/ group with .gitkeep placeholder
+- [x] T017 [P] Create CatPawsTests/ModelTests/ group with .gitkeep placeholder
+- [x] T018 [P] Create CatPawsTests/ServiceTests/ group with .gitkeep placeholder
+- [x] T019 [P] Create CatPawsUITests/MenuBarTests/ group with .gitkeep placeholder
 
 **Checkpoint**: All folder groups exist and project compiles (empty)
 
@@ -72,16 +72,16 @@ CatPaws/
 
 ### Implementation for User Story 1
 
-- [ ] T020 [P] [US1] Create CatPawsApp.swift with @main entry point in CatPaws/App/CatPawsApp.swift
-- [ ] T021 [P] [US1] Create AppDelegate.swift with NSApplicationDelegateAdaptor setup in CatPaws/App/AppDelegate.swift
-- [ ] T022 [P] [US1] Create StatusItemManager.swift skeleton in CatPaws/MenuBar/StatusItemManager.swift
-- [ ] T023 [P] [US1] Create MenuBarView.swift skeleton in CatPaws/MenuBar/MenuBarView.swift
-- [ ] T024 [P] [US1] Create PopoverView.swift skeleton in CatPaws/Views/PopoverView.swift
-- [ ] T025 [P] [US1] Create SettingsView.swift skeleton in CatPaws/Views/SettingsView.swift
-- [ ] T026 [P] [US1] Create AppViewModel.swift skeleton in CatPaws/ViewModels/AppViewModel.swift
-- [ ] T027 [P] [US1] Create AppState.swift skeleton in CatPaws/Models/AppState.swift
-- [ ] T028 [US1] Wire AppDelegate to StatusItemManager for menu bar initialization in CatPaws/App/AppDelegate.swift
-- [ ] T029 [US1] Verify project builds with zero errors and zero warnings
+- [x] T020 [P] [US1] Create CatPawsApp.swift with @main entry point in CatPaws/App/CatPawsApp.swift
+- [x] T021 [P] [US1] Create AppDelegate.swift with NSApplicationDelegateAdaptor setup in CatPaws/App/AppDelegate.swift
+- [x] T022 [P] [US1] Create StatusItemManager.swift skeleton in CatPaws/MenuBar/StatusItemManager.swift
+- [x] T023 [P] [US1] Create MenuBarView.swift skeleton in CatPaws/MenuBar/MenuBarView.swift
+- [x] T024 [P] [US1] Create PopoverView.swift skeleton in CatPaws/Views/PopoverView.swift
+- [x] T025 [P] [US1] Create SettingsView.swift skeleton in CatPaws/Views/SettingsView.swift
+- [x] T026 [P] [US1] Create AppViewModel.swift skeleton in CatPaws/ViewModels/AppViewModel.swift
+- [x] T027 [P] [US1] Create AppState.swift skeleton in CatPaws/Models/AppState.swift
+- [x] T028 [US1] Wire AppDelegate to StatusItemManager for menu bar initialization in CatPaws/App/AppDelegate.swift
+- [x] T029 [US1] Verify project builds with zero errors and zero warnings
 
 **Checkpoint**: Project opens in Xcode, structure is visible, builds successfully
 
