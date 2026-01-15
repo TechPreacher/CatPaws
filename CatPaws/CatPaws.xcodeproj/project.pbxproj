@@ -7,22 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		/* App Target Files */
 		A1000001001 /* CatPawsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001000 /* CatPawsApp.swift */; };
 		A1000002001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000 /* AppDelegate.swift */; };
 		A1000003001 /* StatusItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003000 /* StatusItemManager.swift */; };
 		A1000004001 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004000 /* MenuBarView.swift */; };
-		A100000C001 /* MenuBarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000C000 /* MenuBarContentView.swift */; };
 		A1000005001 /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005000 /* PopoverView.swift */; };
 		A1000006001 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006000 /* SettingsView.swift */; };
 		A1000007001 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000007000 /* AppViewModel.swift */; };
 		A1000008001 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000008000 /* AppState.swift */; };
 		A1000009001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000009000 /* Assets.xcassets */; };
+		A100000C001 /* MenuBarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000C000 /* MenuBarContentView.swift */; };
 		A100000D001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A100000D000 /* Localizable.strings */; };
-		/* Test Target Files */
 		B1000001001 /* AppViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000001000 /* AppViewModelTests.swift */; };
 		B1000002001 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000002000 /* AppStateTests.swift */; };
-		/* UI Test Target Files */
 		C1000001001 /* MenuBarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000001000 /* MenuBarUITests.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,26 +41,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		/* App Target */
 		A1000000001 /* CatPaws.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatPaws.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000001000 /* CatPawsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatPawsApp.swift; sourceTree = "<group>"; };
 		A1000002000 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1000003000 /* StatusItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemManager.swift; sourceTree = "<group>"; };
 		A1000004000 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
-		A100000C000 /* MenuBarContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContentView.swift; sourceTree = "<group>"; };
 		A1000005000 /* PopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
 		A1000006000 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A1000007000 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		A1000008000 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		A1000009000 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A100000D000 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		A100000A000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A100000B000 /* CatPaws.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatPaws.entitlements; sourceTree = "<group>"; };
-		/* Test Target */
+		A100000C000 /* MenuBarContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContentView.swift; sourceTree = "<group>"; };
+		A100000D000 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		B1000000001 /* CatPawsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatPawsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1000001000 /* AppViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModelTests.swift; sourceTree = "<group>"; };
 		B1000002000 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
-		/* UI Test Target */
 		C1000000001 /* CatPawsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatPawsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1000001000 /* MenuBarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
