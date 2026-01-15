@@ -32,7 +32,7 @@
 All code MUST follow Apple's official guidelines and Human Interface Guidelines (HIG).
 The application MUST use SwiftUI for UI components where feasible, falling back to AppKit
 only when SwiftUI lacks required functionality (e.g., low-level event monitoring).
-Code MUST target macOS 26+ and use modern Swift concurrency (async/await, actors) for
+Code MUST target macOS 14+ and use modern Swift concurrency (async/await, actors) for
 all asynchronous operations. Memory management MUST rely on ARC without manual retain
 cycles. All deprecated APIs MUST be avoided.
 
