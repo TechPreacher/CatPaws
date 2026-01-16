@@ -26,12 +26,12 @@ Based on plan.md structure:
 
 **Purpose**: Project configuration and entitlements for keyboard monitoring
 
-- [ ] T001 Add app-sandbox and Input Monitoring entitlements to CatPaws/CatPaws/CatPaws.entitlements (com.apple.security.app-sandbox, com.apple.security.device.input-monitoring)
-- [ ] T002 Add NSInputMonitoringUsageDescription to CatPaws/CatPaws/Info.plist
-- [ ] T003 [P] Create Services directory at CatPaws/CatPaws/Services/
-- [ ] T004 [P] Create ServiceTests directory at CatPaws/CatPawsTests/ServiceTests/
-- [ ] T004a [P] Configure SwiftLint in project with zero-violation policy per Constitution
-- [ ] T004b [P] Configure Xcode build settings to treat warnings as errors per Constitution
+- [x] T001 Add app-sandbox and Input Monitoring entitlements to CatPaws/CatPaws/CatPaws.entitlements (com.apple.security.app-sandbox, com.apple.security.device.input-monitoring)
+- [x] T002 Add NSInputMonitoringUsageDescription to CatPaws/CatPaws/Info.plist
+- [x] T003 [P] Create Services directory at CatPaws/CatPaws/Services/
+- [x] T004 [P] Create ServiceTests directory at CatPaws/CatPawsTests/ServiceTests/
+- [ ] T004a [P] Configure SwiftLint in project with zero-violation policy per Constitution (requires manual Xcode configuration)
+- [ ] T004b [P] Configure Xcode build settings to treat warnings as errors per Constitution (requires manual Xcode configuration)
 
 ---
 
@@ -43,28 +43,28 @@ Based on plan.md structure:
 
 ### Protocols and Types
 
-- [ ] T005 [P] Create PermissionError enum in CatPaws/CatPaws/Services/PermissionError.swift
-- [ ] T006 [P] Create KeyboardMonitoring protocol in CatPaws/CatPaws/Services/KeyboardMonitoring.swift
-- [ ] T007 [P] Create KeyboardMonitorDelegate protocol in CatPaws/CatPaws/Services/KeyboardMonitorDelegate.swift
-- [ ] T008 [P] Create ConfigurationProviding protocol in CatPaws/CatPaws/Services/ConfigurationProviding.swift
+- [x] T005 [P] Create PermissionError enum in CatPaws/CatPaws/Services/PermissionError.swift
+- [x] T006 [P] Create KeyboardMonitoring protocol in CatPaws/CatPaws/Services/KeyboardMonitoring.swift
+- [x] T007 [P] Create KeyboardMonitorDelegate protocol in CatPaws/CatPaws/Services/KeyboardMonitorDelegate.swift
+- [x] T008 [P] Create ConfigurationProviding protocol in CatPaws/CatPaws/Services/ConfigurationProviding.swift
 
 ### Shared Models
 
-- [ ] T009 Create Configuration model with UserDefaults backing in CatPaws/CatPaws/Models/Configuration.swift
+- [x] T009 Create Configuration model with UserDefaults backing in CatPaws/CatPaws/Models/Configuration.swift
 
 ### Keyboard Monitoring (Required by ALL stories)
 
-- [ ] T010 Create KeyboardMonitor service implementing CGEvent tap in CatPaws/CatPaws/Services/KeyboardMonitor.swift
-- [ ] T011 Implement permission check/request flow in KeyboardMonitor (hasPermission, requestPermission, openPermissionSettings)
-- [ ] T012 Implement CGEvent tap creation and event handling in KeyboardMonitor (startMonitoring, stopMonitoring)
-- [ ] T013 Implement delegate callbacks for key down/up/modifiers in KeyboardMonitor
-- [ ] T013a Implement permission denial graceful handling UI with guidance to System Settings in KeyboardMonitor (per Constitution II)
+- [x] T010 Create KeyboardMonitor service implementing CGEvent tap in CatPaws/CatPaws/Services/KeyboardMonitor.swift
+- [x] T011 Implement permission check/request flow in KeyboardMonitor (hasPermission, requestPermission, openPermissionSettings)
+- [x] T012 Implement CGEvent tap creation and event handling in KeyboardMonitor (startMonitoring, stopMonitoring)
+- [x] T013 Implement delegate callbacks for key down/up/modifiers in KeyboardMonitor
+- [x] T013a Implement permission denial graceful handling UI with guidance to System Settings in KeyboardMonitor (per Constitution II)
 
 ### Keyboard Adjacency Data (Required for detection)
 
-- [ ] T014 Create KeyboardAdjacencyMap with QWERTY layout positions in CatPaws/CatPaws/Services/KeyboardAdjacencyMap.swift
-- [ ] T015 Implement adjacency calculation with 1.6 threshold in KeyboardAdjacencyMap
-- [ ] T016 Implement modifier key identification in KeyboardAdjacencyMap
+- [x] T014 Create KeyboardAdjacencyMap with QWERTY layout positions in CatPaws/CatPaws/Services/KeyboardAdjacencyMap.swift
+- [x] T015 Implement adjacency calculation with 1.6 threshold in KeyboardAdjacencyMap
+- [x] T016 Implement modifier key identification in KeyboardAdjacencyMap
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -80,22 +80,22 @@ Based on plan.md structure:
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T017 [P] [US1] Create KeyboardStateTests in CatPaws/CatPawsTests/ModelTests/KeyboardStateTests.swift
-- [ ] T018 [P] [US1] Create CatDetectionServiceTests in CatPaws/CatPawsTests/ServiceTests/CatDetectionServiceTests.swift
-- [ ] T019 [P] [US1] Add test: 3+ adjacent keys triggers detection in CatDetectionServiceTests
-- [ ] T020 [P] [US1] Add test: modifier-only combinations do NOT trigger in CatDetectionServiceTests
-- [ ] T021 [P] [US1] Add test: sequential typing does NOT trigger in CatDetectionServiceTests
-- [ ] T022 [P] [US1] Add test: formsConnectedCluster returns true for adjacent keys in CatDetectionServiceTests
+- [x] T017 [P] [US1] Create KeyboardStateTests in CatPaws/CatPawsTests/ModelTests/KeyboardStateTests.swift
+- [x] T018 [P] [US1] Create CatDetectionServiceTests in CatPaws/CatPawsTests/ServiceTests/CatDetectionServiceTests.swift
+- [x] T019 [P] [US1] Add test: 3+ adjacent keys triggers detection in CatDetectionServiceTests
+- [x] T020 [P] [US1] Add test: modifier-only combinations do NOT trigger in CatDetectionServiceTests
+- [x] T021 [P] [US1] Add test: sequential typing does NOT trigger in CatDetectionServiceTests
+- [x] T022 [P] [US1] Add test: formsConnectedCluster returns true for adjacent keys in CatDetectionServiceTests
 
 ### Implementation for User Story 1
 
-- [ ] T023 [P] [US1] Create KeyboardState model in CatPaws/CatPaws/Models/KeyboardState.swift
-- [ ] T024 [P] [US1] Create DetectionEvent model with DetectionType enum in CatPaws/CatPaws/Models/DetectionEvent.swift
-- [ ] T025 [US1] Create CatDetecting protocol in CatPaws/CatPaws/Services/CatDetecting.swift
-- [ ] T026 [US1] Create CatDetectionService implementing pattern analysis in CatPaws/CatPaws/Services/CatDetectionService.swift
-- [ ] T027 [US1] Implement analyzePattern method using KeyboardAdjacencyMap in CatDetectionService
-- [ ] T028 [US1] Implement formsConnectedCluster using BFS/DFS in CatDetectionService
-- [ ] T029 [US1] Implement modifier key filtering in CatDetectionService
+- [x] T023 [P] [US1] Create KeyboardState model in CatPaws/CatPaws/Models/KeyboardState.swift
+- [x] T024 [P] [US1] Create DetectionEvent model with DetectionType enum in CatPaws/CatPaws/Models/DetectionEvent.swift
+- [x] T025 [US1] Create CatDetecting protocol in CatPaws/CatPaws/Services/CatDetecting.swift
+- [x] T026 [US1] Create CatDetectionService implementing pattern analysis in CatPaws/CatPaws/Services/CatDetectionService.swift
+- [x] T027 [US1] Implement analyzePattern method using KeyboardAdjacencyMap in CatDetectionService
+- [x] T028 [US1] Implement formsConnectedCluster using BFS/DFS in CatDetectionService
+- [x] T029 [US1] Implement modifier key filtering in CatDetectionService
 
 **Checkpoint**: Cat paw detection works independently - can detect 3+ adjacent keys
 
@@ -109,22 +109,22 @@ Based on plan.md structure:
 
 ### Tests for User Story 2
 
-- [ ] T030 [P] [US2] Create LockStateTests in CatPaws/CatPawsTests/ModelTests/LockStateTests.swift
-- [ ] T031 [P] [US2] Add test: state transitions (monitoring → debouncing → locked) in LockStateTests
-- [ ] T032 [P] [US2] Create KeyboardLockServiceTests in CatPaws/CatPawsTests/ServiceTests/KeyboardLockServiceTests.swift
-- [ ] T033 [P] [US2] Add test: shouldPassThrough returns false when locked in KeyboardLockServiceTests
-- [ ] T034 [P] [US2] Add test: debounce requires 200-500ms persistence in KeyboardLockServiceTests
+- [x] T030 [P] [US2] Create LockStateTests in CatPaws/CatPawsTests/ModelTests/LockStateTests.swift
+- [x] T031 [P] [US2] Add test: state transitions (monitoring → debouncing → locked) in LockStateTests
+- [x] T032 [P] [US2] Create KeyboardLockServiceTests in CatPaws/CatPawsTests/ServiceTests/KeyboardLockServiceTests.swift
+- [x] T033 [P] [US2] Add test: shouldPassThrough returns false when locked in KeyboardLockServiceTests
+- [x] T034 [P] [US2] Add test: debounce requires 200-500ms persistence in KeyboardLockServiceTests
 
 ### Implementation for User Story 2
 
-- [ ] T035 [P] [US2] Create LockState model with LockStatus enum in CatPaws/CatPaws/Models/LockState.swift
-- [ ] T036 [US2] Create KeyboardLocking protocol in CatPaws/CatPaws/Services/KeyboardLocking.swift
-- [ ] T037 [US2] Create KeyboardLockService implementing input blocking in CatPaws/CatPaws/Services/KeyboardLockService.swift
-- [ ] T038 [US2] Implement shouldPassThrough returning nil for blocked events in KeyboardLockService
-- [ ] T039 [US2] Create LockStateManaging protocol in CatPaws/CatPaws/Services/LockStateManaging.swift
-- [ ] T040 [US2] Create LockStateManager implementing state machine in CatPaws/CatPaws/Services/LockStateManager.swift
-- [ ] T041 [US2] Implement debounce logic using Task.sleep in LockStateManager (use 300ms default per Configuration)
-- [ ] T042 [US2] Integrate KeyboardMonitor callback with CatDetectionService and LockStateManager in KeyboardMonitor
+- [x] T035 [P] [US2] Create LockState model with LockStatus enum in CatPaws/CatPaws/Models/LockState.swift
+- [x] T036 [US2] Create KeyboardLocking protocol in CatPaws/CatPaws/Services/KeyboardLocking.swift
+- [x] T037 [US2] Create KeyboardLockService implementing input blocking in CatPaws/CatPaws/Services/KeyboardLockService.swift
+- [x] T038 [US2] Implement shouldPassThrough returning nil for blocked events in KeyboardLockService
+- [x] T039 [US2] Create LockStateManaging protocol in CatPaws/CatPaws/Services/LockStateManaging.swift
+- [x] T040 [US2] Create LockStateManager implementing state machine in CatPaws/CatPaws/Services/LockStateManager.swift
+- [x] T041 [US2] Implement debounce logic using Task.sleep in LockStateManager (use 300ms default per Configuration)
+- [x] T042 [US2] Integrate KeyboardMonitor callback with CatDetectionService and LockStateManager in KeyboardMonitor
 
 **Checkpoint**: Keyboard locks on cat detection - input is blocked after debounce
 
@@ -138,20 +138,20 @@ Based on plan.md structure:
 
 ### Tests for User Story 3
 
-- [ ] T043 [P] [US3] Create MockNotificationPresenter for testing in CatPaws/CatPawsTests/Mocks/MockNotificationPresenter.swift
-- [ ] T044 [P] [US3] Add test: show is called when entering locked state in LockStateManagerTests
-- [ ] T045 [P] [US3] Add test: hide is called when exiting locked state in LockStateManagerTests
-- [ ] T046 [P] [US3] Add test: dismiss callback triggers manualUnlock in LockStateManagerTests
+- [x] T043 [P] [US3] Create MockNotificationPresenter for testing in CatPaws/CatPawsTests/Mocks/MockNotificationPresenter.swift
+- [x] T044 [P] [US3] Add test: show is called when entering locked state in LockStateManagerTests
+- [x] T045 [P] [US3] Add test: hide is called when exiting locked state in LockStateManagerTests
+- [x] T046 [P] [US3] Add test: dismiss callback triggers manualUnlock in LockStateManagerTests
 
 ### Implementation for User Story 3
 
-- [ ] T047 [P] [US3] Create NotificationPresenting protocol in CatPaws/CatPaws/Services/NotificationPresenting.swift
-- [ ] T048 [US3] Create CatLockPopupView SwiftUI view in CatPaws/CatPaws/Views/CatLockPopupView.swift
-- [ ] T049 [US3] Create NotificationWindowController using NSPanel in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T050 [US3] Configure NSPanel with .floating level and .fullScreenAuxiliary behavior
-- [ ] T051 [US3] Implement show/hide methods with dismiss callback in NotificationWindowController
-- [ ] T052 [US3] Integrate NotificationPresenting with LockStateManager (show on lock, hide on unlock)
-- [ ] T053 [US3] Implement cooldown state (5-10 sec) after manual unlock in LockStateManager
+- [x] T047 [P] [US3] Create NotificationPresenting protocol in CatPaws/CatPaws/Services/NotificationPresenting.swift
+- [x] T048 [US3] Create CatLockPopupView SwiftUI view in CatPaws/CatPaws/Views/CatLockPopupView.swift
+- [x] T049 [US3] Create NotificationWindowController using NSPanel in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [x] T050 [US3] Configure NSPanel with .floating level and .fullScreenAuxiliary behavior
+- [x] T051 [US3] Implement show/hide methods with dismiss callback in NotificationWindowController
+- [x] T052 [US3] Integrate NotificationPresenting with LockStateManager (show on lock, hide on unlock)
+- [x] T053 [US3] Implement cooldown state (5-10 sec) after manual unlock in LockStateManager
 
 **Checkpoint**: Popup appears on lock with dismiss button; cooldown prevents immediate re-lock
 
@@ -165,16 +165,16 @@ Based on plan.md structure:
 
 ### Tests for User Story 4
 
-- [ ] T054 [P] [US4] Add test: performRecheck unlocks when no keys pressed in LockStateManagerTests
-- [ ] T055 [P] [US4] Add test: re-check interval is configurable (default 2 sec) in LockStateManagerTests
-- [ ] T056 [P] [US4] Add test: keyboard remains locked if keys still pressed at re-check in LockStateManagerTests
+- [x] T054 [P] [US4] Add test: performRecheck unlocks when no keys pressed in LockStateManagerTests
+- [x] T055 [P] [US4] Add test: re-check interval is configurable (default 2 sec) in LockStateManagerTests
+- [x] T056 [P] [US4] Add test: keyboard remains locked if keys still pressed at re-check in LockStateManagerTests
 
 ### Implementation for User Story 4
 
-- [ ] T057 [US4] Implement periodic re-check timer using Task in LockStateManager
-- [ ] T058 [US4] Implement performRecheck method checking KeyboardState in LockStateManager
-- [ ] T059 [US4] Transition from locked to monitoring when no keys detected in LockStateManager
-- [ ] T060 [US4] Ensure notification hides on automatic unlock in LockStateManager
+- [x] T057 [US4] Implement periodic re-check timer using Task in LockStateManager
+- [x] T058 [US4] Implement performRecheck method checking KeyboardState in LockStateManager
+- [x] T059 [US4] Transition from locked to monitoring when no keys detected in LockStateManager
+- [x] T060 [US4] Ensure notification hides on automatic unlock in LockStateManager
 
 **Checkpoint**: Keyboard auto-unlocks when cat leaves - full lock/unlock cycle works
 
@@ -188,16 +188,16 @@ Based on plan.md structure:
 
 ### Tests for User Story 5
 
-- [ ] T061 [P] [US5] Add test: 10+ keys triggers sitting detection in CatDetectionServiceTests
-- [ ] T062 [P] [US5] Add test: multiple disconnected clusters triggers multiPaw detection in CatDetectionServiceTests
-- [ ] T063 [P] [US5] Add test: DetectionType.sitting set for 10+ keys in CatDetectionServiceTests
+- [x] T061 [P] [US5] Add test: 10+ keys triggers sitting detection in CatDetectionServiceTests
+- [x] T062 [P] [US5] Add test: multiple disconnected clusters triggers multiPaw detection in CatDetectionServiceTests
+- [x] T063 [P] [US5] Add test: DetectionType.sitting set for 10+ keys in CatDetectionServiceTests
 
 ### Implementation for User Story 5
 
-- [ ] T064 [US5] Add sitting detection (10+ keys) to analyzePattern in CatDetectionService
-- [ ] T065 [US5] Add multiPaw detection (multiple clusters) to analyzePattern in CatDetectionService
-- [ ] T066 [US5] Update DetectionEvent creation with appropriate DetectionType in CatDetectionService
-- [ ] T067 [US5] Update popup messaging based on DetectionType in CatLockPopupView
+- [x] T064 [US5] Add sitting detection (10+ keys) to analyzePattern in CatDetectionService
+- [x] T065 [US5] Add multiPaw detection (multiple clusters) to analyzePattern in CatDetectionService
+- [x] T066 [US5] Update DetectionEvent creation with appropriate DetectionType in CatDetectionService
+- [x] T067 [US5] Update popup messaging based on DetectionType in CatLockPopupView
 
 **Checkpoint**: All detection patterns work - single paw, multiple paws, and sitting cat
 

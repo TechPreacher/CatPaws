@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2AA2A77F1B72D7A1C56D179E /* KeyboardStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F37169AC6273F3F63527A5 /* KeyboardStateTests.swift */; };
+		377F7207679B33F02F8CE251 /* CatDetectionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8FA985DFD313A8C6A891AE /* CatDetectionServiceTests.swift */; };
+		39576945FA79769219E6838F /* LockStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE4E2731D705FAF3D808C8E /* LockStateManagerTests.swift */; };
+		3C9864E0269E223371C40345 /* KeyboardLockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DAFD122D2D2037FA96E347 /* KeyboardLockService.swift */; };
+		3D14507A27AB6342478978C1 /* DetectionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58413587A59D955CD284C68 /* DetectionEvent.swift */; };
+		64F526A094DC84BCBB0453FC /* CatDetecting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA27AE4947DFAEB2375F466 /* CatDetecting.swift */; };
+		707C9EE3C52A4D37AC9FD8DB /* MockNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4CA576936583411F206525 /* MockNotificationPresenter.swift */; };
+		7B1407FA9F63FC5E4E505189 /* CatLockPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205E129D01A14CAEEC03C079 /* CatLockPopupView.swift */; };
+		7C01EC6FB97E4F254DC74A43 /* CatDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C1BD12004C894AD5199252 /* CatDetectionService.swift */; };
+		848C05C155A12606BD5B1C7F /* ConfigurationProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF42300815EBB328BCC2703 /* ConfigurationProviding.swift */; };
+		85561CBCA717F389068386DF /* KeyboardLocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E122AF96676294780E931115 /* KeyboardLocking.swift */; };
+		87B4A5AE18E833243E6B6453 /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6315B9177CDEA82EE4C72F22 /* KeyboardMonitor.swift */; };
+		90B3CA61A4A95ACF5B4C2273 /* LockStateManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBD76368D6C6BDC6C92FD41 /* LockStateManaging.swift */; };
+		90DF7904206F9D130E8E1813 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FFEDCA764C38097A2B78FA /* Configuration.swift */; };
+		99AD4CD089D1BA156FE3EEDF /* PermissionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DBF51B1CAAE005BFE8923A /* PermissionError.swift */; };
 		A1000001001 /* CatPawsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001000 /* CatPawsApp.swift */; };
 		A1000002001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000 /* AppDelegate.swift */; };
 		A1000003001 /* StatusItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003000 /* StatusItemManager.swift */; };
@@ -18,9 +33,19 @@
 		A1000009001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000009000 /* Assets.xcassets */; };
 		A100000C001 /* MenuBarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000C000 /* MenuBarContentView.swift */; };
 		A100000D001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A100000D000 /* Localizable.strings */; };
+		A421227A0B581A1C9D1F55D8 /* KeyboardLockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5208ADE11A9A3AF98FD080A4 /* KeyboardLockServiceTests.swift */; };
+		A971E8989C8D92F632F478A7 /* NotificationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880C8B172A7E9009032F5C00 /* NotificationWindowController.swift */; };
 		B1000001001 /* AppViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000001000 /* AppViewModelTests.swift */; };
 		B1000002001 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000002000 /* AppStateTests.swift */; };
 		C1000001001 /* MenuBarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000001000 /* MenuBarUITests.swift */; };
+		C9D0E1D5F3A004ECAE81E9FC /* KeyboardAdjacencyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763BCF8B02E378F6A2B8D8D2 /* KeyboardAdjacencyMap.swift */; };
+		CC54AE5CC1078767449C73F0 /* LockStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B31B55AADCB52204D4726E4 /* LockStateTests.swift */; };
+		D09396099BF8BE0CB8345BB1 /* NotificationPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ACD9BB036815EE8CA2B29F /* NotificationPresenting.swift */; };
+		E3F222D97F160584618928CB /* KeyboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C96CFD57851C0AA9CE1A998 /* KeyboardState.swift */; };
+		E405AC9D46A75F03C08EFB76 /* KeyboardMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09B21D805AA7496DECAAB1 /* KeyboardMonitoring.swift */; };
+		F5CE2F8E50265A4A20B0FC22 /* KeyboardMonitorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE553F7888136420A36C2F4 /* KeyboardMonitorDelegate.swift */; };
+		F982739B62C7484D9A63B5CB /* LockState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1629C86496AAF8C854FD92EA /* LockState.swift */; };
+		FD6A161C9F1D31FD65C5F0DC /* LockStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A9983E879536F16D129DC1 /* LockStateManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +66,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1629C86496AAF8C854FD92EA /* LockState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LockState.swift; path = CatPaws/Models/LockState.swift; sourceTree = "<group>"; };
+		1B31B55AADCB52204D4726E4 /* LockStateTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LockStateTests.swift; path = CatPawsTests/ModelTests/LockStateTests.swift; sourceTree = "<group>"; };
+		205E129D01A14CAEEC03C079 /* CatLockPopupView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CatLockPopupView.swift; path = CatPaws/Views/CatLockPopupView.swift; sourceTree = "<group>"; };
+		28C1BD12004C894AD5199252 /* CatDetectionService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CatDetectionService.swift; path = CatPaws/Services/CatDetectionService.swift; sourceTree = "<group>"; };
+		2EF42300815EBB328BCC2703 /* ConfigurationProviding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConfigurationProviding.swift; path = CatPaws/Services/ConfigurationProviding.swift; sourceTree = "<group>"; };
+		33ACD9BB036815EE8CA2B29F /* NotificationPresenting.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NotificationPresenting.swift; path = CatPaws/Services/NotificationPresenting.swift; sourceTree = "<group>"; };
+		4AA27AE4947DFAEB2375F466 /* CatDetecting.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CatDetecting.swift; path = CatPaws/Services/CatDetecting.swift; sourceTree = "<group>"; };
+		4C96CFD57851C0AA9CE1A998 /* KeyboardState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyboardState.swift; path = CatPaws/Models/KeyboardState.swift; sourceTree = "<group>"; };
+		4F09B21D805AA7496DECAAB1 /* KeyboardMonitoring.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyboardMonitoring.swift; path = CatPaws/Services/KeyboardMonitoring.swift; sourceTree = "<group>"; };
+		5208ADE11A9A3AF98FD080A4 /* KeyboardLockServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyboardLockServiceTests.swift; path = CatPawsTests/ServiceTests/KeyboardLockServiceTests.swift; sourceTree = "<group>"; };
+		6315B9177CDEA82EE4C72F22 /* KeyboardMonitor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyboardMonitor.swift; path = CatPaws/Services/KeyboardMonitor.swift; sourceTree = "<group>"; };
+		69DAFD122D2D2037FA96E347 /* KeyboardLockService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyboardLockService.swift; path = CatPaws/Services/KeyboardLockService.swift; sourceTree = "<group>"; };
+		6A4CA576936583411F206525 /* MockNotificationPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MockNotificationPresenter.swift; path = CatPawsTests/Mocks/MockNotificationPresenter.swift; sourceTree = "<group>"; };
+		763BCF8B02E378F6A2B8D8D2 /* KeyboardAdjacencyMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyboardAdjacencyMap.swift; path = CatPaws/Services/KeyboardAdjacencyMap.swift; sourceTree = "<group>"; };
+		78FFEDCA764C38097A2B78FA /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = CatPaws/Models/Configuration.swift; sourceTree = "<group>"; };
+		7BE553F7888136420A36C2F4 /* KeyboardMonitorDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyboardMonitorDelegate.swift; path = CatPaws/Services/KeyboardMonitorDelegate.swift; sourceTree = "<group>"; };
+		880C8B172A7E9009032F5C00 /* NotificationWindowController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NotificationWindowController.swift; path = CatPaws/Services/NotificationWindowController.swift; sourceTree = "<group>"; };
+		8B8FA985DFD313A8C6A891AE /* CatDetectionServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CatDetectionServiceTests.swift; path = CatPawsTests/ServiceTests/CatDetectionServiceTests.swift; sourceTree = "<group>"; };
 		A1000000001 /* CatPaws.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatPaws.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000001000 /* CatPawsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatPawsApp.swift; sourceTree = "<group>"; };
 		A1000002000 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,11 +98,18 @@
 		A100000B000 /* CatPaws.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CatPaws.entitlements; sourceTree = "<group>"; };
 		A100000C000 /* MenuBarContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContentView.swift; sourceTree = "<group>"; };
 		A100000D000 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		ADBD76368D6C6BDC6C92FD41 /* LockStateManaging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LockStateManaging.swift; path = CatPaws/Services/LockStateManaging.swift; sourceTree = "<group>"; };
 		B1000000001 /* CatPawsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatPawsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1000001000 /* AppViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModelTests.swift; sourceTree = "<group>"; };
 		B1000002000 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
+		BBE4E2731D705FAF3D808C8E /* LockStateManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LockStateManagerTests.swift; path = CatPawsTests/ServiceTests/LockStateManagerTests.swift; sourceTree = "<group>"; };
 		C1000000001 /* CatPawsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatPawsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1000001000 /* MenuBarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarUITests.swift; sourceTree = "<group>"; };
+		C1DBF51B1CAAE005BFE8923A /* PermissionError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PermissionError.swift; path = CatPaws/Services/PermissionError.swift; sourceTree = "<group>"; };
+		D58413587A59D955CD284C68 /* DetectionEvent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DetectionEvent.swift; path = CatPaws/Models/DetectionEvent.swift; sourceTree = "<group>"; };
+		E122AF96676294780E931115 /* KeyboardLocking.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyboardLocking.swift; path = CatPaws/Services/KeyboardLocking.swift; sourceTree = "<group>"; };
+		E6A9983E879536F16D129DC1 /* LockStateManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LockStateManager.swift; path = CatPaws/Services/LockStateManager.swift; sourceTree = "<group>"; };
+		F6F37169AC6273F3F63527A5 /* KeyboardStateTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyboardStateTests.swift; path = CatPawsTests/ModelTests/KeyboardStateTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +137,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A7FE988F07BD9D0B85F9441 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				6A4CA576936583411F206525 /* MockNotificationPresenter.swift */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
 		A0000000001 = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +205,7 @@
 			children = (
 				A1000005000 /* PopoverView.swift */,
 				A1000006000 /* SettingsView.swift */,
+				205E129D01A14CAEEC03C079 /* CatLockPopupView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -163,6 +222,10 @@
 			isa = PBXGroup;
 			children = (
 				A1000008000 /* AppState.swift */,
+				4C96CFD57851C0AA9CE1A998 /* KeyboardState.swift */,
+				D58413587A59D955CD284C68 /* DetectionEvent.swift */,
+				1629C86496AAF8C854FD92EA /* LockState.swift */,
+				78FFEDCA764C38097A2B78FA /* Configuration.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -170,6 +233,20 @@
 		A1000016000 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				C1DBF51B1CAAE005BFE8923A /* PermissionError.swift */,
+				4F09B21D805AA7496DECAAB1 /* KeyboardMonitoring.swift */,
+				7BE553F7888136420A36C2F4 /* KeyboardMonitorDelegate.swift */,
+				2EF42300815EBB328BCC2703 /* ConfigurationProviding.swift */,
+				6315B9177CDEA82EE4C72F22 /* KeyboardMonitor.swift */,
+				763BCF8B02E378F6A2B8D8D2 /* KeyboardAdjacencyMap.swift */,
+				4AA27AE4947DFAEB2375F466 /* CatDetecting.swift */,
+				28C1BD12004C894AD5199252 /* CatDetectionService.swift */,
+				E122AF96676294780E931115 /* KeyboardLocking.swift */,
+				69DAFD122D2D2037FA96E347 /* KeyboardLockService.swift */,
+				ADBD76368D6C6BDC6C92FD41 /* LockStateManaging.swift */,
+				E6A9983E879536F16D129DC1 /* LockStateManager.swift */,
+				33ACD9BB036815EE8CA2B29F /* NotificationPresenting.swift */,
+				880C8B172A7E9009032F5C00 /* NotificationWindowController.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -205,6 +282,7 @@
 				B1000011000 /* ViewModelTests */,
 				B1000012000 /* ModelTests */,
 				B1000013000 /* ServiceTests */,
+				8A7FE988F07BD9D0B85F9441 /* Mocks */,
 			);
 			path = CatPawsTests;
 			sourceTree = "<group>";
@@ -221,6 +299,8 @@
 			isa = PBXGroup;
 			children = (
 				B1000002000 /* AppStateTests.swift */,
+				F6F37169AC6273F3F63527A5 /* KeyboardStateTests.swift */,
+				1B31B55AADCB52204D4726E4 /* LockStateTests.swift */,
 			);
 			path = ModelTests;
 			sourceTree = "<group>";
@@ -228,6 +308,9 @@
 		B1000013000 /* ServiceTests */ = {
 			isa = PBXGroup;
 			children = (
+				8B8FA985DFD313A8C6A891AE /* CatDetectionServiceTests.swift */,
+				5208ADE11A9A3AF98FD080A4 /* KeyboardLockServiceTests.swift */,
+				BBE4E2731D705FAF3D808C8E /* LockStateManagerTests.swift */,
 			);
 			path = ServiceTests;
 			sourceTree = "<group>";
@@ -387,6 +470,25 @@
 				A1000006001 /* SettingsView.swift in Sources */,
 				A1000007001 /* AppViewModel.swift in Sources */,
 				A1000008001 /* AppState.swift in Sources */,
+				99AD4CD089D1BA156FE3EEDF /* PermissionError.swift in Sources */,
+				E405AC9D46A75F03C08EFB76 /* KeyboardMonitoring.swift in Sources */,
+				F5CE2F8E50265A4A20B0FC22 /* KeyboardMonitorDelegate.swift in Sources */,
+				848C05C155A12606BD5B1C7F /* ConfigurationProviding.swift in Sources */,
+				87B4A5AE18E833243E6B6453 /* KeyboardMonitor.swift in Sources */,
+				C9D0E1D5F3A004ECAE81E9FC /* KeyboardAdjacencyMap.swift in Sources */,
+				64F526A094DC84BCBB0453FC /* CatDetecting.swift in Sources */,
+				7C01EC6FB97E4F254DC74A43 /* CatDetectionService.swift in Sources */,
+				85561CBCA717F389068386DF /* KeyboardLocking.swift in Sources */,
+				3C9864E0269E223371C40345 /* KeyboardLockService.swift in Sources */,
+				90B3CA61A4A95ACF5B4C2273 /* LockStateManaging.swift in Sources */,
+				FD6A161C9F1D31FD65C5F0DC /* LockStateManager.swift in Sources */,
+				D09396099BF8BE0CB8345BB1 /* NotificationPresenting.swift in Sources */,
+				A971E8989C8D92F632F478A7 /* NotificationWindowController.swift in Sources */,
+				E3F222D97F160584618928CB /* KeyboardState.swift in Sources */,
+				3D14507A27AB6342478978C1 /* DetectionEvent.swift in Sources */,
+				F982739B62C7484D9A63B5CB /* LockState.swift in Sources */,
+				90DF7904206F9D130E8E1813 /* Configuration.swift in Sources */,
+				7B1407FA9F63FC5E4E505189 /* CatLockPopupView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +498,12 @@
 			files = (
 				B1000001001 /* AppViewModelTests.swift in Sources */,
 				B1000002001 /* AppStateTests.swift in Sources */,
+				707C9EE3C52A4D37AC9FD8DB /* MockNotificationPresenter.swift in Sources */,
+				2AA2A77F1B72D7A1C56D179E /* KeyboardStateTests.swift in Sources */,
+				CC54AE5CC1078767449C73F0 /* LockStateTests.swift in Sources */,
+				377F7207679B33F02F8CE251 /* CatDetectionServiceTests.swift in Sources */,
+				A421227A0B581A1C9D1F55D8 /* KeyboardLockServiceTests.swift in Sources */,
+				39576945FA79769219E6838F /* LockStateManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
