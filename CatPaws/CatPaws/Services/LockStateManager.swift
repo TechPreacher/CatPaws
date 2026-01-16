@@ -5,6 +5,7 @@
 //  Created on 2026-01-16.
 //
 
+import AppKit
 import Foundation
 
 /// Delegate for lock state changes
@@ -103,6 +104,11 @@ final class LockStateManager: LockStateManaging {
         notificationPresenter?.hide()
         delegate?.lockStateManagerDidUnlock(self)
 
+        // Play unlock sound if enabled
+        if configuration?.playSoundOnUnlock ?? true {
+            playUnlockSound()
+        }
+
         startCooldownTimer()
     }
 
@@ -155,6 +161,11 @@ final class LockStateManager: LockStateManaging {
         lockService?.lock()
         delegate?.lockStateManagerDidLock(self)
 
+        // Play lock sound if enabled
+        if configuration?.playSoundOnLock ?? true {
+            playLockSound()
+        }
+
         // Show notification
         notificationPresenter?.show(detectionType: detection.type) { [weak self] in
             self?.manualUnlock()
@@ -195,6 +206,11 @@ final class LockStateManager: LockStateManaging {
         lockService?.unlock()
         notificationPresenter?.hide()
         delegate?.lockStateManagerDidUnlock(self)
+
+        // Play unlock sound if enabled
+        if configuration?.playSoundOnUnlock ?? true {
+            playUnlockSound()
+        }
     }
 
     private func startCooldownTimer() {
@@ -217,5 +233,17 @@ final class LockStateManager: LockStateManaging {
     private func endCooldown() {
         guard state.status == .cooldown else { return }
         state.endCooldown()
+    }
+
+    // MARK: - Sound Effects
+
+    private func playLockSound() {
+        // Use Funk sound for lock - a clear alert tone
+        NSSound(named: "Funk")?.play()
+    }
+
+    private func playUnlockSound() {
+        // Use Pop sound for unlock - a softer, positive tone
+        NSSound(named: "Pop")?.play()
     }
 }

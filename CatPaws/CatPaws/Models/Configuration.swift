@@ -65,63 +65,76 @@ final class Configuration: ConfigurationProviding, ObservableObject {
 
     // MARK: - ConfigurationProviding
 
-    @Published var isEnabled: Bool {
+    var isEnabled: Bool {
         get { defaults.bool(forKey: Keys.isEnabled) }
-        set { defaults.set(newValue, forKey: Keys.isEnabled) }
+        set {
+            objectWillChange.send()
+            defaults.set(newValue, forKey: Keys.isEnabled)
+        }
     }
 
-    @Published var debounceMs: Int {
+    var debounceMs: Int {
         get {
             let value = defaults.integer(forKey: Keys.debounceMs)
             return Ranges.debounceMs.contains(value) ? value : Defaults.debounceMs
         }
         set {
+            objectWillChange.send()
             let clamped = min(max(newValue, Ranges.debounceMs.lowerBound), Ranges.debounceMs.upperBound)
             defaults.set(clamped, forKey: Keys.debounceMs)
         }
     }
 
-    @Published var recheckIntervalSec: Double {
+    var recheckIntervalSec: Double {
         get {
             let value = defaults.double(forKey: Keys.recheckIntervalSec)
             return Ranges.recheckIntervalSec.contains(value) ? value : Defaults.recheckIntervalSec
         }
         set {
+            objectWillChange.send()
             let clamped = min(max(newValue, Ranges.recheckIntervalSec.lowerBound), Ranges.recheckIntervalSec.upperBound)
             defaults.set(clamped, forKey: Keys.recheckIntervalSec)
         }
     }
 
-    @Published var cooldownSec: Double {
+    var cooldownSec: Double {
         get {
             let value = defaults.double(forKey: Keys.cooldownSec)
             return Ranges.cooldownSec.contains(value) ? value : Defaults.cooldownSec
         }
         set {
+            objectWillChange.send()
             let clamped = min(max(newValue, Ranges.cooldownSec.lowerBound), Ranges.cooldownSec.upperBound)
             defaults.set(clamped, forKey: Keys.cooldownSec)
         }
     }
 
-    @Published var minimumKeyCount: Int {
+    var minimumKeyCount: Int {
         get {
             let value = defaults.integer(forKey: Keys.minimumKeyCount)
             return Ranges.minimumKeyCount.contains(value) ? value : Defaults.minimumKeyCount
         }
         set {
+            objectWillChange.send()
             let clamped = min(max(newValue, Ranges.minimumKeyCount.lowerBound), Ranges.minimumKeyCount.upperBound)
             defaults.set(clamped, forKey: Keys.minimumKeyCount)
         }
     }
 
-    @Published var playSoundOnLock: Bool {
+    var playSoundOnLock: Bool {
         get { defaults.bool(forKey: Keys.playSoundOnLock) }
-        set { defaults.set(newValue, forKey: Keys.playSoundOnLock) }
+        set {
+            objectWillChange.send()
+            defaults.set(newValue, forKey: Keys.playSoundOnLock)
+        }
     }
 
-    @Published var playSoundOnUnlock: Bool {
+    var playSoundOnUnlock: Bool {
         get { defaults.bool(forKey: Keys.playSoundOnUnlock) }
-        set { defaults.set(newValue, forKey: Keys.playSoundOnUnlock) }
+        set {
+            objectWillChange.send()
+            defaults.set(newValue, forKey: Keys.playSoundOnUnlock)
+        }
     }
 
     func resetToDefaults() {

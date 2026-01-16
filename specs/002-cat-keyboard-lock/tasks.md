@@ -207,13 +207,13 @@ Based on plan.md structure:
 
 **Purpose**: Wire all services together through AppViewModel
 
-- [ ] T068 Update AppViewModel to hold KeyboardMonitor instance in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T069 Update AppViewModel to hold LockStateManager instance
-- [ ] T070 Update AppViewModel to hold NotificationWindowController instance
-- [ ] T071 Implement service initialization and permission flow on app launch in AppViewModel
-- [ ] T072 Update menu bar icon based on lock state in AppViewModel (per Constitution IV: outlined paw = unlocked, filled paw = locked, grayed paw = disabled)
-- [ ] T073 Add manual unlock option to menu bar menu in CatPaws/CatPaws/MenuBar/MenuBarContentView.swift
-- [ ] T074 Add Settings controls for detection configuration in CatPaws/CatPaws/Views/SettingsView.swift
+- [x] T068 Update AppViewModel to hold KeyboardMonitor instance in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [x] T069 Update AppViewModel to hold LockStateManager instance
+- [x] T070 Update AppViewModel to hold NotificationWindowController instance
+- [x] T071 Implement service initialization and permission flow on app launch in AppViewModel
+- [x] T072 Update menu bar icon based on lock state in AppViewModel (per Constitution IV: outlined paw = unlocked, filled paw = locked, grayed paw = disabled)
+- [x] T073 Add manual unlock option to menu bar menu in CatPaws/CatPaws/MenuBar/MenuBarContentView.swift
+- [x] T074 Add Settings controls for detection configuration in CatPaws/CatPaws/Views/SettingsView.swift
 
 ---
 
@@ -221,12 +221,12 @@ Based on plan.md structure:
 
 **Purpose**: Final testing, documentation, and cleanup
 
-- [ ] T075 [P] Create integration test for full detection→lock→unlock flow in CatPaws/CatPawsTests/IntegrationTests/
-- [ ] T076 [P] Add VoiceOver accessibility labels to CatLockPopupView
-- [ ] T077 [P] Add sound effects for lock/unlock (optional, controlled by Configuration)
-- [ ] T078 Run all tests and verify 80%+ coverage on detection logic
-- [ ] T079 Run quickstart.md validation scenarios
-- [ ] T080 Code cleanup and remove debug logging
+- [x] T075 [P] Create integration test for full detection→lock→unlock flow in CatPaws/CatPawsTests/IntegrationTests/
+- [x] T076 [P] Add VoiceOver accessibility labels to CatLockPopupView
+- [x] T077 [P] Add sound effects for lock/unlock (optional, controlled by Configuration)
+- [x] T078 Run all tests and verify 80%+ coverage on detection logic
+- [x] T079 Run quickstart.md validation scenarios
+- [x] T080 Code cleanup and remove debug logging
 
 ---
 

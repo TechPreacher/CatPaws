@@ -158,7 +158,7 @@ final class AppViewModel: ObservableObject {
             try keyboardMonitor.startMonitoring()
             updateIconState()
         } catch {
-            print("Failed to start monitoring: \(error)")
+            // Monitoring failed - likely permission issue
             appState.isActive = false
         }
     }
