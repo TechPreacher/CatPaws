@@ -1,10 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "pawprint disabled.png",
       "idiom" : "mac",
       "scale" : "1x"
     },
     {
+      "filename" : "pawprint disabled 1.png",
       "idiom" : "mac",
       "scale" : "2x"
     }

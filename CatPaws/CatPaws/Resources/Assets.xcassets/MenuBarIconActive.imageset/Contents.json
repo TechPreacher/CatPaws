@@ -1,10 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "pawprint.fill.png",
       "idiom" : "mac",
       "scale" : "1x"
     },
     {
+      "filename" : "pawprint.fill 1.png",
       "idiom" : "mac",
       "scale" : "2x"
     }
