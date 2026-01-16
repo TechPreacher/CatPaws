@@ -10,7 +10,7 @@ Implement cat detection and keyboard locking functionality for the CatPaws menu 
 ## Technical Context
 
 **Language/Version**: Swift 5.9+, Xcode 15+
-**Primary Dependencies**: SwiftUI, AppKit (NSEvent for global keyboard monitoring), Accessibility APIs (CGEvent)
+**Primary Dependencies**: SwiftUI, AppKit, Accessibility APIs (CGEvent for global keyboard monitoring and input blocking)
 **Storage**: UserDefaults (configuration only - debounce timing, cooldown duration)
 **Testing**: XCTest (unit tests for detection logic, integration tests for state machine)
 **Target Platform**: macOS 14+

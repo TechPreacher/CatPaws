@@ -26,10 +26,12 @@ Based on plan.md structure:
 
 **Purpose**: Project configuration and entitlements for keyboard monitoring
 
-- [ ] T001 Add Input Monitoring entitlement to CatPaws/CatPaws/CatPaws.entitlements
+- [ ] T001 Add app-sandbox and Input Monitoring entitlements to CatPaws/CatPaws/CatPaws.entitlements (com.apple.security.app-sandbox, com.apple.security.device.input-monitoring)
 - [ ] T002 Add NSInputMonitoringUsageDescription to CatPaws/CatPaws/Info.plist
 - [ ] T003 [P] Create Services directory at CatPaws/CatPaws/Services/
 - [ ] T004 [P] Create ServiceTests directory at CatPaws/CatPawsTests/ServiceTests/
+- [ ] T004a [P] Configure SwiftLint in project with zero-violation policy per Constitution
+- [ ] T004b [P] Configure Xcode build settings to treat warnings as errors per Constitution
 
 ---
 
@@ -56,6 +58,7 @@ Based on plan.md structure:
 - [ ] T011 Implement permission check/request flow in KeyboardMonitor (hasPermission, requestPermission, openPermissionSettings)
 - [ ] T012 Implement CGEvent tap creation and event handling in KeyboardMonitor (startMonitoring, stopMonitoring)
 - [ ] T013 Implement delegate callbacks for key down/up/modifiers in KeyboardMonitor
+- [ ] T013a Implement permission denial graceful handling UI with guidance to System Settings in KeyboardMonitor (per Constitution II)
 
 ### Keyboard Adjacency Data (Required for detection)
 
@@ -120,7 +123,7 @@ Based on plan.md structure:
 - [ ] T038 [US2] Implement shouldPassThrough returning nil for blocked events in KeyboardLockService
 - [ ] T039 [US2] Create LockStateManaging protocol in CatPaws/CatPaws/Services/LockStateManaging.swift
 - [ ] T040 [US2] Create LockStateManager implementing state machine in CatPaws/CatPaws/Services/LockStateManager.swift
-- [ ] T041 [US2] Implement debounce logic using Task.sleep in LockStateManager
+- [ ] T041 [US2] Implement debounce logic using Task.sleep in LockStateManager (use 300ms default per Configuration)
 - [ ] T042 [US2] Integrate KeyboardMonitor callback with CatDetectionService and LockStateManager in KeyboardMonitor
 
 **Checkpoint**: Keyboard locks on cat detection - input is blocked after debounce
@@ -208,7 +211,7 @@ Based on plan.md structure:
 - [ ] T069 Update AppViewModel to hold LockStateManager instance
 - [ ] T070 Update AppViewModel to hold NotificationWindowController instance
 - [ ] T071 Implement service initialization and permission flow on app launch in AppViewModel
-- [ ] T072 Update menu bar icon based on lock state (outlined/filled paw) in AppViewModel
+- [ ] T072 Update menu bar icon based on lock state in AppViewModel (per Constitution IV: outlined paw = unlocked, filled paw = locked, grayed paw = disabled)
 - [ ] T073 Add manual unlock option to menu bar menu in CatPaws/CatPaws/MenuBar/MenuBarContentView.swift
 - [ ] T074 Add Settings controls for detection configuration in CatPaws/CatPaws/Views/SettingsView.swift
 
