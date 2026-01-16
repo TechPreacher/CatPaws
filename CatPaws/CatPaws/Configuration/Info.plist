@@ -30,5 +30,7 @@
 	<string>Copyright © 2026. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSInputMonitoringUsageDescription</key>
+	<string>CatPaws needs to monitor keyboard input to detect when your cat is on the keyboard and protect your work from unwanted keystrokes.</string>
 </dict>
 </plist>

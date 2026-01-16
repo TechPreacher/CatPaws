@@ -15,9 +15,9 @@ struct MenuBarContentView: View {
         VStack(spacing: 16) {
             // Header
             HStack {
-                Image(systemName: "pawprint.fill")
+                Image(systemName: viewModel.iconState.systemImageName)
                     .font(.title)
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(viewModel.iconState.isGrayed ? .gray : .accentColor)
 
                 Text("CatPaws")
                     .font(.title2)
@@ -31,17 +31,55 @@ struct MenuBarContentView: View {
             // Status
             HStack {
                 Circle()
-                    .fill(viewModel.appState.isActive ? Color.green : Color.gray)
+                    .fill(statusColor)
                     .frame(width: 8, height: 8)
 
-                Text(viewModel.appState.isActive ? "Active" : "Inactive")
+                Text(statusText)
                     .font(.subheadline)
 
                 Spacer()
 
-                Toggle("", isOn: $viewModel.appState.isActive)
-                    .toggleStyle(.switch)
-                    .labelsHidden()
+                Toggle("", isOn: Binding(
+                    get: { viewModel.appState.isActive },
+                    set: { _ in viewModel.toggleActive() }
+                ))
+                .toggleStyle(.switch)
+                .labelsHidden()
+            }
+
+            // Permission warning
+            if !viewModel.hasPermission {
+                HStack {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.yellow)
+
+                    Text("Input Monitoring permission required")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+
+                    Spacer()
+
+                    Button("Grant") {
+                        viewModel.openPermissionSettings()
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                }
+            }
+
+            // Manual unlock button (shown when locked)
+            if viewModel.isLocked {
+                Button(action: {
+                    viewModel.manualUnlock()
+                }) {
+                    HStack {
+                        Image(systemName: "lock.open.fill")
+                        Text("Unlock Keyboard")
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.orange)
             }
 
             Spacer()
@@ -62,7 +100,29 @@ struct MenuBarContentView: View {
             }
         }
         .padding()
-        .frame(width: 280, height: 180)
+        .frame(width: 280, height: viewModel.isLocked || !viewModel.hasPermission ? 240 : 180)
+    }
+
+    // MARK: - Computed Properties
+
+    private var statusColor: Color {
+        if viewModel.isLocked {
+            return .orange
+        } else if viewModel.appState.isActive {
+            return .green
+        } else {
+            return .gray
+        }
+    }
+
+    private var statusText: String {
+        if viewModel.isLocked {
+            return "Keyboard Locked"
+        } else if viewModel.appState.isActive {
+            return "Active"
+        } else {
+            return "Inactive"
+        }
     }
 }
 
