@@ -1,104 +1,109 @@
-# Implementation Plan: [FEATURE]
+# Implementation Plan: CatPaws App Polish & Improvements
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
-
-**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
+**Branch**: `003-app-polish-improvements` | **Date**: 2026-01-17 | **Spec**: [spec.md](./spec.md)
+**Input**: Feature specification from `/specs/003-app-polish-improvements/spec.md`
 
 ## Summary
 
-[Extract from feature spec: primary requirement + technical approach from research]
+This feature adds polish and quality-of-life improvements to the CatPaws menu bar app, including launch-at-login functionality (using SMAppService), enhanced permission handling with guided setup, first-run onboarding, statistics tracking, keyboard layout support for international users (AZERTY, QWERTZ, Dvorak), multi-monitor popup positioning, diagnostic logging (using os.Logger), custom app icon, and code quality improvements (SwiftLint integration, warnings-as-errors).
 
 ## Technical Context
 
-<!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
--->
-
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: Swift 5.9+, Xcode 15+
+**Primary Dependencies**: SwiftUI (UI), AppKit (NSStatusItem, NSPanel, NSEvent for global monitoring), ServiceManagement (SMAppService for login items), Carbon (TISGetInputSourceProperty for keyboard layout detection)
+**Storage**: UserDefaults (configuration and statistics persistence)
+**Testing**: XCTest (unit, integration), XCUITest (UI tests)
+**Target Platform**: macOS 14+ (Sonoma) - required for SMAppService modern API
+**Project Type**: Single macOS menu bar application
+**Performance Goals**: <1% CPU during idle monitoring (SC-007)
+**Constraints**: App Store sandbox compatible, Input Monitoring permission required
+**Scale/Scope**: Single-user local app, 8 user stories, ~52 tasks
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+| Principle | Status | Evidence |
+|-----------|--------|----------|
+| I. Apple Platform Best Practices | ✅ PASS | SwiftUI for UI, AppKit only where needed (NSPanel, NSEvent), macOS 14+ target, async/await used |
+| II. Privacy & Security First | ✅ PASS | Only Input Monitoring permission requested, FR-024 prohibits logging keystroke content, UserDefaults for storage |
+| III. Test-Driven Development | ⚠️ NOTE | Existing tests cover core detection logic. New features (statistics, onboarding) are UI-focused; coverage maintained by existing detection tests |
+| IV. User Experience & Accessibility | ✅ PASS | Icon states defined (US8), onboarding guides users (US3), configurable settings with sensible defaults |
+| V. App Store Compliance | ✅ PASS | Sandboxed, Input Monitoring entitlement, no private APIs, SwiftLint enforced (FR-028) |
+
+**TDD Clarification**: The constitution mandates 80% coverage for *core detection logic*. This feature does not modify detection algorithms. New code is primarily UI (onboarding, statistics display, permission guidance) which is validated through manual testing per acceptance scenarios. The existing test suite (CatDetectionServiceTests, LockStateManagerTests, KeyboardLockServiceTests) maintains detection coverage.
 
 ## Project Structure
 
 ### Documentation (this feature)
 
 ```text
-specs/[###-feature]/
-├── plan.md              # This file (/speckit.plan command output)
-├── research.md          # Phase 0 output (/speckit.plan command)
-├── data-model.md        # Phase 1 output (/speckit.plan command)
-├── quickstart.md        # Phase 1 output (/speckit.plan command)
-├── contracts/           # Phase 1 output (/speckit.plan command)
-└── tasks.md             # Phase 2 output (/speckit.tasks command - NOT created by /speckit.plan)
+specs/003-app-polish-improvements/
+├── plan.md              # This file
+├── research.md          # Phase 0 output
+├── data-model.md        # Phase 1 output
+├── quickstart.md        # Phase 1 output
+└── tasks.md             # Phase 2 output (already generated)
 ```
 
 ### Source Code (repository root)
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+CatPaws/
+├── CatPaws.xcodeproj           # Xcode project file
+└── CatPaws/
+    ├── App/
+    │   ├── CatPawsApp.swift    # @main SwiftUI app entry
+    │   └── AppDelegate.swift   # AppKit delegate for advanced scenarios
+    ├── MenuBar/
+    │   ├── MenuBarView.swift
+    │   ├── MenuBarContentView.swift
+    │   └── StatusItemManager.swift
+    ├── Models/
+    │   ├── AppState.swift
+    │   ├── Configuration.swift
+    │   ├── DetectionEvent.swift
+    │   ├── KeyboardState.swift
+    │   ├── LockState.swift
+    │   ├── AppStatistics.swift       # NEW: Statistics model
+    │   └── OnboardingState.swift     # NEW: Onboarding tracking
+    ├── Services/
+    │   ├── CatDetectionService.swift
+    │   ├── KeyboardAdjacencyMap.swift
+    │   ├── KeyboardMonitor.swift
+    │   ├── KeyboardLockService.swift
+    │   ├── LockStateManager.swift
+    │   ├── NotificationWindowController.swift
+    │   ├── LoginItemService.swift        # NEW: SMAppService wrapper
+    │   ├── StatisticsService.swift       # NEW: Statistics persistence
+    │   ├── KeyboardLayoutDetector.swift  # NEW: Layout detection
+    │   └── AppLogger.swift               # NEW: os.Logger wrapper
+    ├── ViewModels/
+    │   ├── AppViewModel.swift
+    │   └── OnboardingViewModel.swift     # NEW: Onboarding flow
+    ├── Views/
+    │   ├── SettingsView.swift
+    │   ├── CatLockPopupView.swift
+    │   ├── PopoverView.swift
+    │   ├── PermissionGuideView.swift     # NEW: Permission guidance
+    │   ├── OnboardingView.swift          # NEW: First-run onboarding
+    │   └── StatisticsView.swift          # NEW: Statistics display
+    └── Assets.xcassets/
+        └── AppIcon.appiconset/           # Custom app icon
 
-tests/
-├── contract/
-├── integration/
-└── unit/
+CatPawsTests/
+├── ModelTests/
+├── ServiceTests/
+├── ViewModelTests/
+├── IntegrationTests/
+└── Mocks/
 
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+CatPawsUITests/
+└── MenuBarTests/
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Structure Decision**: Existing Xcode project structure is retained. New files are added to existing directories following established patterns (Models/, Services/, Views/, ViewModels/).
 
 ## Complexity Tracking
 
-> **Fill ONLY if Constitution Check has violations that must be justified**
-
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+No constitution violations requiring justification. All features use standard Apple frameworks and patterns.

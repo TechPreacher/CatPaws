@@ -223,6 +223,10 @@ As a user, I want CatPaws to have a distinctive, professional app icon, so that 
 
 - Q: How long should "all-time" statistics data be retained? → A: Unlimited retention (persist forever until user resets)
 
+### Session 2026-01-17
+
+- Q: How do users export logs for bug reports (US7-AC3)? → A: Via macOS Console.app using filter `subsystem:com.catpaws.app`. No custom export feature needed - this leverages the system's built-in unified logging capabilities.
+
 ## Assumptions
 
 - macOS 14+ is the minimum deployment target (enables use of SMAppService for login items)
