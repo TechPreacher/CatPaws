@@ -157,9 +157,9 @@
 
 ### Implementation for User Story 6
 
-- [ ] T046 [US6] Add activeScreen() helper method to NotificationWindowController per research.md implementation
-- [ ] T047 [US6] Update show() method in NotificationWindowController to use activeScreen() instead of NSScreen.main
-- [ ] T048 [US6] Set panel.level to .floating and panel.collectionBehavior to [.canJoinAllSpaces, .fullScreenAuxiliary] for full-screen app support
+- [X] T046 [US6] Add activeScreen() helper method to NotificationWindowController per research.md implementation
+- [X] T047 [US6] Update show() method in NotificationWindowController to use activeScreen() instead of NSScreen.main
+- [X] T048 [US6] Set panel.level to .floating and panel.collectionBehavior to [.canJoinAllSpaces, .fullScreenAuxiliary] for full-screen app support
 
 **Checkpoint**: Multi-monitor popup positioning fully functional and testable
 
