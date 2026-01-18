@@ -136,14 +136,14 @@
 
 ### Implementation for User Story 5
 
-- [ ] T038 [P] [US5] Add Layout enum (qwerty, azerty, qwertz, dvorak) to KeyboardAdjacencyMap in CatPaws/CatPaws/CatPaws/Services/KeyboardAdjacencyMap.swift
-- [ ] T039 [P] [US5] Add AZERTY key position map (azertyKeyPositions) to KeyboardAdjacencyMap per data-model.md
-- [ ] T040 [P] [US5] Add QWERTZ key position map (qwertzKeyPositions) to KeyboardAdjacencyMap per data-model.md
-- [ ] T041 [P] [US5] Add Dvorak key position map (dvorakKeyPositions) to KeyboardAdjacencyMap per data-model.md
-- [ ] T042 [US5] Create KeyboardLayoutDetector service using TISGetInputSourceProperty in CatPaws/CatPaws/CatPaws/Services/KeyboardLayoutDetector.swift per research.md
-- [ ] T043 [US5] Add layout change notification observer using DistributedNotificationCenter.default() per research.md
-- [ ] T044 [US5] Add keyPositions(for layout:) static method to KeyboardAdjacencyMap that returns correct map for layout
-- [ ] T045 [US5] Integrate KeyboardLayoutDetector with CatDetectionService to use current layout's adjacency map
+- [X] T038 [P] [US5] Add Layout enum (qwerty, azerty, qwertz, dvorak) to KeyboardAdjacencyMap in CatPaws/CatPaws/CatPaws/Services/KeyboardAdjacencyMap.swift
+- [X] T039 [P] [US5] Add AZERTY key position map (azertyKeyPositions) to KeyboardAdjacencyMap per data-model.md
+- [X] T040 [P] [US5] Add QWERTZ key position map (qwertzKeyPositions) to KeyboardAdjacencyMap per data-model.md
+- [X] T041 [P] [US5] Add Dvorak key position map (dvorakKeyPositions) to KeyboardAdjacencyMap per data-model.md
+- [X] T042 [US5] Create KeyboardLayoutDetector service using TISGetInputSourceProperty in CatPaws/CatPaws/CatPaws/Services/KeyboardLayoutDetector.swift per research.md
+- [X] T043 [US5] Add layout change notification observer using DistributedNotificationCenter.default() per research.md
+- [X] T044 [US5] Add keyPositions(for layout:) static method to KeyboardAdjacencyMap that returns correct map for layout
+- [X] T045 [US5] Integrate KeyboardLayoutDetector with CatDetectionService to use current layout's adjacency map
 
 **Checkpoint**: Keyboard layout support fully functional and testable
 
