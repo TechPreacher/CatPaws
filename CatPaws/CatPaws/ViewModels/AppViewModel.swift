@@ -187,7 +187,8 @@ final class AppViewModel: ObservableObject {
         // Run detection
         if let detection = catDetectionService.analyzePattern(pressedKeys: nonModifierKeys) {
             lockStateManager.handleDetection(detection)
-        } else if lockStateManager.state.status == .debouncing && nonModifierKeys.count < configuration.minimumKeyCount {
+        } else if lockStateManager.state.status == .debouncing &&
+                    nonModifierKeys.count < configuration.minimumKeyCount {
             // Not enough keys anymore, cancel debounce
             lockStateManager.handleKeysReleased()
         }

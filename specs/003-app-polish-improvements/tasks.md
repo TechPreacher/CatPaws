@@ -23,10 +23,10 @@
 
 **Purpose**: Project-level tooling and configuration
 
-- [ ] T001 [P] Create .swiftlint.yml configuration file at CatPaws/CatPaws/.swiftlint.yml per research.md specifications
-- [ ] T002 [P] Add SwiftLint build phase script to CatPaws target in CatPaws/CatPaws.xcodeproj
-- [ ] T003 Configure build settings to treat warnings as errors (GCC_TREAT_WARNINGS_AS_ERRORS=YES) in CatPaws/CatPaws.xcodeproj
-- [ ] T004 Remove duplicate MockNotificationPresenter.swift from CatPaws/CatPaws/CatPawsTests/ (keep Mocks/ version only)
+- [X] T001 [P] Create .swiftlint.yml configuration file at CatPaws/CatPaws/.swiftlint.yml per research.md specifications
+- [X] T002 [P] Add SwiftLint build phase script to CatPaws target in CatPaws/CatPaws.xcodeproj
+- [X] T003 Configure build settings to treat warnings as errors (GCC_TREAT_WARNINGS_AS_ERRORS=YES) in CatPaws/CatPaws.xcodeproj
+- [X] T004 Remove duplicate MockNotificationPresenter.swift from CatPaws/CatPaws/CatPawsTests/ (keep Mocks/ version only)
 
 **Checkpoint**: SwiftLint integrated, build fails on warnings, test duplicates removed
 
@@ -38,12 +38,12 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 [P] Create AppStatistics model with Codable conformance in CatPaws/CatPaws/CatPaws/Models/AppStatistics.swift per data-model.md
-- [ ] T006 [P] Create StatisticsService for UserDefaults persistence in CatPaws/CatPaws/CatPaws/Services/StatisticsService.swift
-- [ ] T007 [P] Create OnboardingState model with UserDefaults persistence in CatPaws/CatPaws/CatPaws/Models/OnboardingState.swift per data-model.md
-- [ ] T008 [P] Create OnboardingStep enum with cases: welcome, permissionExplanation, grantPermission, testDetection, complete in CatPaws/CatPaws/CatPaws/Models/OnboardingState.swift
-- [ ] T009 [P] Create AppLogger utility with os.Logger subsystem "com.catpaws.app" in CatPaws/CatPaws/CatPaws/Services/AppLogger.swift per research.md
-- [ ] T010 Fix any existing SwiftLint violations in the codebase to achieve zero-violation baseline
+- [X] T005 [P] Create AppStatistics model with Codable conformance in CatPaws/CatPaws/CatPaws/Models/AppStatistics.swift per data-model.md
+- [X] T006 [P] Create StatisticsService for UserDefaults persistence in CatPaws/CatPaws/CatPaws/Services/StatisticsService.swift
+- [X] T007 [P] Create OnboardingState model with UserDefaults persistence in CatPaws/CatPaws/CatPaws/Models/OnboardingState.swift per data-model.md
+- [X] T008 [P] Create OnboardingStep enum with cases: welcome, permissionExplanation, grantPermission, testDetection, complete in CatPaws/CatPaws/CatPaws/Models/OnboardingState.swift
+- [X] T009 [P] Create AppLogger utility with os.Logger subsystem "com.catpaws.app" in CatPaws/CatPaws/CatPaws/Services/AppLogger.swift per research.md
+- [X] T010 Fix any existing SwiftLint violations in the codebase to achieve zero-violation baseline
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 

@@ -8,7 +8,6 @@
 import XCTest
 
 final class MenuBarUITests: XCTestCase {
-
     var app: XCUIApplication!
 
     override func setUpWithError() throws {

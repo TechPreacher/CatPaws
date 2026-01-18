@@ -69,15 +69,16 @@ struct MenuBarContentView: View {
 
             // Manual unlock button (shown when locked)
             if viewModel.isLocked {
-                Button(action: {
-                    viewModel.manualUnlock()
-                }) {
-                    HStack {
-                        Image(systemName: "lock.open.fill")
-                        Text("Unlock Keyboard")
+                Button(
+                    action: { viewModel.manualUnlock() },
+                    label: {
+                        HStack {
+                            Image(systemName: "lock.open.fill")
+                            Text("Unlock Keyboard")
+                        }
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: .infinity)
-                }
+                )
                 .buttonStyle(.borderedProminent)
                 .tint(.orange)
             }

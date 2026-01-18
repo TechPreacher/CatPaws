@@ -21,7 +21,7 @@ protocol LockStateManagerDelegate: AnyObject {
 final class LockStateManager: LockStateManaging {
     // MARK: - Properties
 
-    private(set) var state: LockState = LockState()
+    private(set) var state = LockState()
 
     weak var delegate: LockStateManagerDelegate?
 

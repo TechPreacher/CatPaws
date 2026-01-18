@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1000001001 /* AppStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000001000 /* AppStatistics.swift */; };
+		E1000002001 /* OnboardingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000002000 /* OnboardingState.swift */; };
+		E1000003001 /* StatisticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000003000 /* StatisticsService.swift */; };
+		E1000004001 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000004000 /* AppLogger.swift */; };
 		2B1678F52F1A8BA0006BF13A /* CatLockPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */; };
 		2B1678FA2F1A8C1D006BF13A /* KeyboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F82F1A8C1D006BF13A /* KeyboardState.swift */; };
 		2B1678FB2F1A8C1D006BF13A /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F62F1A8C1D006BF13A /* Configuration.swift */; };
@@ -66,6 +70,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E1000001000 /* AppStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStatistics.swift; sourceTree = "<group>"; };
+		E1000002000 /* OnboardingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingState.swift; sourceTree = "<group>"; };
+		E1000003000 /* StatisticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsService.swift; sourceTree = "<group>"; };
+		E1000004000 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatLockPopupView.swift; sourceTree = "<group>"; };
 		2B1678F62F1A8C1D006BF13A /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		2B1678F72F1A8C1D006BF13A /* DetectionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionEvent.swift; sourceTree = "<group>"; };
@@ -142,7 +150,7 @@
 			children = (
 				2B1679242F1A8CBB006BF13A /* MockNotificationPresenter.swift */,
 			);
-			name = Mocks;
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		A0000000001 = {
@@ -222,10 +230,12 @@
 			isa = PBXGroup;
 			children = (
 				A1000008000 /* AppState.swift */,
+				E1000001000 /* AppStatistics.swift */,
 				2B1678F62F1A8C1D006BF13A /* Configuration.swift */,
 				2B1678F72F1A8C1D006BF13A /* DetectionEvent.swift */,
 				2B1678F82F1A8C1D006BF13A /* KeyboardState.swift */,
 				2B1678F92F1A8C1D006BF13A /* LockState.swift */,
+				E1000002000 /* OnboardingState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,6 +243,7 @@
 		A1000016000 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E1000004000 /* AppLogger.swift */,
 				2B1678FE2F1A8C5C006BF13A /* CatDetecting.swift */,
 				2B1678FF2F1A8C5C006BF13A /* CatDetectionService.swift */,
 				2B1679002F1A8C5C006BF13A /* ConfigurationProviding.swift */,
@@ -247,6 +258,7 @@
 				2B1679092F1A8C5C006BF13A /* NotificationPresenting.swift */,
 				2B16790A2F1A8C5C006BF13A /* NotificationWindowController.swift */,
 				2B16790B2F1A8C5C006BF13A /* PermissionError.swift */,
+				E1000003000 /* StatisticsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -333,6 +345,28 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D1000000001 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if command -v swiftlint >/dev/null 2>&1; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		A1000000000 /* CatPaws */ = {
 			isa = PBXNativeTarget;
@@ -341,6 +375,7 @@
 				A1000000003 /* Sources */,
 				A1000000002 /* Frameworks */,
 				A1000000004 /* Resources */,
+				D1000000001 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -489,6 +524,10 @@
 				2B1679182F1A8C5C006BF13A /* CatDetectionService.swift in Sources */,
 				2B1679192F1A8C5C006BF13A /* KeyboardAdjacencyMap.swift in Sources */,
 				2B1678F52F1A8BA0006BF13A /* CatLockPopupView.swift in Sources */,
+				E1000001001 /* AppStatistics.swift in Sources */,
+				E1000002001 /* OnboardingState.swift in Sources */,
+				E1000003001 /* StatisticsService.swift in Sources */,
+				E1000004001 /* AppLogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,6 +706,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CatPaws/Configuration/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -695,6 +735,8 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CatPaws/Configuration/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -707,6 +749,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.CatPaws;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

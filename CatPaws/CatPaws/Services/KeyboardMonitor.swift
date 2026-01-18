@@ -35,7 +35,7 @@ final class KeyboardMonitor: KeyboardMonitoring {
     // MARK: - KeyboardMonitoring
 
     func hasPermission() -> Bool {
-        return CGPreflightListenEventAccess()
+        CGPreflightListenEventAccess()
     }
 
     func requestPermission() {
@@ -142,7 +142,7 @@ final class KeyboardMonitor: KeyboardMonitoring {
     }
 
     fileprivate func shouldBlockEvent() -> Bool {
-        return lockService?.isLocked ?? false
+        lockService?.isLocked ?? false
     }
 }
 

@@ -113,7 +113,7 @@ struct KeyboardAdjacencyMap {
         0x7B: KeyPosition(x: 14, y: 4),    // Left Arrow
         0x7C: KeyPosition(x: 16, y: 4),    // Right Arrow
         0x7E: KeyPosition(x: 15, y: 3),    // Up Arrow
-        0x7D: KeyPosition(x: 15, y: 4),    // Down Arrow
+        0x7D: KeyPosition(x: 15, y: 4)     // Down Arrow
     ]
 
     // MARK: - Adjacency Threshold
@@ -128,14 +128,14 @@ struct KeyboardAdjacencyMap {
     /// - Parameter keyCode: The key code to check
     /// - Returns: true if the key is a modifier
     static func isModifierKey(_ keyCode: UInt16) -> Bool {
-        return modifierKeyCodes.contains(keyCode)
+        modifierKeyCodes.contains(keyCode)
     }
 
     /// Filter out modifier keys from a set of key codes
     /// - Parameter keyCodes: Set of key codes to filter
     /// - Returns: Set with modifier keys removed
     static func filterModifiers(from keyCodes: Set<UInt16>) -> Set<UInt16> {
-        return keyCodes.subtracting(modifierKeyCodes)
+        keyCodes.subtracting(modifierKeyCodes)
     }
 
     /// Calculate the distance between two keys

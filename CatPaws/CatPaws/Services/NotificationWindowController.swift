@@ -52,7 +52,7 @@ final class NotificationWindowController: NotificationPresenting {
         panel.contentView = hosting
 
         // Size to fit content
-        hosting.frame = panel.contentView!.bounds
+        hosting.frame = hosting.bounds
         let fittingSize = hosting.fittingSize
         panel.setContentSize(fittingSize)
 

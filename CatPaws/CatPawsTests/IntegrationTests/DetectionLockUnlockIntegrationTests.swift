@@ -11,7 +11,6 @@ import XCTest
 /// Integration tests for the full detection→lock→unlock flow
 /// These tests verify that all components work together correctly
 final class DetectionLockUnlockIntegrationTests: XCTestCase {
-
     var catDetectionService: CatDetectionService!
     var lockStateManager: LockStateManager!
     var lockService: KeyboardLockService!
@@ -65,12 +64,14 @@ final class DetectionLockUnlockIntegrationTests: XCTestCase {
         }
 
         // 3. Analyze pattern - should detect cat paw
-        let detection = catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys)
-        XCTAssertNotNil(detection, "Should detect cat paw pattern")
-        XCTAssertEqual(detection?.type, .paw)
+        let detection = try XCTUnwrap(
+            catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys),
+            "Should detect cat paw pattern"
+        )
+        XCTAssertEqual(detection.type, .paw)
 
         // 4. Handle detection
-        lockStateManager.handleDetection(detection!)
+        lockStateManager.handleDetection(detection)
 
         // 5. Verify debouncing state
         XCTAssertEqual(lockStateManager.state.status, .debouncing)
@@ -110,9 +111,10 @@ final class DetectionLockUnlockIntegrationTests: XCTestCase {
         }
 
         // 2. Detect and lock
-        let detection = catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys)
-        XCTAssertNotNil(detection)
-        lockStateManager.handleDetection(detection!)
+        let detection = try XCTUnwrap(
+            catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys)
+        )
+        lockStateManager.handleDetection(detection)
 
         // 3. Wait for debounce
         try await Task.sleep(nanoseconds: 400_000_000)
@@ -156,14 +158,16 @@ final class DetectionLockUnlockIntegrationTests: XCTestCase {
             keyboardState.keyPressed(keyCode)
         }
 
-        let detection = catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys)
+        let detection = try XCTUnwrap(
+            catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys),
+            "Should detect multi-paw pattern"
+        )
 
         // Should detect multi-paw pattern
-        XCTAssertNotNil(detection, "Should detect multi-paw pattern")
-        XCTAssertEqual(detection?.type, .multiPaw)
+        XCTAssertEqual(detection.type, .multiPaw)
 
         // Lock and verify
-        lockStateManager.handleDetection(detection!)
+        lockStateManager.handleDetection(detection)
         try await Task.sleep(nanoseconds: 400_000_000)
 
         XCTAssertEqual(lockStateManager.state.status, .locked)
@@ -186,15 +190,17 @@ final class DetectionLockUnlockIntegrationTests: XCTestCase {
             keyboardState.keyPressed(keyCode)
         }
 
-        let detection = catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys)
+        let detection = try XCTUnwrap(
+            catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys),
+            "Should detect sitting pattern"
+        )
 
         // Should detect sitting pattern
-        XCTAssertNotNil(detection, "Should detect sitting pattern")
-        XCTAssertEqual(detection?.type, .sitting)
-        XCTAssertEqual(detection?.keyCount, 12)
+        XCTAssertEqual(detection.type, .sitting)
+        XCTAssertEqual(detection.keyCount, 12)
 
         // Lock and verify
-        lockStateManager.handleDetection(detection!)
+        lockStateManager.handleDetection(detection)
         try await Task.sleep(nanoseconds: 400_000_000)
 
         XCTAssertEqual(lockStateManager.state.status, .locked)
@@ -248,9 +254,10 @@ final class DetectionLockUnlockIntegrationTests: XCTestCase {
             keyboardState.keyPressed(keyCode)
         }
 
-        let detection = catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys)
-        XCTAssertNotNil(detection)
-        lockStateManager.handleDetection(detection!)
+        let detection = try XCTUnwrap(
+            catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys)
+        )
+        lockStateManager.handleDetection(detection)
 
         // Verify debouncing
         XCTAssertEqual(lockStateManager.state.status, .debouncing)
@@ -270,7 +277,11 @@ final class DetectionLockUnlockIntegrationTests: XCTestCase {
         // Wait past debounce period to ensure lock doesn't happen
         try await Task.sleep(nanoseconds: 300_000_000)
 
-        XCTAssertEqual(lockStateManager.state.status, .monitoring, "Should remain in monitoring after debounce cancelled")
+        XCTAssertEqual(
+            lockStateManager.state.status,
+            .monitoring,
+            "Should remain in monitoring after debounce cancelled"
+        )
         XCTAssertEqual(mockNotificationPresenter.showCallCount, 0, "Notification should not be shown")
     }
 
@@ -284,8 +295,10 @@ final class DetectionLockUnlockIntegrationTests: XCTestCase {
             keyboardState.keyPressed(keyCode)
         }
 
-        let detection = catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys)
-        lockStateManager.handleDetection(detection!)
+        let detection = try XCTUnwrap(
+            catDetectionService.analyzePattern(pressedKeys: keyboardState.nonModifierKeys)
+        )
+        lockStateManager.handleDetection(detection)
 
         // Wait for lock
         try await Task.sleep(nanoseconds: 400_000_000)

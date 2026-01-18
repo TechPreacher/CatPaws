@@ -132,10 +132,8 @@ final class CatDetectionService: CatDetecting {
                 cluster.insert(current)
 
                 // Add all adjacent unvisited keys to queue
-                for otherKey in unvisited {
-                    if KeyboardAdjacencyMap.areAdjacent(current, otherKey) {
-                        queue.append(otherKey)
-                    }
+                for otherKey in unvisited where KeyboardAdjacencyMap.areAdjacent(current, otherKey) {
+                    queue.append(otherKey)
                 }
             }
 
