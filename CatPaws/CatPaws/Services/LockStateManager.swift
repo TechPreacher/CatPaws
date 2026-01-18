@@ -34,6 +34,9 @@ final class LockStateManager: LockStateManaging {
     /// Notification presenter for showing lock popup
     var notificationPresenter: NotificationPresenting?
 
+    /// Statistics service for recording block events
+    var statisticsService: StatisticsService?
+
     /// Current debounce task
     private var debounceTask: Task<Void, Never>?
 
@@ -160,6 +163,9 @@ final class LockStateManager: LockStateManaging {
         pendingDetection = nil
         lockService?.lock()
         delegate?.lockStateManagerDidLock(self)
+
+        // Record the block for statistics
+        statisticsService?.recordBlock()
 
         // Play lock sound if enabled
         if configuration?.playSoundOnLock ?? true {

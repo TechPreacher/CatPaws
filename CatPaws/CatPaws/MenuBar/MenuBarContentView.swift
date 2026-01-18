@@ -10,6 +10,7 @@ import SwiftUI
 /// Content view displayed in the menu bar extra window
 struct MenuBarContentView: View {
     @ObservedObject var viewModel: AppViewModel
+    @State private var showingStatistics = false
 
     var body: some View {
         VStack(spacing: 16) {
@@ -52,6 +53,28 @@ struct MenuBarContentView: View {
                 PermissionGuideView(onOpenSettings: {
                     viewModel.openPermissionSettings()
                 })
+            }
+
+            // Statistics summary (when permission granted and not showing detailed view)
+            if viewModel.hasPermission && !showingStatistics {
+                StatisticsSummaryView(statisticsService: viewModel.statisticsService)
+                    .onTapGesture {
+                        withAnimation {
+                            showingStatistics = true
+                        }
+                    }
+            }
+
+            // Detailed statistics view
+            if showingStatistics {
+                StatisticsView(statisticsService: viewModel.statisticsService)
+
+                Button("Hide Statistics") {
+                    withAnimation {
+                        showingStatistics = false
+                    }
+                }
+                .buttonStyle(.link)
             }
 
             // Manual unlock button (shown when locked)
@@ -118,6 +141,12 @@ struct MenuBarContentView: View {
 
         if !viewModel.hasPermission {
             height += 200  // Permission guide takes more space
+        } else {
+            height += 50  // Statistics summary
+        }
+
+        if showingStatistics {
+            height += 150  // Detailed statistics
         }
 
         if viewModel.isLocked {

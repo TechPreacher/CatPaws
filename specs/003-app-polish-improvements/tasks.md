@@ -117,12 +117,12 @@
 
 ### Implementation for User Story 4
 
-- [ ] T032 [US4] Add recordBlock() call to LockStateManager when keyboard lock is triggered in CatPaws/CatPaws/CatPaws/Services/LockStateManager.swift
-- [ ] T033 [US4] Add daily/weekly counter reset logic based on date boundaries to StatisticsService
-- [ ] T034 [P] [US4] Create StatisticsView showing today/week/all-time breakdown in CatPaws/CatPaws/CatPaws/Views/StatisticsView.swift
-- [ ] T035 [US4] Add statistics summary ("X blocks today") to MenuBarContentView in CatPaws/CatPaws/CatPaws/MenuBar/MenuBarContentView.swift
-- [ ] T036 [US4] Add tappable statistics area in MenuBarContentView that shows detailed StatisticsView
-- [ ] T037 [US4] Add "Reset Statistics" button to Settings that calls StatisticsService.resetAll()
+- [X] T032 [US4] Add recordBlock() call to LockStateManager when keyboard lock is triggered in CatPaws/CatPaws/CatPaws/Services/LockStateManager.swift
+- [X] T033 [US4] Add daily/weekly counter reset logic based on date boundaries to StatisticsService
+- [X] T034 [P] [US4] Create StatisticsView showing today/week/all-time breakdown in CatPaws/CatPaws/CatPaws/Views/StatisticsView.swift
+- [X] T035 [US4] Add statistics summary ("X blocks today") to MenuBarContentView in CatPaws/CatPaws/CatPaws/MenuBar/MenuBarContentView.swift
+- [X] T036 [US4] Add tappable statistics area in MenuBarContentView that shows detailed StatisticsView
+- [X] T037 [US4] Add "Reset Statistics" button to Settings that calls StatisticsService.resetAll()
 
 **Checkpoint**: Statistics dashboard fully functional and testable
 

@@ -35,8 +35,10 @@ struct SettingsView: View {
 /// General settings tab content
 struct GeneralSettingsView: View {
     @ObservedObject private var loginItemService = LoginItemService.shared
+    @StateObject private var statisticsService = StatisticsService()
     @State private var showingError = false
     @State private var errorMessage = ""
+    @State private var showingResetConfirmation = false
 
     private var launchAtLoginBinding: Binding<Bool> {
         Binding(
@@ -54,13 +56,42 @@ struct GeneralSettingsView: View {
 
     var body: some View {
         Form {
-            Toggle("Launch at login", isOn: launchAtLoginBinding)
+            Section("Startup") {
+                Toggle("Launch at login", isOn: launchAtLoginBinding)
+            }
+
+            Section("Statistics") {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Total blocks: \(statisticsService.statistics.totalBlocks)")
+                            .font(.subheadline)
+                        Text("Today: \(statisticsService.statistics.todayBlocks)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    Button("Reset Statistics") {
+                        showingResetConfirmation = true
+                    }
+                    .buttonStyle(.bordered)
+                }
+            }
         }
         .padding()
         .alert("Login Item Error", isPresented: $showingError) {
             Button("OK", role: .cancel) {}
         } message: {
             Text(errorMessage)
+        }
+        .alert("Reset Statistics?", isPresented: $showingResetConfirmation) {
+            Button("Cancel", role: .cancel) {}
+            Button("Reset", role: .destructive) {
+                statisticsService.resetAll()
+            }
+        } message: {
+            Text("This will reset all protection statistics to zero. This action cannot be undone.")
         }
     }
 }

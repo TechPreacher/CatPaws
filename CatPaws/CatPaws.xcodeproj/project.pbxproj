@@ -15,6 +15,7 @@
 		E1000006001 /* PermissionGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000006000 /* PermissionGuideView.swift */; };
 		E1000007001 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000007000 /* OnboardingViewModel.swift */; };
 		E1000008001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000008000 /* OnboardingView.swift */; };
+		E1000009001 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000009000 /* StatisticsView.swift */; };
 		2B1678F52F1A8BA0006BF13A /* CatLockPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */; };
 		2B1678FA2F1A8C1D006BF13A /* KeyboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F82F1A8C1D006BF13A /* KeyboardState.swift */; };
 		2B1678FB2F1A8C1D006BF13A /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F62F1A8C1D006BF13A /* Configuration.swift */; };
@@ -82,6 +83,7 @@
 		E1000006000 /* PermissionGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionGuideView.swift; sourceTree = "<group>"; };
 		E1000007000 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		E1000008000 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		E1000009000 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatLockPopupView.swift; sourceTree = "<group>"; };
 		2B1678F62F1A8C1D006BF13A /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		2B1678F72F1A8C1D006BF13A /* DetectionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionEvent.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */,
 				E1000006000 /* PermissionGuideView.swift */,
 				E1000008000 /* OnboardingView.swift */,
+				E1000009000 /* StatisticsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				E1000006001 /* PermissionGuideView.swift in Sources */,
 				E1000007001 /* OnboardingViewModel.swift in Sources */,
 				E1000008001 /* OnboardingView.swift in Sources */,
+				E1000009001 /* StatisticsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -52,6 +52,7 @@ final class AppViewModel: ObservableObject {
     let lockStateManager: LockStateManager
     let lockService: KeyboardLockService
     let notificationController: NotificationWindowController
+    let statisticsService: StatisticsService
 
     // MARK: - Private
 
@@ -72,6 +73,7 @@ final class AppViewModel: ObservableObject {
         self.lockStateManager = LockStateManager()
         self.lockService = KeyboardLockService()
         self.notificationController = NotificationWindowController()
+        self.statisticsService = StatisticsService()
 
         // Wire up services
         setupServices()
@@ -145,6 +147,7 @@ final class AppViewModel: ObservableObject {
         lockStateManager.lockService = lockService
         lockStateManager.notificationPresenter = notificationController
         lockStateManager.configuration = configuration
+        lockStateManager.statisticsService = statisticsService
         lockStateManager.delegate = self
 
         // Configure detection service
