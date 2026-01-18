@@ -47,24 +47,11 @@ struct MenuBarContentView: View {
                 .labelsHidden()
             }
 
-            // Permission warning
+            // Permission guide (shown when permission not granted)
             if !viewModel.hasPermission {
-                HStack {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundColor(.yellow)
-
-                    Text("Input Monitoring permission required")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-
-                    Spacer()
-
-                    Button("Grant") {
-                        viewModel.openPermissionSettings()
-                    }
-                    .buttonStyle(.bordered)
-                    .controlSize(.small)
-                }
+                PermissionGuideView(onOpenSettings: {
+                    viewModel.openPermissionSettings()
+                })
             }
 
             // Manual unlock button (shown when locked)
@@ -101,7 +88,7 @@ struct MenuBarContentView: View {
             }
         }
         .padding()
-        .frame(width: 280, height: viewModel.isLocked || !viewModel.hasPermission ? 240 : 180)
+        .frame(width: 280, height: calculateHeight())
     }
 
     // MARK: - Computed Properties
@@ -124,6 +111,20 @@ struct MenuBarContentView: View {
         } else {
             return "Inactive"
         }
+    }
+
+    private func calculateHeight() -> CGFloat {
+        var height: CGFloat = 180  // Base height
+
+        if !viewModel.hasPermission {
+            height += 200  // Permission guide takes more space
+        }
+
+        if viewModel.isLocked {
+            height += 50  // Unlock button
+        }
+
+        return height
     }
 }
 

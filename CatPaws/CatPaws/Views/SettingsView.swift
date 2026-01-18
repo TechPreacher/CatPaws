@@ -34,13 +34,34 @@ struct SettingsView: View {
 
 /// General settings tab content
 struct GeneralSettingsView: View {
-    @AppStorage("launchAtLogin") private var launchAtLogin = false
+    @ObservedObject private var loginItemService = LoginItemService.shared
+    @State private var showingError = false
+    @State private var errorMessage = ""
+
+    private var launchAtLoginBinding: Binding<Bool> {
+        Binding(
+            get: { loginItemService.isEnabled },
+            set: { newValue in
+                do {
+                    try loginItemService.setEnabled(newValue)
+                } catch {
+                    errorMessage = error.localizedDescription
+                    showingError = true
+                }
+            }
+        )
+    }
 
     var body: some View {
         Form {
-            Toggle("Launch at login", isOn: $launchAtLogin)
+            Toggle("Launch at login", isOn: launchAtLoginBinding)
         }
         .padding()
+        .alert("Login Item Error", isPresented: $showingError) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(errorMessage)
+        }
     }
 }
 

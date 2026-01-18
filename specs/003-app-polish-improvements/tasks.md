@@ -57,13 +57,13 @@
 
 ### Implementation for User Story 1
 
-- [ ] T011 [US1] Create LoginItemService using SMAppService.mainApp in CatPaws/CatPaws/CatPaws/Services/LoginItemService.swift per research.md
-- [ ] T012 [US1] Add isEnabled computed property to LoginItemService that wraps SMAppService.mainApp.status
-- [ ] T013 [US1] Add register() and unregister() methods to LoginItemService with error handling
-- [ ] T014 [US1] Add launchAtLogin property to Configuration.swift with UserDefaults persistence key "catpaws.launchAtLogin"
-- [ ] T015 [US1] Update GeneralSettingsView in CatPaws/CatPaws/CatPaws/Views/SettingsView.swift to bind toggle to LoginItemService
-- [ ] T016 [US1] Add single-instance check using NSRunningApplication in CatPaws/CatPaws/CatPaws/App/AppDelegate.swift per research.md
-- [ ] T017 [US1] Verify Info.plist has LSUIElement=YES for menu bar app behavior
+- [X] T011 [US1] Create LoginItemService using SMAppService.mainApp in CatPaws/CatPaws/CatPaws/Services/LoginItemService.swift per research.md
+- [X] T012 [US1] Add isEnabled computed property to LoginItemService that wraps SMAppService.mainApp.status
+- [X] T013 [US1] Add register() and unregister() methods to LoginItemService with error handling
+- [X] T014 [US1] Add launchAtLogin property to Configuration.swift with UserDefaults persistence key "catpaws.launchAtLogin"
+- [X] T015 [US1] Update GeneralSettingsView in CatPaws/CatPaws/CatPaws/Views/SettingsView.swift to bind toggle to LoginItemService
+- [X] T016 [US1] Add single-instance check using NSRunningApplication in CatPaws/CatPaws/CatPaws/App/AppDelegate.swift per research.md
+- [X] T017 [US1] Verify Info.plist has LSUIElement=YES for menu bar app behavior
 
 **Checkpoint**: Launch at Login fully functional and testable
 
@@ -77,12 +77,12 @@
 
 ### Implementation for User Story 2
 
-- [ ] T018 [P] [US2] Create PermissionGuideView with permission explanation text in CatPaws/CatPaws/CatPaws/Views/PermissionGuideView.swift
-- [ ] T019 [US2] Add "Open System Settings" button using URL "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent" per research.md
-- [ ] T020 [US2] Add hasInputMonitoringPermission() helper using AXIsProcessTrusted() to AppViewModel in CatPaws/CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T021 [US2] Add permission status polling Timer (2-second interval) to AppViewModel when permission not granted per research.md
-- [ ] T022 [US2] Integrate PermissionGuideView into MenuBarContentView in CatPaws/CatPaws/CatPaws/MenuBar/MenuBarContentView.swift to show when permission not granted
-- [ ] T023 [US2] Handle permission revocation during operation - stop monitoring and show guide in AppViewModel
+- [X] T018 [P] [US2] Create PermissionGuideView with permission explanation text in CatPaws/CatPaws/CatPaws/Views/PermissionGuideView.swift
+- [X] T019 [US2] Add "Open System Settings" button using URL "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent" per research.md
+- [X] T020 [US2] Add hasInputMonitoringPermission() helper using AXIsProcessTrusted() to AppViewModel in CatPaws/CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T021 [US2] Add permission status polling Timer (2-second interval) to AppViewModel when permission not granted per research.md
+- [X] T022 [US2] Integrate PermissionGuideView into MenuBarContentView in CatPaws/CatPaws/CatPaws/MenuBar/MenuBarContentView.swift to show when permission not granted
+- [X] T023 [US2] Handle permission revocation during operation - stop monitoring and show guide in AppViewModel
 
 **Checkpoint**: Permission guidance fully functional and testable
 
@@ -96,14 +96,14 @@
 
 ### Implementation for User Story 3
 
-- [ ] T024 [P] [US3] Create OnboardingViewModel to manage onboarding state and step navigation in CatPaws/CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
-- [ ] T025 [P] [US3] Create OnboardingView with multi-step flow (welcome, permission, test) in CatPaws/CatPaws/CatPaws/Views/OnboardingView.swift
-- [ ] T026 [US3] Add welcome step with app purpose explanation to OnboardingView
-- [ ] T027 [US3] Add permission explanation step that guides user to grant Input Monitoring permission
-- [ ] T028 [US3] Add "Test Detection" step showing users to press A+S+D+F together to verify app works
-- [ ] T029 [US3] Add skip functionality with "Skip" button on each onboarding step per FR-009
-- [ ] T030 [US3] Add onboarding window presentation logic in CatPaws/CatPaws/CatPaws/App/AppDelegate.swift - show if !hasCompletedOnboarding
-- [ ] T031 [US3] Persist onboarding completion flag using OnboardingState.complete() when user finishes
+- [X] T024 [P] [US3] Create OnboardingViewModel to manage onboarding state and step navigation in CatPaws/CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
+- [X] T025 [P] [US3] Create OnboardingView with multi-step flow (welcome, permission, test) in CatPaws/CatPaws/CatPaws/Views/OnboardingView.swift
+- [X] T026 [US3] Add welcome step with app purpose explanation to OnboardingView
+- [X] T027 [US3] Add permission explanation step that guides user to grant Input Monitoring permission
+- [X] T028 [US3] Add "Test Detection" step showing users to press A+S+D+F together to verify app works
+- [X] T029 [US3] Add skip functionality with "Skip" button on each onboarding step per FR-009
+- [X] T030 [US3] Add onboarding window presentation logic in CatPaws/CatPaws/CatPaws/App/AppDelegate.swift - show if !hasCompletedOnboarding
+- [X] T031 [US3] Persist onboarding completion flag using OnboardingState.complete() when user finishes
 
 **Checkpoint**: Onboarding fully functional and testable
 

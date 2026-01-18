@@ -11,6 +11,10 @@
 		E1000002001 /* OnboardingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000002000 /* OnboardingState.swift */; };
 		E1000003001 /* StatisticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000003000 /* StatisticsService.swift */; };
 		E1000004001 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000004000 /* AppLogger.swift */; };
+		E1000005001 /* LoginItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000005000 /* LoginItemService.swift */; };
+		E1000006001 /* PermissionGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000006000 /* PermissionGuideView.swift */; };
+		E1000007001 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000007000 /* OnboardingViewModel.swift */; };
+		E1000008001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000008000 /* OnboardingView.swift */; };
 		2B1678F52F1A8BA0006BF13A /* CatLockPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */; };
 		2B1678FA2F1A8C1D006BF13A /* KeyboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F82F1A8C1D006BF13A /* KeyboardState.swift */; };
 		2B1678FB2F1A8C1D006BF13A /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F62F1A8C1D006BF13A /* Configuration.swift */; };
@@ -74,6 +78,10 @@
 		E1000002000 /* OnboardingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingState.swift; sourceTree = "<group>"; };
 		E1000003000 /* StatisticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsService.swift; sourceTree = "<group>"; };
 		E1000004000 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
+		E1000005000 /* LoginItemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemService.swift; sourceTree = "<group>"; };
+		E1000006000 /* PermissionGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionGuideView.swift; sourceTree = "<group>"; };
+		E1000007000 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		E1000008000 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatLockPopupView.swift; sourceTree = "<group>"; };
 		2B1678F62F1A8C1D006BF13A /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		2B1678F72F1A8C1D006BF13A /* DetectionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionEvent.swift; sourceTree = "<group>"; };
@@ -214,6 +222,8 @@
 				A1000005000 /* PopoverView.swift */,
 				A1000006000 /* SettingsView.swift */,
 				2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */,
+				E1000006000 /* PermissionGuideView.swift */,
+				E1000008000 /* OnboardingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -222,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				A1000007000 /* AppViewModel.swift */,
+				E1000007000 /* OnboardingViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -245,6 +256,7 @@
 			children = (
 				E1000004000 /* AppLogger.swift */,
 				2B1678FE2F1A8C5C006BF13A /* CatDetecting.swift */,
+				E1000005000 /* LoginItemService.swift */,
 				2B1678FF2F1A8C5C006BF13A /* CatDetectionService.swift */,
 				2B1679002F1A8C5C006BF13A /* ConfigurationProviding.swift */,
 				2B1679012F1A8C5C006BF13A /* KeyboardAdjacencyMap.swift */,
@@ -528,6 +540,10 @@
 				E1000002001 /* OnboardingState.swift in Sources */,
 				E1000003001 /* StatisticsService.swift in Sources */,
 				E1000004001 /* AppLogger.swift in Sources */,
+				E1000005001 /* LoginItemService.swift in Sources */,
+				E1000006001 /* PermissionGuideView.swift in Sources */,
+				E1000007001 /* OnboardingViewModel.swift in Sources */,
+				E1000008001 /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

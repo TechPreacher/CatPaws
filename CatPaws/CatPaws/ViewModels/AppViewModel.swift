@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import ApplicationServices
 
 /// Menu bar icon state
 enum MenuBarIconState {
@@ -56,6 +57,8 @@ final class AppViewModel: ObservableObject {
 
     private var keyboardState = KeyboardState()
     private var cancellables = Set<AnyCancellable>()
+    private var permissionPollingTimer: Timer?
+    private static let permissionPollingInterval: TimeInterval = 2.0
 
     // MARK: - Initialization
 
@@ -74,9 +77,14 @@ final class AppViewModel: ObservableObject {
         setupServices()
         setupBindings()
 
-        // Check permission
-        hasPermission = keyboardMonitor.hasPermission()
+        // Check permission and start polling if needed
+        hasPermission = hasInputMonitoringPermission()
         updateIconState()
+        updatePermissionPolling()
+    }
+
+    deinit {
+        permissionPollingTimer?.invalidate()
     }
 
     // MARK: - Public Methods
@@ -98,6 +106,11 @@ final class AppViewModel: ObservableObject {
         configuration.resetToDefaults()
     }
 
+    /// Check if Input Monitoring permission is granted using AXIsProcessTrusted
+    func hasInputMonitoringPermission() -> Bool {
+        AXIsProcessTrusted()
+    }
+
     /// Request accessibility permission
     func requestPermission() {
         keyboardMonitor.requestPermission()
@@ -105,15 +118,16 @@ final class AppViewModel: ObservableObject {
         Task {
             try? await Task.sleep(nanoseconds: 1_000_000_000)
             await MainActor.run {
-                self.hasPermission = self.keyboardMonitor.hasPermission()
+                self.hasPermission = self.hasInputMonitoringPermission()
                 self.updateIconState()
+                self.updatePermissionPolling()
             }
         }
     }
 
     /// Open System Settings to grant permission
     func openPermissionSettings() {
-        keyboardMonitor.openPermissionSettings()
+        PermissionGuideView.openInputMonitoringSettings()
     }
 
     /// Manually unlock the keyboard
@@ -178,6 +192,67 @@ final class AppViewModel: ObservableObject {
         } else {
             iconState = .unlocked
         }
+    }
+
+    /// Start or stop permission polling based on current permission status
+    private func updatePermissionPolling() {
+        if hasPermission {
+            // Permission granted - stop polling
+            stopPermissionPolling()
+        } else {
+            // Permission not granted - start polling
+            startPermissionPolling()
+        }
+    }
+
+    /// Start polling for permission status changes
+    private func startPermissionPolling() {
+        guard permissionPollingTimer == nil else { return }
+
+        permissionPollingTimer = Timer.scheduledTimer(
+            withTimeInterval: Self.permissionPollingInterval,
+            repeats: true
+        ) { [weak self] _ in
+            Task { @MainActor in
+                self?.checkPermissionStatus()
+            }
+        }
+    }
+
+    /// Stop polling for permission status changes
+    private func stopPermissionPolling() {
+        permissionPollingTimer?.invalidate()
+        permissionPollingTimer = nil
+    }
+
+    /// Check current permission status and handle changes
+    private func checkPermissionStatus() {
+        let currentPermission = hasInputMonitoringPermission()
+
+        if currentPermission != hasPermission {
+            hasPermission = currentPermission
+            updateIconState()
+
+            if currentPermission {
+                // Permission was granted - stop polling
+                stopPermissionPolling()
+            } else {
+                // Permission was revoked - stop monitoring
+                handlePermissionRevoked()
+            }
+        }
+    }
+
+    /// Handle permission being revoked while the app is running
+    private func handlePermissionRevoked() {
+        // Stop monitoring if active
+        if appState.isActive {
+            stopMonitoring()
+            appState.isActive = false
+        }
+
+        // Start polling to detect when permission is re-granted
+        startPermissionPolling()
     }
 
     private func analyzeCurrentKeys() {
