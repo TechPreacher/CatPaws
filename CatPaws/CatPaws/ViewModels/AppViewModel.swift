@@ -43,6 +43,7 @@ final class AppViewModel: ObservableObject {
     @Published private(set) var iconState: MenuBarIconState = .unlocked
     @Published private(set) var hasPermission: Bool = false
     @Published private(set) var isLocked: Bool = false
+    @Published private(set) var isMonitoring: Bool = false
 
     // MARK: - Services
 
@@ -173,9 +174,11 @@ final class AppViewModel: ObservableObject {
         do {
             keyboardMonitor.delegate = self
             try keyboardMonitor.startMonitoring()
+            isMonitoring = true
             updateIconState()
         } catch {
             // Monitoring failed - likely permission issue
+            isMonitoring = false
             appState.isActive = false
         }
     }
@@ -184,6 +187,7 @@ final class AppViewModel: ObservableObject {
         keyboardMonitor.stopMonitoring()
         keyboardMonitor.delegate = nil
         keyboardState.clearAll()
+        isMonitoring = false
         updateIconState()
     }
 

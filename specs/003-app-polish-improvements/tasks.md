@@ -173,13 +173,13 @@
 
 ### Implementation for User Story 7
 
-- [ ] T049 [US7] Add debugLoggingEnabled property to Configuration.swift with UserDefaults key "catpaws.debugLogging"
-- [ ] T050 [US7] Add category-specific Loggers (detection, lock, permission) to AppLogger per research.md
-- [ ] T051 [US7] Add conditional logging to CatDetectionService - log when pattern detected (key count only, NO key content)
-- [ ] T052 [US7] Add conditional logging to LockStateManager for state transitions (lock, unlock, debounce)
-- [ ] T053 [US7] Add conditional logging to KeyboardMonitor for permission status changes
-- [ ] T054 [US7] Add "Enable Debug Logging" toggle to SettingsView bound to Configuration.debugLoggingEnabled
-- [ ] T055 [US7] Ensure no keystroke content or PII is logged per FR-024 - audit all log calls
+- [X] T049 [US7] Add debugLoggingEnabled property to Configuration.swift with UserDefaults key "catpaws.debugLogging"
+- [X] T050 [US7] Add category-specific Loggers (detection, lock, permission) to AppLogger per research.md
+- [X] T051 [US7] Add conditional logging to CatDetectionService - log when pattern detected (key count only, NO key content)
+- [X] T052 [US7] Add conditional logging to LockStateManager for state transitions (lock, unlock, debounce)
+- [X] T053 [US7] Add conditional logging to KeyboardMonitor for permission status changes
+- [X] T054 [US7] Add "Enable Debug Logging" toggle to SettingsView bound to Configuration.debugLoggingEnabled
+- [X] T055 [US7] Ensure no keystroke content or PII is logged per FR-024 - audit all log calls
 
 **Checkpoint**: Diagnostic logging fully functional and testable
 
@@ -193,9 +193,9 @@
 
 ### Implementation for User Story 8
 
-- [ ] T056 [US8] Create or obtain cat paw icon design assets (16x16 through 1024x1024) - placeholder acceptable
-- [ ] T057 [US8] Add icon assets to CatPaws/CatPaws/CatPaws/Assets.xcassets/AppIcon.appiconset/
-- [ ] T058 [US8] Update Contents.json with all required icon sizes per FR-027
+- [X] T056 [US8] Create or obtain cat paw icon design assets (16x16 through 1024x1024) - placeholder acceptable
+- [X] T057 [US8] Add icon assets to CatPaws/CatPaws/CatPaws/Assets.xcassets/AppIcon.appiconset/
+- [X] T058 [US8] Update Contents.json with all required icon sizes per FR-027
 
 **Checkpoint**: Custom app icon visible in all required locations
 
@@ -205,11 +205,11 @@
 
 **Purpose**: Final cleanup and validation
 
-- [ ] T059 Run full SwiftLint validation and fix any remaining violations to achieve SC-008
-- [ ] T060 Verify zero compiler warnings in release build to achieve SC-009
-- [ ] T061 Run all tests and ensure passing (xcodebuild test)
-- [ ] T062 Performance validation: verify CPU usage < 1% during idle monitoring per SC-007
-- [ ] T063 Execute quickstart.md validation scenarios for all 8 user stories
+- [X] T059 Run full SwiftLint validation and fix any remaining violations to achieve SC-008
+- [X] T060 Verify zero compiler warnings in release build to achieve SC-009
+- [X] T061 Run all tests and ensure passing (xcodebuild test)
+- [ ] T062 Performance validation: verify CPU usage < 1% during idle monitoring per SC-007 (manual test required)
+- [ ] T063 Execute quickstart.md validation scenarios for all 8 user stories (manual test required)
 
 ---
 

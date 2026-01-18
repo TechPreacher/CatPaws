@@ -55,7 +55,10 @@ struct PermissionGuideView: View {
 
     /// Open System Settings directly to Input Monitoring pane
     static func openInputMonitoringSettings() {
-        let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent")!
+        let urlString = "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent"
+        guard let url = URL(string: urlString) else {
+            return
+        }
         NSWorkspace.shared.open(url)
     }
 }

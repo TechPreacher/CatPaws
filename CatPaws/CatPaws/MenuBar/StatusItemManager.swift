@@ -4,6 +4,9 @@
 //
 //  Created on 2026-01-15.
 //
+//  Note: This file is kept for potential future use but is currently unused.
+//  The app uses SwiftUI's MenuBarExtra instead.
+//
 
 import AppKit
 import SwiftUI
@@ -23,7 +26,11 @@ final class StatusItemManager: NSObject, NSPopoverDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let button = statusItem?.button {
-            button.image = NSImage(systemSymbolName: "pawprint", accessibilityDescription: "CatPaws")
+            // Use custom asset from Assets.xcassets
+            if let image = NSImage(named: "MenuBarIcon") {
+                image.isTemplate = true
+                button.image = image
+            }
             button.action = #selector(togglePopover)
             button.target = self
         }

@@ -36,6 +36,7 @@ struct SettingsView: View {
 struct GeneralSettingsView: View {
     @ObservedObject private var loginItemService = LoginItemService.shared
     @StateObject private var statisticsService = StatisticsService()
+    @StateObject private var configuration = Configuration()
     @State private var showingError = false
     @State private var errorMessage = ""
     @State private var showingResetConfirmation = false
@@ -77,6 +78,13 @@ struct GeneralSettingsView: View {
                     }
                     .buttonStyle(.bordered)
                 }
+            }
+
+            Section("Advanced") {
+                Toggle("Enable debug logging", isOn: $configuration.debugLoggingEnabled)
+                Text("View logs in Console.app with filter: subsystem:com.corti.CatPaws")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
         }
         .padding()

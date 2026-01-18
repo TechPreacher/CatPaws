@@ -62,6 +62,8 @@ final class CatDetectionService: CatDetecting {
 
         // Check for sitting pattern (10+ keys)
         if nonModifierKeys.count >= sittingThreshold {
+            AppLogger.logDetection(keyCount: nonModifierKeys.count)
+            AppLogger.logDetectionType("sitting")
             return DetectionEvent(
                 type: .sitting,
                 keyCount: nonModifierKeys.count
@@ -74,6 +76,8 @@ final class CatDetectionService: CatDetecting {
         // Check for multi-paw pattern (2+ clusters each with 3+ keys)
         let significantClusters = clusters.filter { $0.count >= minimumKeyCount }
         if significantClusters.count >= 2 {
+            AppLogger.logDetection(keyCount: nonModifierKeys.count)
+            AppLogger.logDetectionType("multiPaw")
             return DetectionEvent(
                 type: .multiPaw,
                 keyCount: nonModifierKeys.count
@@ -83,6 +87,8 @@ final class CatDetectionService: CatDetecting {
         // Check for single paw pattern (one cluster with 3+ adjacent keys)
         if let largestCluster = clusters.max(by: { $0.count < $1.count }),
            largestCluster.count >= minimumKeyCount {
+            AppLogger.logDetection(keyCount: largestCluster.count)
+            AppLogger.logDetectionType("paw")
             return DetectionEvent(
                 type: .paw,
                 keyCount: largestCluster.count
