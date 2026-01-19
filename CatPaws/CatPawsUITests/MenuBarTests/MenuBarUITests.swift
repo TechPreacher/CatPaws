@@ -12,7 +12,11 @@ final class MenuBarUITests: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
+
         app = XCUIApplication()
+        // Skip onboarding so the app launches as a pure menu bar app
+        // without showing the onboarding window (which would bring it to foreground)
+        app.launchArguments = ["-catpaws.onboarding.completed", "true"]
         app.launch()
     }
 
