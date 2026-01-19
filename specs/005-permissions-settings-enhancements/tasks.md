@@ -121,7 +121,7 @@ Based on plan.md structure:
 ### Implementation for User Story 4
 
 - [ ] T035 [US4] Update `SettingsView` frame dimensions to accommodate all content in CatPaws/CatPaws/Views/SettingsView.swift
-- [ ] T036 [US4] Verify all tabs (General, Detection, About) display fully in CatPaws/CatPaws/Views/SettingsView.swift
+- [ ] T036 [US4] Adjust tab content layout (General, Detection, About) to ensure full display without clipping in CatPaws/CatPaws/Views/SettingsView.swift
 
 **Checkpoint**: All settings controls visible and functional
 
@@ -154,7 +154,7 @@ Based on plan.md structure:
 - [ ] T044 [P] Add VoiceOver accessibility labels to new permission UI elements in CatPaws/CatPaws/Views/OnboardingView.swift
 - [ ] T045 Code review: verify all UserDefaults keys use `catpaws.` prefix
 - [ ] T046 Run quickstart.md validation checklist
-- [ ] T047 Verify all acceptance scenarios from spec.md pass
+- [ ] T047 Verify all acceptance scenarios from spec.md pass (including FR-019 permission revocation banner test: revoke permission while app running, verify banner appears)
 
 ---
 

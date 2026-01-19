@@ -25,7 +25,7 @@ Add Accessibility permission step to onboarding (after permission explanation, b
 
 | Principle | Status | Evidence |
 |-----------|--------|----------|
-| I. Apple Platform Best Practices | PASS | SwiftUI for UI; AppKit for system integration; targets macOS 14+; async/await for permission polling |
+| I. Apple Platform Best Practices | PASS | SwiftUI for UI; AppKit for system integration; targets macOS 14+; Timer-based polling for permission status |
 | II. Privacy & Security First | PASS | Only permission status checked (boolean); no keystroke data; clear user explanations for both permissions |
 | III. Test-Driven Development | PASS | Unit tests planned for permission checking, view model logic, reset functionality |
 | IV. User Experience & Accessibility | PASS | Clear permission status display; tooltips for truncated text; VoiceOver support maintained |
