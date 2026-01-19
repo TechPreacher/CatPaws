@@ -35,10 +35,12 @@ final class KeyboardMonitor: KeyboardMonitoring {
     // MARK: - KeyboardMonitoring
 
     func hasPermission() -> Bool {
-        return CGPreflightListenEventAccess()
+        let hasAccess = CGPreflightListenEventAccess()
+        return hasAccess
     }
 
     func requestPermission() {
+        AppLogger.logPermissionCheck("requesting input monitoring access")
         CGRequestListenEventAccess()
     }
 
@@ -52,8 +54,11 @@ final class KeyboardMonitor: KeyboardMonitoring {
         guard !isMonitoring else { return }
 
         guard hasPermission() else {
+            AppLogger.logPermissionChange(granted: false)
             throw PermissionError.accessibilityNotGranted
         }
+
+        AppLogger.logPermissionChange(granted: true)
 
         // Event mask for keyboard events
         let eventMask: CGEventMask = (1 << CGEventType.keyDown.rawValue) |
@@ -142,7 +147,7 @@ final class KeyboardMonitor: KeyboardMonitoring {
     }
 
     fileprivate func shouldBlockEvent() -> Bool {
-        return lockService?.isLocked ?? false
+        lockService?.isLocked ?? false
     }
 }
 

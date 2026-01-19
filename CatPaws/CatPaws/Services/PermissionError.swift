@@ -18,7 +18,10 @@ enum PermissionError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .accessibilityNotGranted:
-            return "Input Monitoring permission is required. Please enable it in System Settings > Privacy & Security > Input Monitoring."
+            return """
+                Input Monitoring permission is required. \
+                Please enable it in System Settings > Privacy & Security > Input Monitoring.
+                """
         case .eventTapCreationFailed:
             return "Failed to create keyboard event monitor. Please try restarting the application."
         }

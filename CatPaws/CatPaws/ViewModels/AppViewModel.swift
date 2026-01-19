@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import ApplicationServices
 
 /// Menu bar icon state
 enum MenuBarIconState {
@@ -42,6 +43,7 @@ final class AppViewModel: ObservableObject {
     @Published private(set) var iconState: MenuBarIconState = .unlocked
     @Published private(set) var hasPermission: Bool = false
     @Published private(set) var isLocked: Bool = false
+    @Published private(set) var isMonitoring: Bool = false
 
     // MARK: - Services
 
@@ -51,11 +53,14 @@ final class AppViewModel: ObservableObject {
     let lockStateManager: LockStateManager
     let lockService: KeyboardLockService
     let notificationController: NotificationWindowController
+    let statisticsService: StatisticsService
 
     // MARK: - Private
 
     private var keyboardState = KeyboardState()
     private var cancellables = Set<AnyCancellable>()
+    private var permissionPollingTimer: Timer?
+    private static let permissionPollingInterval: TimeInterval = 2.0
 
     // MARK: - Initialization
 
@@ -69,14 +74,20 @@ final class AppViewModel: ObservableObject {
         self.lockStateManager = LockStateManager()
         self.lockService = KeyboardLockService()
         self.notificationController = NotificationWindowController()
+        self.statisticsService = StatisticsService()
 
         // Wire up services
         setupServices()
         setupBindings()
 
-        // Check permission
-        hasPermission = keyboardMonitor.hasPermission()
+        // Check permission and start polling if needed
+        hasPermission = hasInputMonitoringPermission()
         updateIconState()
+        updatePermissionPolling()
+    }
+
+    deinit {
+        permissionPollingTimer?.invalidate()
     }
 
     // MARK: - Public Methods
@@ -98,6 +109,11 @@ final class AppViewModel: ObservableObject {
         configuration.resetToDefaults()
     }
 
+    /// Check if Input Monitoring permission is granted using AXIsProcessTrusted
+    func hasInputMonitoringPermission() -> Bool {
+        AXIsProcessTrusted()
+    }
+
     /// Request accessibility permission
     func requestPermission() {
         keyboardMonitor.requestPermission()
@@ -105,15 +121,16 @@ final class AppViewModel: ObservableObject {
         Task {
             try? await Task.sleep(nanoseconds: 1_000_000_000)
             await MainActor.run {
-                self.hasPermission = self.keyboardMonitor.hasPermission()
+                self.hasPermission = self.hasInputMonitoringPermission()
                 self.updateIconState()
+                self.updatePermissionPolling()
             }
         }
     }
 
     /// Open System Settings to grant permission
     func openPermissionSettings() {
-        keyboardMonitor.openPermissionSettings()
+        PermissionGuideView.openInputMonitoringSettings()
     }
 
     /// Manually unlock the keyboard
@@ -131,6 +148,7 @@ final class AppViewModel: ObservableObject {
         lockStateManager.lockService = lockService
         lockStateManager.notificationPresenter = notificationController
         lockStateManager.configuration = configuration
+        lockStateManager.statisticsService = statisticsService
         lockStateManager.delegate = self
 
         // Configure detection service
@@ -156,9 +174,11 @@ final class AppViewModel: ObservableObject {
         do {
             keyboardMonitor.delegate = self
             try keyboardMonitor.startMonitoring()
+            isMonitoring = true
             updateIconState()
         } catch {
             // Monitoring failed - likely permission issue
+            isMonitoring = false
             appState.isActive = false
         }
     }
@@ -167,6 +187,7 @@ final class AppViewModel: ObservableObject {
         keyboardMonitor.stopMonitoring()
         keyboardMonitor.delegate = nil
         keyboardState.clearAll()
+        isMonitoring = false
         updateIconState()
     }
 
@@ -180,6 +201,67 @@ final class AppViewModel: ObservableObject {
         }
     }
 
+    /// Start or stop permission polling based on current permission status
+    private func updatePermissionPolling() {
+        if hasPermission {
+            // Permission granted - stop polling
+            stopPermissionPolling()
+        } else {
+            // Permission not granted - start polling
+            startPermissionPolling()
+        }
+    }
+
+    /// Start polling for permission status changes
+    private func startPermissionPolling() {
+        guard permissionPollingTimer == nil else { return }
+
+        permissionPollingTimer = Timer.scheduledTimer(
+            withTimeInterval: Self.permissionPollingInterval,
+            repeats: true
+        ) { [weak self] _ in
+            Task { @MainActor in
+                self?.checkPermissionStatus()
+            }
+        }
+    }
+
+    /// Stop polling for permission status changes
+    private func stopPermissionPolling() {
+        permissionPollingTimer?.invalidate()
+        permissionPollingTimer = nil
+    }
+
+    /// Check current permission status and handle changes
+    private func checkPermissionStatus() {
+        let currentPermission = hasInputMonitoringPermission()
+
+        if currentPermission != hasPermission {
+            hasPermission = currentPermission
+            updateIconState()
+
+            if currentPermission {
+                // Permission was granted - stop polling
+                stopPermissionPolling()
+            } else {
+                // Permission was revoked - stop monitoring
+                handlePermissionRevoked()
+            }
+        }
+    }
+
+    /// Handle permission being revoked while the app is running
+    private func handlePermissionRevoked() {
+        // Stop monitoring if active
+        if appState.isActive {
+            stopMonitoring()
+            appState.isActive = false
+        }
+
+        // Start polling to detect when permission is re-granted
+        startPermissionPolling()
+    }
+
     private func analyzeCurrentKeys() {
         // Filter non-modifier keys
         let nonModifierKeys = keyboardState.nonModifierKeys
@@ -187,7 +269,8 @@ final class AppViewModel: ObservableObject {
         // Run detection
         if let detection = catDetectionService.analyzePattern(pressedKeys: nonModifierKeys) {
             lockStateManager.handleDetection(detection)
-        } else if lockStateManager.state.status == .debouncing && nonModifierKeys.count < configuration.minimumKeyCount {
+        } else if lockStateManager.state.status == .debouncing &&
+                    nonModifierKeys.count < configuration.minimumKeyCount {
             // Not enough keys anymore, cancel debounce
             lockStateManager.handleKeysReleased()
         }

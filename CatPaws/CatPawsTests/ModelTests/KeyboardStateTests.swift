@@ -9,7 +9,6 @@ import XCTest
 @testable import CatPaws
 
 final class KeyboardStateTests: XCTestCase {
-
     // MARK: - Initialization Tests
 
     func testDefaultInitialization() {

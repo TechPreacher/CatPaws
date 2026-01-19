@@ -9,7 +9,6 @@ import XCTest
 @testable import CatPaws
 
 final class KeyboardLockServiceTests: XCTestCase {
-
     var sut: KeyboardLockService!
 
     override func setUp() {

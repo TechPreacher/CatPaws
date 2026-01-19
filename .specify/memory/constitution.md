@@ -1,17 +1,19 @@
 <!--
   SYNC IMPACT REPORT
   ====================
-  Version change: N/A → 1.0.0 (Initial ratification)
+  Version change: 1.0.0 → 1.0.1 (Terminology correction)
 
-  Modified principles: None (initial creation)
+  Modified principles:
+  - II. Privacy & Security First: "Accessibility API" → "Input Monitoring permission"
 
-  Added sections:
-  - Core Principles (5 principles)
-  - App Store & Platform Compliance
-  - Development Workflow
-  - Governance
+  Modified sections:
+  - "Accessibility API Requirements" → "Input Monitoring Requirements" (renamed for accuracy)
+  - Updated permission path from "Privacy & Security > Accessibility" to
+    "Privacy & Security > Input Monitoring"
 
-  Removed sections: None (initial creation)
+  Added sections: None
+
+  Removed sections: None
 
   Templates requiring updates:
   - .specify/templates/plan-template.md: ✅ Compatible (no changes needed)
@@ -21,6 +23,11 @@
   - .specify/templates/checklist-template.md: ✅ Compatible (no changes needed)
 
   Follow-up TODOs: None
+
+  Rationale: The application uses Input Monitoring permission
+  (com.apple.security.device.input-monitoring), not Accessibility API permission.
+  This correction aligns the constitution with the actual implementation and
+  macOS terminology.
 -->
 
 # CatPaws Constitution
@@ -38,12 +45,12 @@ cycles. All deprecated APIs MUST be avoided.
 
 ### II. Privacy & Security First
 
-The application MUST request only the minimum permissions required (Accessibility API
-access for keyboard monitoring). All permission requests MUST include clear, user-facing
-explanations of why they are needed. The application MUST NOT log, store, or transmit
-any keystroke data—only pattern metadata (timing, key count) for detection purposes.
-The application MUST handle permission denial gracefully with clear user guidance.
-All data storage (configuration only) MUST use secure macOS APIs (UserDefaults,
+The application MUST request only the minimum permissions required (Input Monitoring
+permission for keyboard monitoring). All permission requests MUST include clear,
+user-facing explanations of why they are needed. The application MUST NOT log, store,
+or transmit any keystroke data—only pattern metadata (timing, key count) for detection
+purposes. The application MUST handle permission denial gracefully with clear user
+guidance. All data storage (configuration only) MUST use secure macOS APIs (UserDefaults,
 Keychain where appropriate).
 
 ### III. Test-Driven Development
@@ -83,10 +90,10 @@ for App Store releases.
 - `com.apple.security.app-sandbox`: Required for App Store distribution
 - `com.apple.security.device.input-monitoring`: Required for keyboard event monitoring
 
-### Accessibility API Requirements
+### Input Monitoring Requirements
 
-The application MUST guide users through enabling Accessibility permissions in
-System Settings > Privacy & Security > Accessibility. The application MUST detect
+The application MUST guide users through enabling Input Monitoring permission in
+System Settings > Privacy & Security > Input Monitoring. The application MUST detect
 when permissions are revoked and respond appropriately. The application MUST NOT
 attempt to circumvent macOS security measures.
 
@@ -147,4 +154,4 @@ Before each App Store submission, verify:
 - Privacy and security requirements are satisfied
 - App Store guidelines are met
 
-**Version**: 1.0.0 | **Ratified**: 2026-01-15 | **Last Amended**: 2026-01-15
+**Version**: 1.0.1 | **Ratified**: 2026-01-15 | **Last Amended**: 2026-01-17

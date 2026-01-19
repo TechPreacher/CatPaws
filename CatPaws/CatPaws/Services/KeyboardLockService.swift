@@ -28,6 +28,6 @@ final class KeyboardLockService: KeyboardLocking {
     /// Check if an event should be blocked
     /// - Returns: true if events should be blocked (keyboard is locked)
     func shouldBlockEvent() -> Bool {
-        return isLocked
+        isLocked
     }
 }

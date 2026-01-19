@@ -52,18 +52,17 @@ final class NotificationWindowController: NotificationPresenting {
         panel.contentView = hosting
 
         // Size to fit content
-        hosting.frame = panel.contentView!.bounds
+        hosting.frame = hosting.bounds
         let fittingSize = hosting.fittingSize
         panel.setContentSize(fittingSize)
 
-        // Center on screen
-        if let screen = NSScreen.main {
-            let screenFrame = screen.visibleFrame
-            let panelFrame = panel.frame
-            let x = screenFrame.midX - panelFrame.width / 2
-            let y = screenFrame.midY - panelFrame.height / 2
-            panel.setFrameOrigin(NSPoint(x: x, y: y))
-        }
+        // Center on active screen (supports multi-monitor setups)
+        let screen = activeScreen()
+        let screenFrame = screen.visibleFrame
+        let panelFrame = panel.frame
+        let xPos = screenFrame.midX - panelFrame.width / 2
+        let yPos = screenFrame.midY - panelFrame.height / 2
+        panel.setFrameOrigin(NSPoint(x: xPos, y: yPos))
 
         // Show the panel
         panel.orderFrontRegardless()
@@ -83,5 +82,36 @@ final class NotificationWindowController: NotificationPresenting {
         let callback = currentDismissCallback
         hide()
         callback?()
+    }
+
+    /// Determine the active screen where the user is working
+    /// Uses the frontmost app's window location to find the correct screen
+    /// - Returns: The screen where the user is actively working
+    private func activeScreen() -> NSScreen {
+        // Try to get screen of key window first
+        if let keyWindow = NSApp.keyWindow, let screen = keyWindow.screen {
+            return screen
+        }
+
+        // Try frontmost app's main window
+        if let frontApp = NSWorkspace.shared.frontmostApplication {
+            let pid = frontApp.processIdentifier
+            let options: CGWindowListOption = [.optionOnScreenOnly, .excludeDesktopElements]
+            if let windowList = CGWindowListCopyWindowInfo(options, kCGNullWindowID) as? [[String: Any]] {
+                for window in windowList {
+                    if let ownerPID = window[kCGWindowOwnerPID as String] as? Int32,
+                       ownerPID == pid,
+                       let bounds = window[kCGWindowBounds as String] as? [String: CGFloat] {
+                        let point = CGPoint(x: bounds["X"] ?? 0, y: bounds["Y"] ?? 0)
+                        if let screen = NSScreen.screens.first(where: { $0.frame.contains(point) }) {
+                            return screen
+                        }
+                    }
+                }
+            }
+        }
+
+        // Default to main screen or first available screen
+        return NSScreen.main ?? NSScreen.screens.first ?? NSScreen()
     }
 }

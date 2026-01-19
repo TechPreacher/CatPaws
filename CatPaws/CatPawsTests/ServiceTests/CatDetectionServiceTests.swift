@@ -9,7 +9,6 @@ import XCTest
 @testable import CatPaws
 
 final class CatDetectionServiceTests: XCTestCase {
-
     var sut: CatDetectionService!
 
     override func setUp() {

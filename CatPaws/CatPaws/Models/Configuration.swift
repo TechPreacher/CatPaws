@@ -21,6 +21,8 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         static let minimumKeyCount = "catpaws.minimumKeyCount"
         static let playSoundOnLock = "catpaws.playSoundOnLock"
         static let playSoundOnUnlock = "catpaws.playSoundOnUnlock"
+        static let launchAtLogin = "catpaws.launchAtLogin"
+        static let debugLoggingEnabled = "catpaws.debugLogging"
     }
 
     // MARK: - Defaults
@@ -33,6 +35,8 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         static let minimumKeyCount = 3
         static let playSoundOnLock = true
         static let playSoundOnUnlock = true
+        static let launchAtLogin = false
+        static let debugLoggingEnabled = false
     }
 
     // MARK: - Ranges
@@ -59,7 +63,9 @@ final class Configuration: ConfigurationProviding, ObservableObject {
             Keys.cooldownSec: Defaults.cooldownSec,
             Keys.minimumKeyCount: Defaults.minimumKeyCount,
             Keys.playSoundOnLock: Defaults.playSoundOnLock,
-            Keys.playSoundOnUnlock: Defaults.playSoundOnUnlock
+            Keys.playSoundOnUnlock: Defaults.playSoundOnUnlock,
+            Keys.launchAtLogin: Defaults.launchAtLogin,
+            Keys.debugLoggingEnabled: Defaults.debugLoggingEnabled
         ])
     }
 
@@ -134,6 +140,22 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         set {
             objectWillChange.send()
             defaults.set(newValue, forKey: Keys.playSoundOnUnlock)
+        }
+    }
+
+    var launchAtLogin: Bool {
+        get { defaults.bool(forKey: Keys.launchAtLogin) }
+        set {
+            objectWillChange.send()
+            defaults.set(newValue, forKey: Keys.launchAtLogin)
+        }
+    }
+
+    var debugLoggingEnabled: Bool {
+        get { defaults.bool(forKey: Keys.debugLoggingEnabled) }
+        set {
+            objectWillChange.send()
+            defaults.set(newValue, forKey: Keys.debugLoggingEnabled)
         }
     }
 

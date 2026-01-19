@@ -9,7 +9,6 @@ import XCTest
 @testable import CatPaws
 
 final class LockStateManagerTests: XCTestCase {
-
     var sut: LockStateManager!
     var mockLockService: KeyboardLockService!
     var mockNotificationPresenter: MockNotificationPresenter!

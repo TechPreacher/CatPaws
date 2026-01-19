@@ -10,6 +10,7 @@ import SwiftUI
 /// Content view displayed in the menu bar extra window
 struct MenuBarContentView: View {
     @ObservedObject var viewModel: AppViewModel
+    @State private var showingStatistics = false
 
     var body: some View {
         VStack(spacing: 16) {
@@ -47,37 +48,47 @@ struct MenuBarContentView: View {
                 .labelsHidden()
             }
 
-            // Permission warning
+            // Permission guide (shown when permission not granted)
             if !viewModel.hasPermission {
-                HStack {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundColor(.yellow)
+                PermissionGuideView(onOpenSettings: {
+                    viewModel.openPermissionSettings()
+                })
+            }
 
-                    Text("Input Monitoring permission required")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-
-                    Spacer()
-
-                    Button("Grant") {
-                        viewModel.openPermissionSettings()
+            // Statistics summary (when permission granted and not showing detailed view)
+            if viewModel.hasPermission && !showingStatistics {
+                StatisticsSummaryView(statisticsService: viewModel.statisticsService)
+                    .onTapGesture {
+                        withAnimation {
+                            showingStatistics = true
+                        }
                     }
-                    .buttonStyle(.bordered)
-                    .controlSize(.small)
+            }
+
+            // Detailed statistics view
+            if showingStatistics {
+                StatisticsView(statisticsService: viewModel.statisticsService)
+
+                Button("Hide Statistics") {
+                    withAnimation {
+                        showingStatistics = false
+                    }
                 }
+                .buttonStyle(.link)
             }
 
             // Manual unlock button (shown when locked)
             if viewModel.isLocked {
-                Button(action: {
-                    viewModel.manualUnlock()
-                }) {
-                    HStack {
-                        Image(systemName: "lock.open.fill")
-                        Text("Unlock Keyboard")
+                Button(
+                    action: { viewModel.manualUnlock() },
+                    label: {
+                        HStack {
+                            Image(systemName: "lock.open.fill")
+                            Text("Unlock Keyboard")
+                        }
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: .infinity)
-                }
+                )
                 .buttonStyle(.borderedProminent)
                 .tint(.orange)
             }
@@ -100,7 +111,7 @@ struct MenuBarContentView: View {
             }
         }
         .padding()
-        .frame(width: 280, height: viewModel.isLocked || !viewModel.hasPermission ? 240 : 180)
+        .frame(width: 280, height: calculateHeight())
     }
 
     // MARK: - Computed Properties
@@ -123,6 +134,26 @@ struct MenuBarContentView: View {
         } else {
             return "Inactive"
         }
+    }
+
+    private func calculateHeight() -> CGFloat {
+        var height: CGFloat = 180  // Base height
+
+        if !viewModel.hasPermission {
+            height += 200  // Permission guide takes more space
+        } else {
+            height += 50  // Statistics summary
+        }
+
+        if showingStatistics {
+            height += 150  // Detailed statistics
+        }
+
+        if viewModel.isLocked {
+            height += 50  // Unlock button
+        }
+
+        return height
     }
 }
 

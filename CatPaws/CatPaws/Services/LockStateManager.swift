@@ -21,7 +21,7 @@ protocol LockStateManagerDelegate: AnyObject {
 final class LockStateManager: LockStateManaging {
     // MARK: - Properties
 
-    private(set) var state: LockState = LockState()
+    private(set) var state = LockState()
 
     weak var delegate: LockStateManagerDelegate?
 
@@ -33,6 +33,9 @@ final class LockStateManager: LockStateManaging {
 
     /// Notification presenter for showing lock popup
     var notificationPresenter: NotificationPresenting?
+
+    /// Statistics service for recording block events
+    var statisticsService: StatisticsService?
 
     /// Current debounce task
     private var debounceTask: Task<Void, Never>?
@@ -63,11 +66,14 @@ final class LockStateManager: LockStateManaging {
     // MARK: - LockStateManaging
 
     func handleDetection(_ detection: DetectionEvent) {
+        let previousStatus = String(describing: state.status)
         switch state.status {
         case .monitoring:
             // Start debouncing
             pendingDetection = detection
             state.beginDebounce(for: detection)
+            AppLogger.logStateTransition(from: previousStatus, to: String(describing: state.status))
+            AppLogger.logDebounce()
             startDebounceTimer()
 
         case .debouncing:
@@ -99,7 +105,11 @@ final class LockStateManager: LockStateManaging {
         guard state.status == .locked else { return }
 
         cancelRecheckTimer()
+        let previousStatus = String(describing: state.status)
         state.manualUnlock(cooldownDuration: cooldownSec)
+        AppLogger.logStateTransition(from: previousStatus, to: String(describing: state.status))
+        AppLogger.logUnlock(reason: "manual dismiss")
+        AppLogger.logCooldown(duration: cooldownSec)
         lockService?.unlock()
         notificationPresenter?.hide()
         delegate?.lockStateManagerDidUnlock(self)
@@ -156,10 +166,16 @@ final class LockStateManager: LockStateManaging {
             return
         }
 
+        let previousStatus = String(describing: state.status)
         state.lock(reason: detection)
+        AppLogger.logStateTransition(from: previousStatus, to: String(describing: state.status))
+        AppLogger.logLock()
         pendingDetection = nil
         lockService?.lock()
         delegate?.lockStateManagerDidLock(self)
+
+        // Record the block for statistics
+        statisticsService?.recordBlock()
 
         // Play lock sound if enabled
         if configuration?.playSoundOnLock ?? true {
@@ -202,7 +218,10 @@ final class LockStateManager: LockStateManaging {
 
     private func autoUnlock() {
         cancelRecheckTimer()
+        let previousStatus = String(describing: state.status)
         state.autoUnlock()
+        AppLogger.logStateTransition(from: previousStatus, to: String(describing: state.status))
+        AppLogger.logUnlock(reason: "keys released")
         lockService?.unlock()
         notificationPresenter?.hide()
         delegate?.lockStateManagerDidUnlock(self)
@@ -232,7 +251,9 @@ final class LockStateManager: LockStateManaging {
 
     private func endCooldown() {
         guard state.status == .cooldown else { return }
+        let previousStatus = String(describing: state.status)
         state.endCooldown()
+        AppLogger.logStateTransition(from: previousStatus, to: String(describing: state.status))
     }
 
     // MARK: - Sound Effects

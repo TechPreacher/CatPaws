@@ -10,7 +10,6 @@ import XCTest
 
 @MainActor
 final class AppViewModelTests: XCTestCase {
-
     var viewModel: AppViewModel!
 
     override func setUp() {

@@ -36,17 +36,17 @@ struct KeyboardState {
 
     /// Returns pressed keys minus modifiers
     var nonModifierKeys: Set<UInt16> {
-        return pressedKeys.subtracting(KeyboardAdjacencyMap.modifierKeyCodes)
+        pressedKeys.subtracting(KeyboardAdjacencyMap.modifierKeyCodes)
     }
 
     /// Count of non-modifier keys currently pressed
     var pressedKeyCount: Int {
-        return nonModifierKeys.count
+        nonModifierKeys.count
     }
 
     /// True if only modifier keys are pressed (or no keys at all)
     var hasModifiersOnly: Bool {
-        return nonModifierKeys.isEmpty
+        nonModifierKeys.isEmpty
     }
 
     // MARK: - Mutation Methods

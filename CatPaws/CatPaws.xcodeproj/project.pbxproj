@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1000001001 /* AppStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000001000 /* AppStatistics.swift */; };
+		E1000002001 /* OnboardingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000002000 /* OnboardingState.swift */; };
+		E1000003001 /* StatisticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000003000 /* StatisticsService.swift */; };
+		E1000004001 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000004000 /* AppLogger.swift */; };
+		E1000005001 /* LoginItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000005000 /* LoginItemService.swift */; };
+		E1000006001 /* PermissionGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000006000 /* PermissionGuideView.swift */; };
+		E1000007001 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000007000 /* OnboardingViewModel.swift */; };
+		E1000008001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000008000 /* OnboardingView.swift */; };
+		E1000009001 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000009000 /* StatisticsView.swift */; };
+		E100000A001 /* KeyboardLayoutDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100000A000 /* KeyboardLayoutDetector.swift */; };
 		2B1678F52F1A8BA0006BF13A /* CatLockPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */; };
 		2B1678FA2F1A8C1D006BF13A /* KeyboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F82F1A8C1D006BF13A /* KeyboardState.swift */; };
 		2B1678FB2F1A8C1D006BF13A /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F62F1A8C1D006BF13A /* Configuration.swift */; };
@@ -46,6 +56,9 @@
 		B1000001001 /* AppViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000001000 /* AppViewModelTests.swift */; };
 		B1000002001 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000002000 /* AppStateTests.swift */; };
 		C1000001001 /* MenuBarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000001000 /* MenuBarUITests.swift */; };
+		F1000001001 /* OnboardingStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001000 /* OnboardingStateTests.swift */; };
+		F1000002001 /* OnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000002000 /* OnboardingViewModelTests.swift */; };
+		F1000003001 /* OnboardingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000003000 /* OnboardingUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +79,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E1000001000 /* AppStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStatistics.swift; sourceTree = "<group>"; };
+		E1000002000 /* OnboardingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingState.swift; sourceTree = "<group>"; };
+		E1000003000 /* StatisticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsService.swift; sourceTree = "<group>"; };
+		E1000004000 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
+		E1000005000 /* LoginItemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemService.swift; sourceTree = "<group>"; };
+		E1000006000 /* PermissionGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionGuideView.swift; sourceTree = "<group>"; };
+		E1000007000 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		E1000008000 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		E1000009000 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
+		E100000A000 /* KeyboardLayoutDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutDetector.swift; sourceTree = "<group>"; };
 		2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatLockPopupView.swift; sourceTree = "<group>"; };
 		2B1678F62F1A8C1D006BF13A /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		2B1678F72F1A8C1D006BF13A /* DetectionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionEvent.swift; sourceTree = "<group>"; };
@@ -110,6 +133,9 @@
 		B1000002000 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 		C1000000001 /* CatPawsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatPawsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1000001000 /* MenuBarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarUITests.swift; sourceTree = "<group>"; };
+		F1000001000 /* OnboardingStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStateTests.swift; sourceTree = "<group>"; };
+		F1000002000 /* OnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModelTests.swift; sourceTree = "<group>"; };
+		F1000003000 /* OnboardingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,7 +168,7 @@
 			children = (
 				2B1679242F1A8CBB006BF13A /* MockNotificationPresenter.swift */,
 			);
-			name = Mocks;
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		A0000000001 = {
@@ -206,6 +232,9 @@
 				A1000005000 /* PopoverView.swift */,
 				A1000006000 /* SettingsView.swift */,
 				2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */,
+				E1000006000 /* PermissionGuideView.swift */,
+				E1000008000 /* OnboardingView.swift */,
+				E1000009000 /* StatisticsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -214,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				A1000007000 /* AppViewModel.swift */,
+				E1000007000 /* OnboardingViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -222,10 +252,12 @@
 			isa = PBXGroup;
 			children = (
 				A1000008000 /* AppState.swift */,
+				E1000001000 /* AppStatistics.swift */,
 				2B1678F62F1A8C1D006BF13A /* Configuration.swift */,
 				2B1678F72F1A8C1D006BF13A /* DetectionEvent.swift */,
 				2B1678F82F1A8C1D006BF13A /* KeyboardState.swift */,
 				2B1678F92F1A8C1D006BF13A /* LockState.swift */,
+				E1000002000 /* OnboardingState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,10 +265,13 @@
 		A1000016000 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E1000004000 /* AppLogger.swift */,
 				2B1678FE2F1A8C5C006BF13A /* CatDetecting.swift */,
+				E1000005000 /* LoginItemService.swift */,
 				2B1678FF2F1A8C5C006BF13A /* CatDetectionService.swift */,
 				2B1679002F1A8C5C006BF13A /* ConfigurationProviding.swift */,
 				2B1679012F1A8C5C006BF13A /* KeyboardAdjacencyMap.swift */,
+				E100000A000 /* KeyboardLayoutDetector.swift */,
 				2B1679022F1A8C5C006BF13A /* KeyboardLocking.swift */,
 				2B1679032F1A8C5C006BF13A /* KeyboardLockService.swift */,
 				2B1679042F1A8C5C006BF13A /* KeyboardMonitor.swift */,
@@ -247,6 +282,7 @@
 				2B1679092F1A8C5C006BF13A /* NotificationPresenting.swift */,
 				2B16790A2F1A8C5C006BF13A /* NotificationWindowController.swift */,
 				2B16790B2F1A8C5C006BF13A /* PermissionError.swift */,
+				E1000003000 /* StatisticsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -291,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				B1000001000 /* AppViewModelTests.swift */,
+				F1000002000 /* OnboardingViewModelTests.swift */,
 			);
 			path = ViewModelTests;
 			sourceTree = "<group>";
@@ -301,6 +338,7 @@
 				2B16791A2F1A8C7E006BF13A /* KeyboardStateTests.swift */,
 				2B16791B2F1A8C7E006BF13A /* LockStateTests.swift */,
 				B1000002000 /* AppStateTests.swift */,
+				F1000001000 /* OnboardingStateTests.swift */,
 			);
 			path = ModelTests;
 			sourceTree = "<group>";
@@ -319,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				C1000011000 /* MenuBarTests */,
+				F1000010000 /* OnboardingTests */,
 			);
 			path = CatPawsUITests;
 			sourceTree = "<group>";
@@ -331,7 +370,37 @@
 			path = MenuBarTests;
 			sourceTree = "<group>";
 		};
+		F1000010000 /* OnboardingTests */ = {
+			isa = PBXGroup;
+			children = (
+				F1000003000 /* OnboardingUITests.swift */,
+			);
+			path = OnboardingTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D1000000001 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if command -v swiftlint >/dev/null 2>&1; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		A1000000000 /* CatPaws */ = {
@@ -341,6 +410,7 @@
 				A1000000003 /* Sources */,
 				A1000000002 /* Frameworks */,
 				A1000000004 /* Resources */,
+				D1000000001 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -489,6 +559,16 @@
 				2B1679182F1A8C5C006BF13A /* CatDetectionService.swift in Sources */,
 				2B1679192F1A8C5C006BF13A /* KeyboardAdjacencyMap.swift in Sources */,
 				2B1678F52F1A8BA0006BF13A /* CatLockPopupView.swift in Sources */,
+				E1000001001 /* AppStatistics.swift in Sources */,
+				E1000002001 /* OnboardingState.swift in Sources */,
+				E1000003001 /* StatisticsService.swift in Sources */,
+				E1000004001 /* AppLogger.swift in Sources */,
+				E1000005001 /* LoginItemService.swift in Sources */,
+				E1000006001 /* PermissionGuideView.swift in Sources */,
+				E1000007001 /* OnboardingViewModel.swift in Sources */,
+				E1000008001 /* OnboardingView.swift in Sources */,
+				E1000009001 /* StatisticsView.swift in Sources */,
+				E100000A001 /* KeyboardLayoutDetector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,6 +584,8 @@
 				2B1679252F1A8CBB006BF13A /* MockNotificationPresenter.swift in Sources */,
 				2B16791C2F1A8C7E006BF13A /* KeyboardStateTests.swift in Sources */,
 				2B16791D2F1A8C7E006BF13A /* LockStateTests.swift in Sources */,
+				F1000001001 /* OnboardingStateTests.swift in Sources */,
+				F1000002001 /* OnboardingViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +594,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1000001001 /* MenuBarUITests.swift in Sources */,
+				F1000003001 /* OnboardingUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,6 +750,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CatPaws/Configuration/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -676,7 +760,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.CatPaws;
+				PRODUCT_BUNDLE_IDENTIFIER = com.corti.CatPaws;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -695,6 +779,8 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CatPaws/Configuration/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -704,9 +790,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.CatPaws;
+				PRODUCT_BUNDLE_IDENTIFIER = com.corti.CatPaws;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -721,7 +808,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.CatPawsTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.corti.CatPawsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -739,7 +826,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.CatPawsTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.corti.CatPawsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -756,7 +843,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.CatPawsUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.corti.CatPawsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -773,7 +860,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.CatPawsUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.corti.CatPawsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;

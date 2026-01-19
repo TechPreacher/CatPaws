@@ -9,7 +9,6 @@ import XCTest
 @testable import CatPaws
 
 final class AppStateTests: XCTestCase {
-
     func testDefaultInitialization() {
         let state = AppState()
         XCTAssertFalse(state.isActive)

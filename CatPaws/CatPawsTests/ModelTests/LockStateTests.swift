@@ -9,7 +9,6 @@ import XCTest
 @testable import CatPaws
 
 final class LockStateTests: XCTestCase {
-
     // MARK: - T030: Initial State Tests
 
     func testDefaultInitialization() {
