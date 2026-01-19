@@ -10,6 +10,11 @@
 ### Session 2026-01-19
 
 - Q: Can users proceed past a permission step without granting it? → A: Yes, users can click "Continue Anyway" to proceed without granting each permission (non-blocking), matching existing Input Monitoring behavior.
+- Q: Where in the onboarding flow should the Accessibility permission step be inserted? → A: After the "Permission Explanation" step, before Input Monitoring (Option B).
+- Q: What behavior should occur when Reset is triggered during onboarding? → A: Disable/hide the Reset option entirely while onboarding is in progress (Option A).
+- Q: How frequently should the app poll for Accessibility permission status changes? → A: Poll every 1 second (balanced responsiveness, Option B).
+- Q: How should the menu bar dropdown handle text that exceeds the available width? → A: Truncate with ellipsis (...) and show full text on hover/tooltip (Option B).
+- Q: How should the app respond when a previously-granted permission is revoked while running? → A: Show a non-modal notification banner with "Open Settings" button (Option B).
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -98,19 +103,19 @@ As a user, I want to reset all app settings to defaults from within the app so t
 
 ### Edge Cases
 
-- What happens when user grants Accessibility but revokes it before completing onboarding?
-- What happens when user has Input Monitoring but not Accessibility after a system update?
-- How does the app handle permission being revoked while the app is running?
-- What happens if user clicks "Reset All Settings" while onboarding is in progress?
-- How does the dropdown handle extremely long system-generated text or localized strings?
+- ~~What happens when user grants Accessibility but revokes it before completing onboarding?~~ → Resolved: Non-modal notification shown; permission guide updates to reflect missing permission.
+- ~~What happens when user has Input Monitoring but not Accessibility after a system update?~~ → Resolved: Permission guide shows individual status; user guided to grant missing permission.
+- ~~How does the app handle permission being revoked while the app is running?~~ → Resolved: Non-modal notification banner with "Open Settings" button.
+- ~~What happens if user clicks "Reset All Settings" while onboarding is in progress?~~ → Resolved: Reset option is disabled/hidden during onboarding.
+- ~~How does the dropdown handle extremely long system-generated text or localized strings?~~ → Resolved: Truncate with ellipsis, show full text on hover/tooltip.
 
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
 
 **Onboarding Permissions Flow**:
-- **FR-001**: System MUST include an Accessibility permission step in the onboarding flow before the Input Monitoring step
-- **FR-002**: System MUST detect Accessibility permission status without requiring an app restart
+- **FR-001**: System MUST include an Accessibility permission step in the onboarding flow, positioned after the Permission Explanation step and before the Input Monitoring step
+- **FR-002**: System MUST detect Accessibility permission status without requiring an app restart, using a 1-second polling interval
 - **FR-003**: System MUST provide a button to open System Settings directly to the Accessibility pane
 - **FR-004**: System MUST update the permission status display when Accessibility permission is granted (no restart needed)
 - **FR-005**: System MUST maintain the existing Input Monitoring permission step after the Accessibility step
@@ -121,16 +126,19 @@ As a user, I want to reset all app settings to defaults from within the app so t
 - **FR-008**: System MUST provide "Open System Settings" buttons for each missing permission that opens the correct settings pane
 - **FR-009**: System MUST show the permission guide view when either or both permissions are missing
 - **FR-010**: System MUST hide the permission guide view when both permissions are granted
+- **FR-019**: System MUST display a non-modal notification banner with "Open Settings" button when a previously-granted permission is revoked while the app is running
 
 **UI Size Fixes**:
 - **FR-011**: System MUST size the menu bar dropdown to accommodate all permission status content without text cropping
 - **FR-012**: System MUST size the Settings window to display all settings controls without requiring scrolling or cropping
+- **FR-018**: System MUST truncate text that exceeds available width with ellipsis (...) and display full text on hover via tooltip
 
 **Reset Settings**:
 - **FR-013**: System MUST provide a "Reset All Settings" option in the Settings window
 - **FR-014**: System MUST show a confirmation dialog before resetting settings
 - **FR-015**: System MUST clear all stored preferences when reset is confirmed (equivalent to clearing app defaults)
 - **FR-016**: System MUST clear the onboarding completed state when reset is performed
+- **FR-017**: System MUST disable or hide the "Reset All Settings" option while onboarding is in progress
 
 ### Key Entities
 
