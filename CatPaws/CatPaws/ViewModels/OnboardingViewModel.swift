@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ApplicationServices
 import Combine
 import CoreGraphics
 
@@ -33,7 +32,25 @@ final class OnboardingViewModel: ObservableObject {
     // MARK: - Initialization
 
     init() {
-        hasPermission = AXIsProcessTrusted()
+        hasPermission = CGPreflightListenEventAccess()
+
+        // Restore persisted step
+        let restoredStep = onboardingState.currentStep
+
+        // If permission is already granted and we were on the grant permission step,
+        // skip ahead to test detection (user granted permission and restarted)
+        if hasPermission && restoredStep == .grantPermission {
+            currentStep = .testDetection
+            onboardingState.currentStep = .testDetection
+        } else {
+            currentStep = restoredStep
+        }
+
+        // Start permission polling if on grant permission step without permission
+        if currentStep == .grantPermission && !hasPermission {
+            requestInputMonitoringPermission()
+            startPermissionPolling()
+        }
     }
 
     deinit {
@@ -55,6 +72,7 @@ final class OnboardingViewModel: ObservableObject {
         }
 
         currentStep = next
+        onboardingState.currentStep = next
 
         // Start permission polling when entering grant permission step
         if currentStep == .grantPermission && !hasPermission {
@@ -73,6 +91,7 @@ final class OnboardingViewModel: ObservableObject {
         }
 
         currentStep = previous
+        onboardingState.currentStep = previous
     }
 
     /// Skip the onboarding entirely
@@ -99,7 +118,7 @@ final class OnboardingViewModel: ObservableObject {
 
     /// Check if Input Monitoring permission is granted
     func checkPermission() -> Bool {
-        hasPermission = AXIsProcessTrusted()
+        hasPermission = CGPreflightListenEventAccess()
         return hasPermission
     }
 
@@ -142,7 +161,7 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     private func pollPermissionStatus() {
-        let newStatus = AXIsProcessTrusted()
+        let newStatus = CGPreflightListenEventAccess()
         if newStatus != hasPermission {
             hasPermission = newStatus
         }

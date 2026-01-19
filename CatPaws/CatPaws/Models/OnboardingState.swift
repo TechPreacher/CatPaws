@@ -37,6 +37,7 @@ struct OnboardingState {
 
     private static let completedKey = "catpaws.onboarding.completed"
     private static let skippedKey = "catpaws.onboarding.skipped"
+    private static let currentStepKey = "catpaws.onboarding.currentStep"
 
     // MARK: - Persisted Properties
 
@@ -52,10 +53,16 @@ struct OnboardingState {
         set { UserDefaults.standard.set(newValue, forKey: Self.skippedKey) }
     }
 
-    // MARK: - In-Memory State
-
-    /// Current step in the onboarding flow (not persisted)
-    var currentStep: OnboardingStep = .welcome
+    /// Current step in the onboarding flow (persisted to resume after restart)
+    var currentStep: OnboardingStep {
+        get {
+            let rawValue = UserDefaults.standard.integer(forKey: Self.currentStepKey)
+            return OnboardingStep(rawValue: rawValue) ?? .welcome
+        }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: Self.currentStepKey)
+        }
+    }
 
     // MARK: - State Transitions
 
@@ -94,5 +101,6 @@ struct OnboardingState {
     static func resetForTesting() {
         UserDefaults.standard.removeObject(forKey: completedKey)
         UserDefaults.standard.removeObject(forKey: skippedKey)
+        UserDefaults.standard.removeObject(forKey: currentStepKey)
     }
 }
