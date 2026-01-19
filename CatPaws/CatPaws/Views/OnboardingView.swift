@@ -28,7 +28,7 @@ struct OnboardingView: View {
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)
         }
-        .frame(width: 480, height: 400)
+        .frame(width: 480, height: 500)
         .background(Color(NSColor.windowBackgroundColor))
     }
 
@@ -304,20 +304,22 @@ private struct TestDetectionStepView: View {
                     .font(.title)
                     .fontWeight(.bold)
 
-                Text("Let's make sure CatPaws is working correctly. Press these four keys together:")
+                Text("Let's make sure CatPaws is working correctly. Press these three keys together:")
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
 
-                HStack(spacing: 12) {
-                    KeyCapView(letter: "A")
-                    KeyCapView(letter: "S")
-                    KeyCapView(letter: "D")
-                    KeyCapView(letter: "F")
+                VStack(spacing: 8) {
+                    KeyCapView(letter: "E")
+                    HStack(spacing: 8) {
+                        KeyCapView(letter: "S")
+                        KeyCapView(letter: "D")
+                    }
                 }
                 .padding(.vertical, 8)
 
-                Text("Press and hold all four keys at the same time")
+                Text("Press and hold all three keys at the same time")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
