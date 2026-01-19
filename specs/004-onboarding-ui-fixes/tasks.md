@@ -66,8 +66,8 @@
 
 ### Implementation for User Story 2
 
-- [ ] T007 [US2] Verify event tap is created on app launch to trigger Input Monitoring registration in CatPaws/CatPaws/Services/KeyboardMonitorService.swift
-- [ ] T008 [US2] If needed, add early event tap creation attempt during app initialization in CatPaws/CatPaws/App/AppDelegate.swift or CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T007 [US2] Verify event tap is created on app launch to trigger Input Monitoring registration in CatPaws/CatPaws/Services/KeyboardMonitorService.swift
+- [X] T008 [US2] If needed, add early event tap creation attempt during app initialization in CatPaws/CatPaws/App/AppDelegate.swift or CatPaws/CatPaws/ViewModels/AppViewModel.swift
 
 **Checkpoint**: At this point, User Story 2 should be functional - CatPaws appears in Input Monitoring list.
 
@@ -81,9 +81,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T009 [US3] Add "Quit CatPaws" button below "Open System Settings" button in CatPaws/CatPaws/Views/PermissionGuideView.swift (after line 51)
-- [ ] T010 [US3] Style the Quit button consistently with existing link-style buttons using .buttonStyle(.link)
-- [ ] T011 [US3] Implement quit action using NSApplication.shared.terminate(nil) in the button action
+- [X] T009 [US3] Add "Quit CatPaws" button below "Open System Settings" button in CatPaws/CatPaws/Views/PermissionGuideView.swift (after line 51)
+- [X] T010 [US3] Style the Quit button consistently with existing link-style buttons using .buttonStyle(.link)
+- [X] T011 [US3] Implement quit action using NSApplication.shared.terminate(nil) in the button action
 
 **Checkpoint**: At this point, User Story 3 should be functional - users can quit from permission-required state.
 
@@ -93,9 +93,9 @@
 
 **Purpose**: Final verification and cleanup
 
-- [ ] T012 Run full UI test suite to verify all onboarding tests pass: xcodebuild test -scheme CatPaws -destination 'platform=macOS'
+- [X] T012 Run full UI test suite to verify all onboarding tests pass: xcodebuild test -scheme CatPaws -destination 'platform=macOS'
 - [ ] T013 Manual verification: Reset defaults and test complete onboarding flow with fresh state
-- [ ] T014 Verify SwiftLint passes with zero violations
+- [X] T014 Verify SwiftLint passes with zero violations
 
 ---
 

@@ -8,6 +8,7 @@
 import Foundation
 import ApplicationServices
 import Combine
+import CoreGraphics
 
 /// View model for managing the first-run onboarding flow
 @MainActor
@@ -57,6 +58,8 @@ final class OnboardingViewModel: ObservableObject {
 
         // Start permission polling when entering grant permission step
         if currentStep == .grantPermission && !hasPermission {
+            // Request permission to ensure CatPaws appears in Input Monitoring list
+            requestInputMonitoringPermission()
             startPermissionPolling()
         }
     }
@@ -83,7 +86,15 @@ final class OnboardingViewModel: ObservableObject {
 
     /// Open System Settings to grant Input Monitoring permission
     func openPermissionSettings() {
+        // Request permission to ensure CatPaws appears in Input Monitoring list
+        requestInputMonitoringPermission()
         PermissionGuideView.openInputMonitoringSettings()
+    }
+
+    /// Request Input Monitoring permission to register app in system preferences
+    /// This triggers the app to appear in the Input Monitoring list
+    func requestInputMonitoringPermission() {
+        CGRequestListenEventAccess()
     }
 
     /// Check if Input Monitoring permission is granted
