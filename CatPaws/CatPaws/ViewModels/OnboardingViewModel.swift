@@ -29,6 +29,19 @@ final class OnboardingViewModel: ObservableObject {
     private var permissionPollingTimer: Timer?
     private static let permissionPollingInterval: TimeInterval = 1.0
 
+    // MARK: - Test Detection
+
+    /// Key codes for S, E, D test pattern
+    private static let testKeyS: UInt16 = 1   // S key
+    private static let testKeyE: UInt16 = 14  // E key
+    private static let testKeyD: UInt16 = 2   // D key
+
+    /// Currently pressed keys during test
+    private var pressedKeys: Set<UInt16> = []
+
+    /// Reference to keyboard monitor for test detection
+    private let keyboardMonitor = KeyboardMonitor.shared
+
     // MARK: - Initialization
 
     init() {
@@ -51,10 +64,18 @@ final class OnboardingViewModel: ObservableObject {
             requestInputMonitoringPermission()
             startPermissionPolling()
         }
+
+        // Start keyboard monitoring if on test detection step
+        if currentStep == .testDetection && hasPermission {
+            startTestMonitoring()
+        }
     }
 
     deinit {
         permissionPollingTimer?.invalidate()
+        // Stop monitoring directly since we can't call MainActor methods from deinit
+        keyboardMonitor.stopMonitoring()
+        keyboardMonitor.delegate = nil
     }
 
     // MARK: - Navigation
@@ -66,19 +87,23 @@ final class OnboardingViewModel: ObservableObject {
             return
         }
 
-        // Handle step-specific logic
+        // Handle leaving current step
         if currentStep == .grantPermission {
             stopPermissionPolling()
+        } else if currentStep == .testDetection {
+            stopTestMonitoring()
         }
 
         currentStep = next
         onboardingState.currentStep = next
 
-        // Start permission polling when entering grant permission step
+        // Handle entering new step
         if currentStep == .grantPermission && !hasPermission {
             // Request permission to ensure CatPaws appears in Input Monitoring list
             requestInputMonitoringPermission()
             startPermissionPolling()
+        } else if currentStep == .testDetection && hasPermission {
+            startTestMonitoring()
         }
     }
 
@@ -86,17 +111,27 @@ final class OnboardingViewModel: ObservableObject {
     func previousStep() {
         guard let previous = currentStep.previous else { return }
 
+        // Handle leaving current step
         if currentStep == .grantPermission {
             stopPermissionPolling()
+        } else if currentStep == .testDetection {
+            stopTestMonitoring()
         }
 
         currentStep = previous
         onboardingState.currentStep = previous
+
+        // Handle entering previous step
+        if currentStep == .grantPermission && !hasPermission {
+            requestInputMonitoringPermission()
+            startPermissionPolling()
+        }
     }
 
     /// Skip the onboarding entirely
     func skip() {
         stopPermissionPolling()
+        stopTestMonitoring()
         onboardingState.skip()
         onComplete?()
     }
@@ -138,6 +173,7 @@ final class OnboardingViewModel: ObservableObject {
 
     private func completeOnboarding() {
         stopPermissionPolling()
+        stopTestMonitoring()
         onboardingState.complete()
         onComplete?()
     }
@@ -165,5 +201,56 @@ final class OnboardingViewModel: ObservableObject {
         if newStatus != hasPermission {
             hasPermission = newStatus
         }
+    }
+
+    // MARK: - Test Monitoring
+
+    private func startTestMonitoring() {
+        pressedKeys.removeAll()
+        keyboardMonitor.delegate = self
+        do {
+            try keyboardMonitor.startMonitoring()
+        } catch {
+            // If monitoring fails, user can still skip the test
+        }
+    }
+
+    private func stopTestMonitoring() {
+        keyboardMonitor.stopMonitoring()
+        keyboardMonitor.delegate = nil
+        pressedKeys.removeAll()
+    }
+
+    private func checkForTestPattern() {
+        // Check if S, E, D are all pressed
+        let hasS = pressedKeys.contains(Self.testKeyS)
+        let hasE = pressedKeys.contains(Self.testKeyE)
+        let hasD = pressedKeys.contains(Self.testKeyD)
+
+        if hasS && hasE && hasD {
+            detectionTriggered = true
+            stopTestMonitoring()
+        }
+    }
+}
+
+// MARK: - KeyboardMonitorDelegate
+
+extension OnboardingViewModel: KeyboardMonitorDelegate {
+    nonisolated func keyDidPress(_ keyCode: UInt16, at timestamp: Date) {
+        Task { @MainActor in
+            pressedKeys.insert(keyCode)
+            checkForTestPattern()
+        }
+    }
+
+    nonisolated func keyDidRelease(_ keyCode: UInt16, at timestamp: Date) {
+        Task { @MainActor in
+            pressedKeys.remove(keyCode)
+        }
+    }
+
+    nonisolated func modifiersDidChange(_ modifiers: Set<UInt16>, at timestamp: Date) {
+        // Not needed for test detection
     }
 }
