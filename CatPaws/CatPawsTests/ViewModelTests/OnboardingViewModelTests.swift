@@ -10,7 +10,6 @@ import XCTest
 
 @MainActor
 final class OnboardingViewModelTests: XCTestCase {
-
     override func setUp() {
         super.setUp()
         // Reset onboarding state before each test

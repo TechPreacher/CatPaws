@@ -9,7 +9,6 @@ import XCTest
 @testable import CatPaws
 
 final class OnboardingStateTests: XCTestCase {
-
     override func setUp() {
         super.setUp()
         // Reset onboarding state before each test

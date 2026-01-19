@@ -49,6 +49,12 @@ struct PermissionGuideView: View {
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
+
+            // Quit button
+            Button("Quit CatPaws") {
+                NSApplication.shared.terminate(nil)
+            }
+            .buttonStyle(.link)
         }
         .padding()
     }

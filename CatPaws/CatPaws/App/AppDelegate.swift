@@ -11,6 +11,7 @@ import SwiftUI
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var onboardingWindow: NSWindow?
     private var onboardingViewModel: OnboardingViewModel?
+    private var isTerminating = false
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Check for duplicate instances and quit if another is already running
@@ -19,12 +20,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
 
+        // Ensure the app is properly activated (important when relaunched by System Settings)
+        NSApp.activate(ignoringOtherApps: true)
+
         // Show onboarding if not completed
         showOnboardingIfNeeded()
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        // Cleanup if needed
+        isTerminating = true
     }
 
     // MARK: - Single Instance Check
@@ -36,8 +40,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             return true
         }
         let runningApps = NSRunningApplication.runningApplications(withBundleIdentifier: bundleId)
-        // Allow only 1 instance (this one)
-        return runningApps.count <= 1
+
+        // Filter to only count apps that are not terminating and not this instance
+        let activeInstances = runningApps.filter { app in
+            !app.isTerminated && app.processIdentifier != ProcessInfo.processInfo.processIdentifier
+        }
+
+        // Allow if no other active instances
+        return activeInstances.isEmpty
     }
 
     // MARK: - Onboarding
@@ -67,7 +77,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Create and configure window
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 480, height: 400),
+            contentRect: NSRect(x: 0, y: 0, width: 480, height: 500),
             styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false
@@ -101,7 +111,8 @@ extension AppDelegate: NSWindowDelegate {
               window === onboardingWindow else { return }
 
         // If window is closed without completing, mark as skipped
-        if let viewModel = onboardingViewModel {
+        // BUT only if the app is not terminating (user manually closed the window)
+        if !isTerminating, let viewModel = onboardingViewModel {
             if viewModel.currentStep != .complete {
                 var state = OnboardingState()
                 state.skip()

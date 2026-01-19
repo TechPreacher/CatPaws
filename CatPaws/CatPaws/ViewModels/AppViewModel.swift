@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import ApplicationServices
+import CoreGraphics
 
 /// Menu bar icon state
 enum MenuBarIconState {
@@ -109,9 +109,9 @@ final class AppViewModel: ObservableObject {
         configuration.resetToDefaults()
     }
 
-    /// Check if Input Monitoring permission is granted using AXIsProcessTrusted
+    /// Check if Input Monitoring permission is granted
     func hasInputMonitoringPermission() -> Bool {
-        AXIsProcessTrusted()
+        CGPreflightListenEventAccess()
     }
 
     /// Request accessibility permission

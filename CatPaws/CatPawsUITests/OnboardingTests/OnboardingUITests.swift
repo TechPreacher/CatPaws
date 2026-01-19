@@ -23,7 +23,7 @@ final class OnboardingUITests: XCTestCase {
 
     func testOnboardingAppearsOnFirstLaunch() throws {
         // Reset onboarding state so it appears
-        app.launchArguments = ["-catpaws.onboarding.completed", "false"]
+        app.launchArguments = ["-catpaws.onboarding.completed", "false", "-catpaws.onboarding.currentStep", "0"]
         app.launch()
 
         // Wait for onboarding window to appear
@@ -32,7 +32,7 @@ final class OnboardingUITests: XCTestCase {
     }
 
     func testOnboardingShowsWelcomeStep() throws {
-        app.launchArguments = ["-catpaws.onboarding.completed", "false"]
+        app.launchArguments = ["-catpaws.onboarding.completed", "false", "-catpaws.onboarding.currentStep", "0"]
         app.launch()
 
         // Verify welcome step content - title must exist
@@ -57,7 +57,7 @@ final class OnboardingUITests: XCTestCase {
     // MARK: - Navigation Tests
 
     func testNextButtonAdvancesToPermissionExplanation() throws {
-        app.launchArguments = ["-catpaws.onboarding.completed", "false"]
+        app.launchArguments = ["-catpaws.onboarding.completed", "false", "-catpaws.onboarding.currentStep", "0"]
         app.launch()
 
         // Wait for welcome screen
@@ -71,7 +71,7 @@ final class OnboardingUITests: XCTestCase {
     }
 
     func testBackButtonReturnsToWelcome() throws {
-        app.launchArguments = ["-catpaws.onboarding.completed", "false"]
+        app.launchArguments = ["-catpaws.onboarding.completed", "false", "-catpaws.onboarding.currentStep", "0"]
         app.launch()
 
         // Navigate to permission explanation
@@ -89,7 +89,7 @@ final class OnboardingUITests: XCTestCase {
     }
 
     func testNavigateThroughAllSteps() throws {
-        app.launchArguments = ["-catpaws.onboarding.completed", "false"]
+        app.launchArguments = ["-catpaws.onboarding.completed", "false", "-catpaws.onboarding.currentStep", "0"]
         app.launch()
 
         // Step 1: Welcome
@@ -129,7 +129,7 @@ final class OnboardingUITests: XCTestCase {
     // MARK: - Skip Tests
 
     func testSkipButtonExistsOnWelcome() throws {
-        app.launchArguments = ["-catpaws.onboarding.completed", "false"]
+        app.launchArguments = ["-catpaws.onboarding.completed", "false", "-catpaws.onboarding.currentStep", "0"]
         app.launch()
 
         XCTAssertTrue(app.staticTexts["Welcome to CatPaws"].waitForExistence(timeout: 5))
@@ -142,7 +142,7 @@ final class OnboardingUITests: XCTestCase {
     }
 
     func testSkipButtonClosesOnboarding() throws {
-        app.launchArguments = ["-catpaws.onboarding.completed", "false"]
+        app.launchArguments = ["-catpaws.onboarding.completed", "false", "-catpaws.onboarding.currentStep", "0"]
         app.launch()
 
         // Wait for onboarding window and welcome text
@@ -174,7 +174,7 @@ final class OnboardingUITests: XCTestCase {
     }
 
     func testSkipFromMiddleStep() throws {
-        app.launchArguments = ["-catpaws.onboarding.completed", "false"]
+        app.launchArguments = ["-catpaws.onboarding.completed", "false", "-catpaws.onboarding.currentStep", "0"]
         app.launch()
 
         // Navigate to permission explanation
@@ -207,7 +207,7 @@ final class OnboardingUITests: XCTestCase {
     // MARK: - Progress Indicator Tests
 
     func testProgressIndicatorExists() throws {
-        app.launchArguments = ["-catpaws.onboarding.completed", "false"]
+        app.launchArguments = ["-catpaws.onboarding.completed", "false", "-catpaws.onboarding.currentStep", "0"]
         app.launch()
 
         XCTAssertTrue(app.staticTexts["Welcome to CatPaws"].waitForExistence(timeout: 5))
@@ -221,7 +221,7 @@ final class OnboardingUITests: XCTestCase {
     // MARK: - Get Started Button Test
 
     func testGetStartedClosesOnboarding() throws {
-        app.launchArguments = ["-catpaws.onboarding.completed", "false"]
+        app.launchArguments = ["-catpaws.onboarding.completed", "false", "-catpaws.onboarding.currentStep", "0"]
         app.launch()
 
         // Navigate to complete step
