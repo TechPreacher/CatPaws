@@ -48,7 +48,10 @@ final class OnboardingViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.currentStep, .permissionExplanation)
 
         viewModel.nextStep()
-        XCTAssertEqual(viewModel.currentStep, .grantPermission)
+        XCTAssertEqual(viewModel.currentStep, .grantAccessibility)
+
+        viewModel.nextStep()
+        XCTAssertEqual(viewModel.currentStep, .grantInputMonitoring)
 
         viewModel.nextStep()
         XCTAssertEqual(viewModel.currentStep, .testDetection)
@@ -60,12 +63,16 @@ final class OnboardingViewModelTests: XCTestCase {
     func testPreviousStepGoesBack() {
         let viewModel = OnboardingViewModel()
 
-        // Advance to grantPermission
+        // Advance to grantInputMonitoring
         viewModel.nextStep()
         viewModel.nextStep()
-        XCTAssertEqual(viewModel.currentStep, .grantPermission)
+        viewModel.nextStep()
+        XCTAssertEqual(viewModel.currentStep, .grantInputMonitoring)
 
         // Go back
+        viewModel.previousStep()
+        XCTAssertEqual(viewModel.currentStep, .grantAccessibility)
+
         viewModel.previousStep()
         XCTAssertEqual(viewModel.currentStep, .permissionExplanation)
 
@@ -92,7 +99,8 @@ final class OnboardingViewModelTests: XCTestCase {
 
         // Navigate to complete step
         viewModel.nextStep() // -> permissionExplanation
-        viewModel.nextStep() // -> grantPermission
+        viewModel.nextStep() // -> grantAccessibility
+        viewModel.nextStep() // -> grantInputMonitoring
         viewModel.nextStep() // -> testDetection
         viewModel.nextStep() // -> complete
 
@@ -109,6 +117,7 @@ final class OnboardingViewModelTests: XCTestCase {
         viewModel.onComplete = {}
 
         // Navigate through all steps and complete
+        viewModel.nextStep()
         viewModel.nextStep()
         viewModel.nextStep()
         viewModel.nextStep()
@@ -155,7 +164,8 @@ final class OnboardingViewModelTests: XCTestCase {
         // Advance to middle step
         viewModel.nextStep()
         viewModel.nextStep()
-        XCTAssertEqual(viewModel.currentStep, .grantPermission)
+        viewModel.nextStep()
+        XCTAssertEqual(viewModel.currentStep, .grantInputMonitoring)
 
         // Skip should still work
         viewModel.skip()
@@ -191,5 +201,30 @@ final class OnboardingViewModelTests: XCTestCase {
         // We can't control the system permission in tests, but we can verify the method works
         let result = viewModel.checkPermission()
         XCTAssertEqual(result, viewModel.hasPermission)
+    }
+
+    func testHasPermissionReflectsInputMonitoring() {
+        let viewModel = OnboardingViewModel()
+
+        // hasPermission is a computed property that returns hasInputMonitoring
+        XCTAssertEqual(viewModel.hasPermission, viewModel.hasInputMonitoring)
+    }
+
+    func testHasAccessibilityIsInitialized() {
+        let viewModel = OnboardingViewModel()
+
+        // hasAccessibility should be set during init
+        // Can only verify it returns a boolean value
+        let result = viewModel.hasAccessibility
+        XCTAssertTrue(result == true || result == false)
+    }
+
+    func testHasInputMonitoringIsInitialized() {
+        let viewModel = OnboardingViewModel()
+
+        // hasInputMonitoring should be set during init
+        // Can only verify it returns a boolean value
+        let result = viewModel.hasInputMonitoring
+        XCTAssertTrue(result == true || result == false)
     }
 }

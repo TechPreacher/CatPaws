@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E200000A001 /* PermissionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000A000 /* PermissionType.swift */; };
+		E200000B001 /* PermissionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000B000 /* PermissionStatus.swift */; };
+		E200000C001 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000C000 /* PermissionService.swift */; };
 		E1000001001 /* AppStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000001000 /* AppStatistics.swift */; };
 		E1000002001 /* OnboardingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000002000 /* OnboardingState.swift */; };
 		E1000003001 /* StatisticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000003000 /* StatisticsService.swift */; };
@@ -59,6 +62,12 @@
 		F1000001001 /* OnboardingStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001000 /* OnboardingStateTests.swift */; };
 		F1000002001 /* OnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000002000 /* OnboardingViewModelTests.swift */; };
 		F1000003001 /* OnboardingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000003000 /* OnboardingUITests.swift */; };
+		E200000A001 /* PermissionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000A000 /* PermissionType.swift */; };
+		E200000B001 /* PermissionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000B000 /* PermissionStatus.swift */; };
+		E200000C001 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000C000 /* PermissionService.swift */; };
+		E200000D001 /* PermissionTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000D000 /* PermissionTypeTests.swift */; };
+		E200000E001 /* PermissionStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000E000 /* PermissionStatusTests.swift */; };
+		E200000F001 /* PermissionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000F000 /* PermissionServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +90,9 @@
 /* Begin PBXFileReference section */
 		E1000001000 /* AppStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStatistics.swift; sourceTree = "<group>"; };
 		E1000002000 /* OnboardingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingState.swift; sourceTree = "<group>"; };
+		E200000A000 /* PermissionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionType.swift; sourceTree = "<group>"; };
+		E200000B000 /* PermissionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatus.swift; sourceTree = "<group>"; };
+		E200000C000 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
 		E1000003000 /* StatisticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsService.swift; sourceTree = "<group>"; };
 		E1000004000 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		E1000005000 /* LoginItemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemService.swift; sourceTree = "<group>"; };
@@ -136,6 +148,9 @@
 		F1000001000 /* OnboardingStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStateTests.swift; sourceTree = "<group>"; };
 		F1000002000 /* OnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModelTests.swift; sourceTree = "<group>"; };
 		F1000003000 /* OnboardingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUITests.swift; sourceTree = "<group>"; };
+		E200000D000 /* PermissionTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionTypeTests.swift; sourceTree = "<group>"; };
+		E200000E000 /* PermissionStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatusTests.swift; sourceTree = "<group>"; };
+		E200000F000 /* PermissionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +273,8 @@
 				2B1678F82F1A8C1D006BF13A /* KeyboardState.swift */,
 				2B1678F92F1A8C1D006BF13A /* LockState.swift */,
 				E1000002000 /* OnboardingState.swift */,
+				E200000B000 /* PermissionStatus.swift */,
+				E200000A000 /* PermissionType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -282,6 +299,7 @@
 				2B1679092F1A8C5C006BF13A /* NotificationPresenting.swift */,
 				2B16790A2F1A8C5C006BF13A /* NotificationWindowController.swift */,
 				2B16790B2F1A8C5C006BF13A /* PermissionError.swift */,
+				E200000C000 /* PermissionService.swift */,
 				E1000003000 /* StatisticsService.swift */,
 			);
 			path = Services;
@@ -339,6 +357,8 @@
 				2B16791B2F1A8C7E006BF13A /* LockStateTests.swift */,
 				B1000002000 /* AppStateTests.swift */,
 				F1000001000 /* OnboardingStateTests.swift */,
+				E200000D000 /* PermissionTypeTests.swift */,
+				E200000E000 /* PermissionStatusTests.swift */,
 			);
 			path = ModelTests;
 			sourceTree = "<group>";
@@ -349,6 +369,7 @@
 				2B16791E2F1A8C97006BF13A /* CatDetectionServiceTests.swift */,
 				2B16791F2F1A8C97006BF13A /* KeyboardLockServiceTests.swift */,
 				2B1679202F1A8C97006BF13A /* LockStateManagerTests.swift */,
+				E200000F000 /* PermissionServiceTests.swift */,
 			);
 			path = ServiceTests;
 			sourceTree = "<group>";
@@ -561,6 +582,9 @@
 				2B1678F52F1A8BA0006BF13A /* CatLockPopupView.swift in Sources */,
 				E1000001001 /* AppStatistics.swift in Sources */,
 				E1000002001 /* OnboardingState.swift in Sources */,
+				E200000A001 /* PermissionType.swift in Sources */,
+				E200000B001 /* PermissionStatus.swift in Sources */,
+				E200000C001 /* PermissionService.swift in Sources */,
 				E1000003001 /* StatisticsService.swift in Sources */,
 				E1000004001 /* AppLogger.swift in Sources */,
 				E1000005001 /* LoginItemService.swift in Sources */,
@@ -586,6 +610,9 @@
 				2B16791D2F1A8C7E006BF13A /* LockStateTests.swift in Sources */,
 				F1000001001 /* OnboardingStateTests.swift in Sources */,
 				F1000002001 /* OnboardingViewModelTests.swift in Sources */,
+				E200000D001 /* PermissionTypeTests.swift in Sources */,
+				E200000E001 /* PermissionStatusTests.swift in Sources */,
+				E200000F001 /* PermissionServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,13 +11,64 @@
 // MARK: - Menu Bar
 "menubar.active" = "Active";
 "menubar.inactive" = "Inactive";
+"menubar.keyboard_locked" = "Keyboard Locked";
 
 // MARK: - Settings
 "settings.title" = "Settings";
 "settings.general" = "General";
 "settings.about" = "About";
 "settings.launch_at_login" = "Launch at login";
+"settings.reset_all" = "Reset All Settings";
+"settings.reset_all_description" = "Restores factory defaults and clears onboarding.";
+"settings.reset_all_confirm_title" = "Reset All Settings?";
+"settings.reset_all_confirm_message" = "This will reset all settings to factory defaults and clear onboarding progress. The app will quit and you will need to complete onboarding again on next launch. This action cannot be undone.";
 
 // MARK: - Actions
 "action.quit" = "Quit";
 "action.settings" = "Settings";
+"action.cancel" = "Cancel";
+"action.reset" = "Reset";
+"action.reset_all" = "Reset All";
+"action.open_settings" = "Open Settings";
+"action.continue_anyway" = "Continue Anyway";
+"action.next" = "Next";
+"action.back" = "Back";
+"action.skip" = "Skip";
+"action.finish" = "Finish";
+"action.get_started" = "Get Started";
+
+// MARK: - Permissions
+"permission.accessibility" = "Accessibility";
+"permission.input_monitoring" = "Input Monitoring";
+"permission.granted" = "Permission Granted!";
+"permission.ok" = "OK";
+"permission.needs_permission" = "Needs Permission";
+"permission.revoked_title" = "Permission Revoked";
+"permission.revoked_message" = "A required permission was removed.";
+"permissions.required" = "Permissions Required";
+
+// MARK: - Onboarding
+"onboarding.welcome.title" = "Welcome to CatPaws";
+"onboarding.welcome.description" = "CatPaws protects your keyboard when your cat decides to take a walk across it. The app detects characteristic cat-paw typing patterns and temporarily locks your keyboard to prevent unwanted input.";
+"onboarding.permission_explanation.title" = "Permissions Required";
+"onboarding.permission_explanation.description" = "To detect cat paw patterns and protect your keyboard, CatPaws needs two permissions: Accessibility and Input Monitoring.";
+"onboarding.grant_accessibility.title" = "Grant Accessibility";
+"onboarding.grant_accessibility.description" = "Accessibility permission allows CatPaws to detect keyboard patterns. Click the button below to open System Settings, then enable CatPaws in the Accessibility list.";
+"onboarding.grant_input_monitoring.title" = "Grant Input Monitoring";
+"onboarding.grant_input_monitoring.description" = "Input Monitoring permission allows CatPaws to see when multiple keys are pressed simultaneously. Click the button below to open System Settings, then enable CatPaws in the Input Monitoring list.";
+"onboarding.open_accessibility_settings" = "Open Accessibility Settings";
+"onboarding.open_input_monitoring_settings" = "Open Input Monitoring Settings";
+"onboarding.permission_granted" = "Permission is enabled. Click Next to continue.";
+"onboarding.auto_update_hint" = "This page will update automatically when permission is granted.";
+"onboarding.test_detection.title" = "Test Detection";
+"onboarding.test_detection.description" = "Let's make sure CatPaws is working correctly. Press these three keys together:";
+"onboarding.test_detection.instructions" = "Press and hold all three keys at the same time";
+"onboarding.test_detection.success_title" = "It Works!";
+"onboarding.test_detection.success_description" = "CatPaws successfully detected the key pattern. Your keyboard is protected!";
+"onboarding.complete.title" = "You're All Set!";
+"onboarding.complete.description" = "CatPaws is now running in your menu bar. Look for the paw icon to access settings and status.";
+
+// MARK: - Privacy
+"privacy.keystrokes_not_recorded" = "Your keystrokes are never recorded or transmitted";
+"privacy.local_analysis_only" = "Only key press patterns are analyzed locally";
+"privacy.revoke_anytime" = "You can revoke permissions at any time";

@@ -168,4 +168,20 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         playSoundOnLock = Defaults.playSoundOnLock
         playSoundOnUnlock = Defaults.playSoundOnUnlock
     }
+
+    /// Resets ALL app settings to factory defaults, including onboarding state.
+    /// This will trigger the onboarding flow on next app launch.
+    func resetAll() {
+        guard let bundleId = Bundle.main.bundleIdentifier else { return }
+
+        // Remove all UserDefaults for this app
+        defaults.removePersistentDomain(forName: bundleId)
+        defaults.synchronize()
+
+        // Re-register default values
+        registerDefaults()
+
+        // Notify observers of the change
+        objectWillChange.send()
+    }
 }

@@ -14,6 +14,22 @@ struct MenuBarContentView: View {
 
     var body: some View {
         VStack(spacing: 16) {
+            // Permission revocation banner (shown at top when permission was revoked)
+            if viewModel.showPermissionRevokedBanner {
+                PermissionRevokedBanner(
+                    onOpenSettings: {
+                        if !viewModel.permissionState.accessibility.isGranted {
+                            viewModel.openSettings(for: .accessibility)
+                        } else {
+                            viewModel.openSettings(for: .inputMonitoring)
+                        }
+                    },
+                    onDismiss: {
+                        viewModel.dismissPermissionRevokedBanner()
+                    }
+                )
+            }
+
             // Header
             HStack {
                 Image(systemName: viewModel.iconState.systemImageName)
@@ -48,15 +64,18 @@ struct MenuBarContentView: View {
                 .labelsHidden()
             }
 
-            // Permission guide (shown when permission not granted)
-            if !viewModel.hasPermission {
-                PermissionGuideView(onOpenSettings: {
-                    viewModel.openPermissionSettings()
-                })
+            // Permission guide (shown when any permission is missing)
+            if viewModel.permissionState.anyMissing {
+                PermissionGuideView(
+                    permissionState: viewModel.permissionState,
+                    onOpenSettings: { type in
+                        viewModel.openSettings(for: type)
+                    }
+                )
             }
 
-            // Statistics summary (when permission granted and not showing detailed view)
-            if viewModel.hasPermission && !showingStatistics {
+            // Statistics summary (when all permissions granted and not showing detailed view)
+            if viewModel.permissionState.allGranted && !showingStatistics {
                 StatisticsSummaryView(statisticsService: viewModel.statisticsService)
                     .onTapGesture {
                         withAnimation {
@@ -111,7 +130,9 @@ struct MenuBarContentView: View {
             }
         }
         .padding()
-        .frame(width: 280, height: calculateHeight())
+        .frame(width: 320)
+        .frame(minHeight: 400)
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     // MARK: - Computed Properties
@@ -135,25 +156,58 @@ struct MenuBarContentView: View {
             return "Inactive"
         }
     }
+}
 
-    private func calculateHeight() -> CGFloat {
-        var height: CGFloat = 180  // Base height
+// MARK: - Permission Revoked Banner
 
-        if !viewModel.hasPermission {
-            height += 200  // Permission guide takes more space
-        } else {
-            height += 50  // Statistics summary
+/// Non-modal banner shown when a permission is revoked during runtime
+private struct PermissionRevokedBanner: View {
+    let onOpenSettings: () -> Void
+    let onDismiss: () -> Void
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundColor(.orange)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Permission Revoked")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+
+                Text("A required permission was removed.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+            }
+
+            Spacer()
+
+            Button("Open Settings") {
+                onOpenSettings()
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+
+            Button {
+                onDismiss()
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.caption)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Dismiss banner")
         }
-
-        if showingStatistics {
-            height += 150  // Detailed statistics
-        }
-
-        if viewModel.isLocked {
-            height += 50  // Unlock button
-        }
-
-        return height
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.orange.opacity(0.1))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.orange.opacity(0.3), lineWidth: 1)
+                )
+        )
     }
 }
 

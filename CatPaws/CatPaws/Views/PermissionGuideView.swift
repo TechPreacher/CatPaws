@@ -5,67 +5,110 @@
 //  Created on 2026-01-18.
 //
 
-import SwiftUI
 import AppKit
+import SwiftUI
 
-/// View that guides users through granting Input Monitoring permission
+/// View that displays permission status and guides users through granting permissions
 struct PermissionGuideView: View {
-    var onOpenSettings: () -> Void
+    let permissionState: PermissionState
+    var onOpenSettings: (PermissionType) -> Void
 
     var body: some View {
         VStack(spacing: 16) {
             // Warning icon
             Image(systemName: "exclamationmark.shield.fill")
-                .font(.system(size: 48))
+                .font(.system(size: 36))
                 .foregroundColor(.orange)
 
             // Title
-            Text("Permission Required")
+            Text("Permissions Required")
                 .font(.headline)
                 .fontWeight(.semibold)
 
-            // Explanation
-            Text("CatPaws needs Input Monitoring permission to detect when your cat walks on the keyboard.")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
+            // Permission status rows
+            VStack(spacing: 12) {
+                PermissionStatusRow(
+                    permission: permissionState.accessibility,
+                    onOpenSettings: { onOpenSettings(.accessibility) }
+                )
 
-            // Steps
-            VStack(alignment: .leading, spacing: 8) {
-                PermissionStepRow(number: 1, text: "Click \"Open System Settings\" below")
-                PermissionStepRow(number: 2, text: "Find CatPaws in the list")
-                PermissionStepRow(number: 3, text: "Toggle CatPaws ON")
+                PermissionStatusRow(
+                    permission: permissionState.inputMonitoring,
+                    onOpenSettings: { onOpenSettings(.inputMonitoring) }
+                )
             }
             .padding(.vertical, 8)
 
-            // Open Settings button
-            Button(action: onOpenSettings) {
-                HStack {
-                    Image(systemName: "gear")
-                    Text("Open System Settings")
-                }
-                .frame(maxWidth: .infinity)
+            // Instructions for missing permissions
+            if permissionState.anyMissing {
+                Text("Click \"Open Settings\" next to each missing permission to grant access.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-
-            // Quit button
-            Button("Quit CatPaws") {
-                NSApplication.shared.terminate(nil)
-            }
-            .buttonStyle(.link)
         }
         .padding()
     }
 
     /// Open System Settings directly to Input Monitoring pane
     static func openInputMonitoringSettings() {
-        let urlString = "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent"
-        guard let url = URL(string: urlString) else {
-            return
+        PermissionService.shared.openSettings(for: .inputMonitoring)
+    }
+
+    /// Open System Settings directly to Accessibility pane
+    static func openAccessibilitySettings() {
+        PermissionService.shared.openSettings(for: .accessibility)
+    }
+}
+
+/// A row showing the status of a single permission with action button
+private struct PermissionStatusRow: View {
+    let permission: PermissionStatus
+    let onOpenSettings: () -> Void
+
+    var body: some View {
+        HStack(spacing: 12) {
+            // Permission icon
+            Image(systemName: permission.isGranted ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .font(.title3)
+                .foregroundColor(permission.isGranted ? .green : .red)
+
+            // Permission name and status
+            VStack(alignment: .leading, spacing: 2) {
+                Text(permission.displayName)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .help(permission.displayName)
+
+                Text(permission.statusText)
+                    .font(.caption)
+                    .foregroundColor(permission.isGranted ? .green : .orange)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .help(permission.statusText)
+            }
+
+            Spacer()
+
+            // Open Settings button (only shown if permission not granted)
+            if !permission.isGranted {
+                Button("Open Settings") {
+                    onOpenSettings()
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+                .accessibilityHint("Opens System Settings to grant \(permission.displayName) permission")
+            }
         }
-        NSWorkspace.shared.open(url)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.gray.opacity(0.1))
+        )
     }
 }
 
@@ -91,6 +134,13 @@ private struct PermissionStepRow: View {
 }
 
 #Preview {
-    PermissionGuideView(onOpenSettings: {})
-        .frame(width: 280)
+    let state = PermissionState(
+        accessibility: PermissionStatus(type: .accessibility, isGranted: true),
+        inputMonitoring: PermissionStatus(type: .inputMonitoring, isGranted: false)
+    )
+    return PermissionGuideView(
+        permissionState: state,
+        onOpenSettings: { _ in }
+    )
+    .frame(width: 320)
 }

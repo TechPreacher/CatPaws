@@ -100,8 +100,8 @@ final class OnboardingUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Permission Required"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
-        // Step 3: Grant Permission
-        XCTAssertTrue(app.staticTexts["Grant Permission"].waitForExistence(timeout: 2) ||
+        // Step 3: Grant Accessibility
+        XCTAssertTrue(app.staticTexts["Grant Accessibility"].waitForExistence(timeout: 2) ||
                       app.staticTexts["Permission Granted!"].waitForExistence(timeout: 2))
 
         // Use "Continue Anyway" or "Next" depending on permission state
@@ -111,7 +111,18 @@ final class OnboardingUITests: XCTestCase {
             app.buttons["Next"].tap()
         }
 
-        // Step 4: Test Detection
+        // Step 4: Grant Input Monitoring
+        XCTAssertTrue(app.staticTexts["Grant Input Monitoring"].waitForExistence(timeout: 2) ||
+                      app.staticTexts["Permission Granted!"].waitForExistence(timeout: 2))
+
+        // Use "Continue Anyway" or "Next" depending on permission state
+        if app.buttons["Continue Anyway"].exists {
+            app.buttons["Continue Anyway"].tap()
+        } else {
+            app.buttons["Next"].tap()
+        }
+
+        // Step 5: Test Detection
         XCTAssertTrue(app.staticTexts["Test Detection"].waitForExistence(timeout: 2) ||
                       app.staticTexts["It Works!"].waitForExistence(timeout: 2))
 
@@ -122,7 +133,7 @@ final class OnboardingUITests: XCTestCase {
             app.buttons["Finish"].tap()
         }
 
-        // Step 5: Complete
+        // Step 6: Complete
         XCTAssertTrue(app.staticTexts["You're All Set!"].waitForExistence(timeout: 2))
     }
 

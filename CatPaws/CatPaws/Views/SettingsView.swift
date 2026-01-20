@@ -28,7 +28,7 @@ struct SettingsView: View {
                     Label("About", systemImage: "info.circle")
                 }
         }
-        .frame(width: 450, height: 320)
+        .frame(width: 480, height: 400)
     }
 }
 
@@ -40,6 +40,13 @@ struct GeneralSettingsView: View {
     @State private var showingError = false
     @State private var errorMessage = ""
     @State private var showingResetConfirmation = false
+    @State private var showingResetAllConfirmation = false
+
+    /// Whether onboarding is currently in progress (disables reset all)
+    private var isOnboardingInProgress: Bool {
+        let state = OnboardingState()
+        return !state.hasCompletedOnboarding
+    }
 
     private var launchAtLoginBinding: Binding<Bool> {
         Binding(
@@ -86,6 +93,29 @@ struct GeneralSettingsView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
+
+            Section("Reset") {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Reset All Settings")
+                            .font(.subheadline)
+                        Text("Restores factory defaults and clears onboarding.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    Button("Reset All…", role: .destructive) {
+                        showingResetAllConfirmation = true
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(isOnboardingInProgress)
+                    .help(isOnboardingInProgress
+                          ? "Reset is disabled during onboarding"
+                          : "Reset all app settings to factory defaults")
+                }
+            }
         }
         .padding()
         .alert("Login Item Error", isPresented: $showingError) {
@@ -100,6 +130,19 @@ struct GeneralSettingsView: View {
             }
         } message: {
             Text("This will reset all protection statistics to zero. This action cannot be undone.")
+        }
+        .alert("Reset All Settings?", isPresented: $showingResetAllConfirmation) {
+            Button("Cancel", role: .cancel) {}
+            Button("Reset All", role: .destructive) {
+                configuration.resetAll()
+                // Quit the app after reset so onboarding can run on next launch
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    NSApplication.shared.terminate(nil)
+                }
+            }
+        } message: {
+            // swiftlint:disable:next line_length
+            Text("This will reset all settings to factory defaults and clear onboarding progress. The app will quit and you will need to complete onboarding again on next launch. This action cannot be undone.")
         }
     }
 }

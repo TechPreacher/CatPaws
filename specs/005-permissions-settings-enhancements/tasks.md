@@ -25,9 +25,9 @@ Based on plan.md structure:
 
 **Purpose**: Project initialization and shared infrastructure
 
-- [ ] T001 Add `ApplicationServices` import capability for `AXIsProcessTrusted()` API access
-- [ ] T002 [P] Create `PermissionType` enum in CatPaws/CatPaws/Models/PermissionType.swift
-- [ ] T003 [P] Create `PermissionStatus` struct in CatPaws/CatPaws/Models/PermissionStatus.swift
+- [X] T001 Add `ApplicationServices` import capability for `AXIsProcessTrusted()` API access
+- [X] T002 [P] Create `PermissionType` enum in CatPaws/CatPaws/Models/PermissionType.swift
+- [X] T003 [P] Create `PermissionStatus` struct in CatPaws/CatPaws/Models/PermissionStatus.swift
 
 ---
 
@@ -37,15 +37,15 @@ Based on plan.md structure:
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 Create `PermissionService.swift` with `PermissionChecking` protocol in CatPaws/CatPaws/Services/PermissionService.swift
-- [ ] T005 Implement `checkAccessibility()` using `AXIsProcessTrusted()` in CatPaws/CatPaws/Services/PermissionService.swift
-- [ ] T006 Implement `checkInputMonitoring()` using `CGPreflightListenEventAccess()` in CatPaws/CatPaws/Services/PermissionService.swift
-- [ ] T007 Implement `getCurrentState()` returning `PermissionState` in CatPaws/CatPaws/Services/PermissionService.swift
-- [ ] T008 Implement `openSettings(for:)` with URL deep links in CatPaws/CatPaws/Services/PermissionService.swift
-- [ ] T009 Implement 1-second polling with `startPolling()` and `stopPolling()` in CatPaws/CatPaws/Services/PermissionService.swift
-- [ ] T010 Update `OnboardingStep` enum: add `grantAccessibility` case at raw value 2, rename `grantPermission` to `grantInputMonitoring`, shift subsequent values in CatPaws/CatPaws/Models/OnboardingState.swift
-- [ ] T011 Implement `OnboardingState.migrateIfNeeded()` for step value migration in CatPaws/CatPaws/Models/OnboardingState.swift
-- [ ] T012 Call `OnboardingState.migrateIfNeeded()` in app initialization in CatPaws/CatPaws/App/CatPawsApp.swift
+- [X] T004 Create `PermissionService.swift` with `PermissionChecking` protocol in CatPaws/CatPaws/Services/PermissionService.swift
+- [X] T005 Implement `checkAccessibility()` using `AXIsProcessTrusted()` in CatPaws/CatPaws/Services/PermissionService.swift
+- [X] T006 Implement `checkInputMonitoring()` using `CGPreflightListenEventAccess()` in CatPaws/CatPaws/Services/PermissionService.swift
+- [X] T007 Implement `getCurrentState()` returning `PermissionState` in CatPaws/CatPaws/Services/PermissionService.swift
+- [X] T008 Implement `openSettings(for:)` with URL deep links in CatPaws/CatPaws/Services/PermissionService.swift
+- [X] T009 Implement 1-second polling with `startPolling()` and `stopPolling()` in CatPaws/CatPaws/Services/PermissionService.swift
+- [X] T010 Update `OnboardingStep` enum: add `grantAccessibility` case at raw value 2, rename `grantPermission` to `grantInputMonitoring`, shift subsequent values in CatPaws/CatPaws/Models/OnboardingState.swift
+- [X] T011 Implement `OnboardingState.migrateIfNeeded()` for step value migration in CatPaws/CatPaws/Models/OnboardingState.swift
+- [X] T012 Call `OnboardingState.migrateIfNeeded()` in app initialization in CatPaws/CatPaws/App/CatPawsApp.swift
 
 **Checkpoint**: Foundation ready - PermissionService functional, OnboardingStep enum updated with migration
 
@@ -59,15 +59,15 @@ Based on plan.md structure:
 
 ### Implementation for User Story 1
 
-- [ ] T013 [US1] Add `hasAccessibility` published property to `OnboardingViewModel` in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
-- [ ] T014 [US1] Update `OnboardingViewModel.init()` to check both permissions on startup in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
-- [ ] T015 [US1] Implement Accessibility permission polling in `OnboardingViewModel` (1-second interval) in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
-- [ ] T016 [US1] Update `nextStep()` to handle new `grantAccessibility` → `grantInputMonitoring` flow in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
-- [ ] T017 [US1] Add `openAccessibilitySettings()` method to `OnboardingViewModel` in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
-- [ ] T018 [US1] Create Accessibility permission step view (case `.grantAccessibility`) in CatPaws/CatPaws/Views/OnboardingView.swift
-- [ ] T019 [US1] Update Input Monitoring step view for renamed case `.grantInputMonitoring` in CatPaws/CatPaws/Views/OnboardingView.swift
-- [ ] T020 [US1] Add "Permission Granted!" status indicator to Accessibility step UI in CatPaws/CatPaws/Views/OnboardingView.swift
-- [ ] T021 [US1] Add "Continue Anyway" button to Accessibility step for non-blocking flow in CatPaws/CatPaws/Views/OnboardingView.swift
+- [X] T013 [US1] Add `hasAccessibility` published property to `OnboardingViewModel` in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
+- [X] T014 [US1] Update `OnboardingViewModel.init()` to check both permissions on startup in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
+- [X] T015 [US1] Implement Accessibility permission polling in `OnboardingViewModel` (1-second interval) in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
+- [X] T016 [US1] Update `nextStep()` to handle new `grantAccessibility` → `grantInputMonitoring` flow in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
+- [X] T017 [US1] Add `openAccessibilitySettings()` method to `OnboardingViewModel` in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
+- [X] T018 [US1] Create Accessibility permission step view (case `.grantAccessibility`) in CatPaws/CatPaws/Views/OnboardingView.swift
+- [X] T019 [US1] Update Input Monitoring step view for renamed case `.grantInputMonitoring` in CatPaws/CatPaws/Views/OnboardingView.swift
+- [X] T020 [US1] Add "Permission Granted!" status indicator to Accessibility step UI in CatPaws/CatPaws/Views/OnboardingView.swift
+- [X] T021 [US1] Add "Continue Anyway" button to Accessibility step for non-blocking flow in CatPaws/CatPaws/Views/OnboardingView.swift
 
 **Checkpoint**: Users can complete full onboarding with both permission steps; UI updates within 2 seconds of grant
 
@@ -81,15 +81,15 @@ Based on plan.md structure:
 
 ### Implementation for User Story 2
 
-- [ ] T022 [US2] Add `permissionState: PermissionState` published property to `AppViewModel` in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T023 [US2] Add `showPermissionRevokedBanner: Bool` published property to `AppViewModel` in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T024 [US2] Integrate `PermissionService` polling into `AppViewModel` for runtime monitoring in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T025 [US2] Detect permission revocation and set `showPermissionRevokedBanner = true` in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T026 [US2] Update `PermissionGuideView` to display individual status for each permission in CatPaws/CatPaws/Views/PermissionGuideView.swift
-- [ ] T027 [US2] Add "Needs Permission" / "OK" status labels per permission in CatPaws/CatPaws/Views/PermissionGuideView.swift
-- [ ] T028 [US2] Add individual "Open System Settings" buttons per missing permission in CatPaws/CatPaws/Views/PermissionGuideView.swift
-- [ ] T029 [US2] Update `PermissionGuideView` visibility logic: show when either permission missing in CatPaws/CatPaws/Views/PermissionGuideView.swift
-- [ ] T030 [US2] Add non-modal permission revocation banner to `MenuBarContentView` in CatPaws/CatPaws/MenuBar/MenuBarContentView.swift
+- [X] T022 [US2] Add `permissionState: PermissionState` published property to `AppViewModel` in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T023 [US2] Add `showPermissionRevokedBanner: Bool` published property to `AppViewModel` in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T024 [US2] Integrate `PermissionService` polling into `AppViewModel` for runtime monitoring in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T025 [US2] Detect permission revocation and set `showPermissionRevokedBanner = true` in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T026 [US2] Update `PermissionGuideView` to display individual status for each permission in CatPaws/CatPaws/Views/PermissionGuideView.swift
+- [X] T027 [US2] Add "Needs Permission" / "OK" status labels per permission in CatPaws/CatPaws/Views/PermissionGuideView.swift
+- [X] T028 [US2] Add individual "Open System Settings" buttons per missing permission in CatPaws/CatPaws/Views/PermissionGuideView.swift
+- [X] T029 [US2] Update `PermissionGuideView` visibility logic: show when either permission missing in CatPaws/CatPaws/Views/PermissionGuideView.swift
+- [X] T030 [US2] Add non-modal permission revocation banner to `MenuBarContentView` in CatPaws/CatPaws/MenuBar/MenuBarContentView.swift
 
 **Checkpoint**: Menu bar shows individual permission status; revocation triggers banner notification
 
@@ -103,10 +103,10 @@ Based on plan.md structure:
 
 ### Implementation for User Story 3
 
-- [ ] T031 [US3] Update `MenuBarContentView` frame to use dynamic minimum height (minHeight: 400) in CatPaws/CatPaws/MenuBar/MenuBarContentView.swift
-- [ ] T032 [US3] Add `.fixedSize(horizontal: false, vertical: true)` for content-driven height in CatPaws/CatPaws/MenuBar/MenuBarContentView.swift
-- [ ] T033 [US3] Add `.help()` modifier tooltips to permission status text for truncated content in CatPaws/CatPaws/Views/PermissionGuideView.swift
-- [ ] T034 [US3] Add `.lineLimit()` and `.truncationMode(.tail)` with tooltip fallback in CatPaws/CatPaws/Views/PermissionGuideView.swift
+- [X] T031 [US3] Update `MenuBarContentView` frame to use dynamic minimum height (minHeight: 400) in CatPaws/CatPaws/MenuBar/MenuBarContentView.swift
+- [X] T032 [US3] Add `.fixedSize(horizontal: false, vertical: true)` for content-driven height in CatPaws/CatPaws/MenuBar/MenuBarContentView.swift
+- [X] T033 [US3] Add `.help()` modifier tooltips to permission status text for truncated content in CatPaws/CatPaws/Views/PermissionGuideView.swift
+- [X] T034 [US3] Add `.lineLimit()` and `.truncationMode(.tail)` with tooltip fallback in CatPaws/CatPaws/Views/PermissionGuideView.swift
 
 **Checkpoint**: All permission text visible; truncated text shows full content on hover
 
@@ -120,8 +120,8 @@ Based on plan.md structure:
 
 ### Implementation for User Story 4
 
-- [ ] T035 [US4] Update `SettingsView` frame dimensions to accommodate all content in CatPaws/CatPaws/Views/SettingsView.swift
-- [ ] T036 [US4] Adjust tab content layout (General, Detection, About) to ensure full display without clipping in CatPaws/CatPaws/Views/SettingsView.swift
+- [X] T035 [US4] Update `SettingsView` frame dimensions to accommodate all content in CatPaws/CatPaws/Views/SettingsView.swift
+- [X] T036 [US4] Adjust tab content layout (General, Detection, About) to ensure full display without clipping in CatPaws/CatPaws/Views/SettingsView.swift
 
 **Checkpoint**: All settings controls visible and functional
 
@@ -135,12 +135,12 @@ Based on plan.md structure:
 
 ### Implementation for User Story 5
 
-- [ ] T037 [US5] Add `resetAll()` method to `Configuration` using `removePersistentDomain()` in CatPaws/CatPaws/Models/Configuration.swift
-- [ ] T038 [US5] Add `reset()` method to `OnboardingState` to clear onboarding keys in CatPaws/CatPaws/Models/OnboardingState.swift
-- [ ] T039 [US5] Add "Reset All Settings" button to `GeneralSettingsView` in CatPaws/CatPaws/Views/SettingsView.swift
-- [ ] T040 [US5] Add confirmation alert dialog with warning text in CatPaws/CatPaws/Views/SettingsView.swift
-- [ ] T041 [US5] Implement reset action calling `Configuration.resetAll()` on confirmation in CatPaws/CatPaws/Views/SettingsView.swift
-- [ ] T042 [US5] Disable/hide reset button when onboarding is in progress in CatPaws/CatPaws/Views/SettingsView.swift
+- [X] T037 [US5] Add `resetAll()` method to `Configuration` using `removePersistentDomain()` in CatPaws/CatPaws/Models/Configuration.swift
+- [X] T038 [US5] Add `reset()` method to `OnboardingState` to clear onboarding keys in CatPaws/CatPaws/Models/OnboardingState.swift
+- [X] T039 [US5] Add "Reset All Settings" button to `GeneralSettingsView` in CatPaws/CatPaws/Views/SettingsView.swift
+- [X] T040 [US5] Add confirmation alert dialog with warning text in CatPaws/CatPaws/Views/SettingsView.swift
+- [X] T041 [US5] Implement reset action calling `Configuration.resetAll()` on confirmation in CatPaws/CatPaws/Views/SettingsView.swift
+- [X] T042 [US5] Disable/hide reset button when onboarding is in progress in CatPaws/CatPaws/Views/SettingsView.swift
 
 **Checkpoint**: Reset clears all settings and onboarding state; disabled during onboarding
 
@@ -150,11 +150,11 @@ Based on plan.md structure:
 
 **Purpose**: Final refinements affecting multiple user stories
 
-- [ ] T043 [P] Update Localizable.strings with new permission step strings in CatPaws/CatPaws/Resources/Localizable.strings
-- [ ] T044 [P] Add VoiceOver accessibility labels to new permission UI elements in CatPaws/CatPaws/Views/OnboardingView.swift
-- [ ] T045 Code review: verify all UserDefaults keys use `catpaws.` prefix
-- [ ] T046 Run quickstart.md validation checklist
-- [ ] T047 Verify all acceptance scenarios from spec.md pass (including FR-019 permission revocation banner test: revoke permission while app running, verify banner appears)
+- [X] T043 [P] Update Localizable.strings with new permission step strings in CatPaws/CatPaws/Resources/Localizable.strings
+- [X] T044 [P] Add VoiceOver accessibility labels to new permission UI elements in CatPaws/CatPaws/Views/OnboardingView.swift
+- [X] T045 Code review: verify all UserDefaults keys use `catpaws.` prefix
+- [X] T046 Run quickstart.md validation checklist
+- [X] T047 Verify all acceptance scenarios from spec.md pass (including FR-019 permission revocation banner test: revoke permission while app running, verify banner appears)
 
 ---
 
