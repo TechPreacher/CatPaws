@@ -21,7 +21,4 @@ protocol LockStateManaging: AnyObject {
 
     /// Called to manually unlock the keyboard
     func manualUnlock()
-
-    /// Called to check if keyboard should remain locked
-    func performRecheck(pressedKeyCount: Int)
 }

@@ -15,8 +15,8 @@ final class Configuration: ConfigurationProviding, ObservableObject {
 
     private enum Keys {
         static let isEnabled = "catpaws.isEnabled"
+        static let hasUserExplicitlyDisabled = "catpaws.hasUserExplicitlyDisabled"
         static let debounceMs = "catpaws.debounceMs"
-        static let recheckIntervalSec = "catpaws.recheckIntervalSec"
         static let cooldownSec = "catpaws.cooldownSec"
         static let minimumKeyCount = "catpaws.minimumKeyCount"
         static let playSoundOnLock = "catpaws.playSoundOnLock"
@@ -29,8 +29,8 @@ final class Configuration: ConfigurationProviding, ObservableObject {
 
     private enum Defaults {
         static let isEnabled = true
+        static let hasUserExplicitlyDisabled = false
         static let debounceMs = 300  // Middle of 200-500 range
-        static let recheckIntervalSec = 2.0
         static let cooldownSec = 7.0  // Middle of 5-10 range
         static let minimumKeyCount = 3
         static let playSoundOnLock = true
@@ -43,7 +43,6 @@ final class Configuration: ConfigurationProviding, ObservableObject {
 
     private enum Ranges {
         static let debounceMs = 200...500
-        static let recheckIntervalSec = 1.0...5.0
         static let cooldownSec = 5.0...10.0
         static let minimumKeyCount = 3...5
     }
@@ -58,8 +57,8 @@ final class Configuration: ConfigurationProviding, ObservableObject {
     private func registerDefaults() {
         defaults.register(defaults: [
             Keys.isEnabled: Defaults.isEnabled,
+            Keys.hasUserExplicitlyDisabled: Defaults.hasUserExplicitlyDisabled,
             Keys.debounceMs: Defaults.debounceMs,
-            Keys.recheckIntervalSec: Defaults.recheckIntervalSec,
             Keys.cooldownSec: Defaults.cooldownSec,
             Keys.minimumKeyCount: Defaults.minimumKeyCount,
             Keys.playSoundOnLock: Defaults.playSoundOnLock,
@@ -79,6 +78,22 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         }
     }
 
+    /// Tracks whether the user has explicitly disabled monitoring.
+    /// Used to distinguish between "never configured" (auto-enable) and "user disabled" (respect choice).
+    var hasUserExplicitlyDisabled: Bool {
+        get { defaults.bool(forKey: Keys.hasUserExplicitlyDisabled) }
+        set {
+            objectWillChange.send()
+            defaults.set(newValue, forKey: Keys.hasUserExplicitlyDisabled)
+        }
+    }
+
+    /// Returns true if monitoring should auto-enable on app start.
+    /// Auto-enables unless user has explicitly disabled monitoring.
+    var shouldAutoEnable: Bool {
+        !hasUserExplicitlyDisabled
+    }
+
     var debounceMs: Int {
         get {
             let value = defaults.integer(forKey: Keys.debounceMs)
@@ -88,18 +103,6 @@ final class Configuration: ConfigurationProviding, ObservableObject {
             objectWillChange.send()
             let clamped = min(max(newValue, Ranges.debounceMs.lowerBound), Ranges.debounceMs.upperBound)
             defaults.set(clamped, forKey: Keys.debounceMs)
-        }
-    }
-
-    var recheckIntervalSec: Double {
-        get {
-            let value = defaults.double(forKey: Keys.recheckIntervalSec)
-            return Ranges.recheckIntervalSec.contains(value) ? value : Defaults.recheckIntervalSec
-        }
-        set {
-            objectWillChange.send()
-            let clamped = min(max(newValue, Ranges.recheckIntervalSec.lowerBound), Ranges.recheckIntervalSec.upperBound)
-            defaults.set(clamped, forKey: Keys.recheckIntervalSec)
         }
     }
 
@@ -162,7 +165,6 @@ final class Configuration: ConfigurationProviding, ObservableObject {
     func resetToDefaults() {
         isEnabled = Defaults.isEnabled
         debounceMs = Defaults.debounceMs
-        recheckIntervalSec = Defaults.recheckIntervalSec
         cooldownSec = Defaults.cooldownSec
         minimumKeyCount = Defaults.minimumKeyCount
         playSoundOnLock = Defaults.playSoundOnLock

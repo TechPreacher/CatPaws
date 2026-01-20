@@ -180,17 +180,7 @@ struct DetectionSettingsView: View {
                 }
             }
 
-            Section("Auto-Unlock") {
-                HStack {
-                    Text("Re-check interval:")
-                    Spacer()
-                    Slider(value: $configuration.recheckIntervalSec, in: 1...5, step: 0.5)
-                        .frame(width: 150)
-                    Text(String(format: "%.1fs", configuration.recheckIntervalSec))
-                        .frame(width: 60, alignment: .trailing)
-                        .monospacedDigit()
-                }
-
+            Section("Unlock Behavior") {
                 HStack {
                     Text("Cooldown after unlock:")
                     Spacer()

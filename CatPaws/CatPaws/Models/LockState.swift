@@ -88,15 +88,7 @@ struct LockState {
         lockReason = reasonWithLock
     }
 
-    /// Automatic unlock when cat leaves
-    mutating func autoUnlock() {
-        status = .monitoring
-        lockedAt = nil
-        lockReason = nil
-        lastRecheckAt = nil
-    }
-
-    /// Manual unlock via popup or menu (enters cooldown)
+    /// Manual unlock via popup, menu, or emergency shortcut (enters cooldown)
     mutating func manualUnlock(cooldownDuration: TimeInterval) {
         status = .cooldown
         lockedAt = nil

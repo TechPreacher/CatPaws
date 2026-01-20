@@ -15,9 +15,6 @@ protocol ConfigurationProviding {
     /// Debounce period in milliseconds (200-500)
     var debounceMs: Int { get set }
 
-    /// Re-check interval in seconds while locked (1-5)
-    var recheckIntervalSec: Double { get set }
-
     /// Cooldown period in seconds after manual unlock (5-10)
     var cooldownSec: Double { get set }
 

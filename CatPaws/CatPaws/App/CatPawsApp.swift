@@ -19,6 +19,11 @@ struct CatPawsApp: App {
             MenuBarIconView(viewModel: viewModel)
         }
         .menuBarExtraStyle(.window)
+        .onChange(of: appDelegate.onboardingDidComplete) { _, completed in
+            if completed {
+                viewModel.autoStartMonitoringIfNeeded()
+            }
+        }
 
         Settings {
             SettingsView()
