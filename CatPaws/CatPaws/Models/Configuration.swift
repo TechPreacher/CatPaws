@@ -17,7 +17,6 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         static let isEnabled = "catpaws.isEnabled"
         static let hasUserExplicitlyDisabled = "catpaws.hasUserExplicitlyDisabled"
         static let debounceMs = "catpaws.debounceMs"
-        static let recheckIntervalSec = "catpaws.recheckIntervalSec"
         static let cooldownSec = "catpaws.cooldownSec"
         static let minimumKeyCount = "catpaws.minimumKeyCount"
         static let playSoundOnLock = "catpaws.playSoundOnLock"
@@ -32,7 +31,6 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         static let isEnabled = true
         static let hasUserExplicitlyDisabled = false
         static let debounceMs = 300  // Middle of 200-500 range
-        static let recheckIntervalSec = 2.0
         static let cooldownSec = 7.0  // Middle of 5-10 range
         static let minimumKeyCount = 3
         static let playSoundOnLock = true
@@ -45,7 +43,6 @@ final class Configuration: ConfigurationProviding, ObservableObject {
 
     private enum Ranges {
         static let debounceMs = 200...500
-        static let recheckIntervalSec = 1.0...5.0
         static let cooldownSec = 5.0...10.0
         static let minimumKeyCount = 3...5
     }
@@ -62,7 +59,6 @@ final class Configuration: ConfigurationProviding, ObservableObject {
             Keys.isEnabled: Defaults.isEnabled,
             Keys.hasUserExplicitlyDisabled: Defaults.hasUserExplicitlyDisabled,
             Keys.debounceMs: Defaults.debounceMs,
-            Keys.recheckIntervalSec: Defaults.recheckIntervalSec,
             Keys.cooldownSec: Defaults.cooldownSec,
             Keys.minimumKeyCount: Defaults.minimumKeyCount,
             Keys.playSoundOnLock: Defaults.playSoundOnLock,
@@ -107,18 +103,6 @@ final class Configuration: ConfigurationProviding, ObservableObject {
             objectWillChange.send()
             let clamped = min(max(newValue, Ranges.debounceMs.lowerBound), Ranges.debounceMs.upperBound)
             defaults.set(clamped, forKey: Keys.debounceMs)
-        }
-    }
-
-    var recheckIntervalSec: Double {
-        get {
-            let value = defaults.double(forKey: Keys.recheckIntervalSec)
-            return Ranges.recheckIntervalSec.contains(value) ? value : Defaults.recheckIntervalSec
-        }
-        set {
-            objectWillChange.send()
-            let clamped = min(max(newValue, Ranges.recheckIntervalSec.lowerBound), Ranges.recheckIntervalSec.upperBound)
-            defaults.set(clamped, forKey: Keys.recheckIntervalSec)
         }
     }
 
@@ -181,7 +165,6 @@ final class Configuration: ConfigurationProviding, ObservableObject {
     func resetToDefaults() {
         isEnabled = Defaults.isEnabled
         debounceMs = Defaults.debounceMs
-        recheckIntervalSec = Defaults.recheckIntervalSec
         cooldownSec = Defaults.cooldownSec
         minimumKeyCount = Defaults.minimumKeyCount
         playSoundOnLock = Defaults.playSoundOnLock

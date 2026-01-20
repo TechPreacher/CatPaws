@@ -98,7 +98,8 @@ final class NotificationWindowController: NotificationPresenting {
     /// Start monitoring for emergency keyboard shortcut (Cmd+Option+Escape held for 2 seconds)
     private func startEmergencyShortcutMonitoring() {
         // Monitor key down events for Escape with modifiers
-        localEventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.keyDown, .keyUp, .flagsChanged]) { [weak self] event in
+        let eventMask: NSEvent.EventTypeMask = [.keyDown, .keyUp, .flagsChanged]
+        localEventMonitor = NSEvent.addLocalMonitorForEvents(matching: eventMask) { [weak self] event in
             self?.handleEmergencyShortcutEvent(event)
             return event
         }

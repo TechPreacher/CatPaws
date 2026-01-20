@@ -46,7 +46,7 @@ final class AppViewModel: ObservableObject {
     @Published private(set) var isMonitoring: Bool = false
 
     /// Current state of both permissions (Accessibility and Input Monitoring)
-    @Published private(set) var permissionState: PermissionState = PermissionState()
+    @Published private(set) var permissionState = PermissionState()
 
     /// Whether to show the permission revocation banner
     @Published var showPermissionRevokedBanner: Bool = false
