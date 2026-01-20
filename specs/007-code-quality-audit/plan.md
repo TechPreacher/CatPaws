@@ -183,6 +183,14 @@ No constitution violations requiring justification.
    - Missing test coverage
    - Duplicate test logic
    - Mock accuracy
+   - Coverage measurement (Constitution III: 80% core detection)
+
+## Analysis Notes (2026-01-20)
+
+- **FR-014 (Concurrency)**: No issues found - async/await used correctly throughout
+- **FR-013/SC-004 (Documentation)**: Existing docs adequate; verification-only
+- **DUP-003 through DUP-012**: Deferred to future iteration (medium/low impact)
+- **TQ-010 (Duplicate tests)**: Minor overlap acceptable; not blocking
 
 ## Phase Outputs
 

@@ -101,7 +101,7 @@
 ### High-Impact Duplicates (DUP-001, DUP-002)
 
 - [ ] T027 [US2] Refactor OnboardingViewModel to use PermissionService.checkInputMonitoring() instead of duplicated event tap code in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
-- [ ] T028 [US2] Remove duplicate permission check implementation from OnboardingViewModel (lines 254-273 after T027)
+- [ ] T028 [US2] Remove duplicate `checkInputMonitoringPermission()` private method from OnboardingViewModel after T027 refactor
 
 ### Test Organization (TQ-009)
 
@@ -197,7 +197,8 @@
 - [ ] T059 [P] Verify keyboard lock/unlock functionality works
 - [ ] T060 Run full test suite: `xcodebuild -scheme CatPaws test`
 - [ ] T061 Run SwiftLint: `swiftlint`
-- [ ] T062 Update any affected documentation in specs/007-code-quality-audit/
+- [ ] T062 Measure test coverage for core detection logic (Constitution III: must exceed 80%): `xcodebuild test -scheme CatPaws -enableCodeCoverage YES`
+- [ ] T063 Update any affected documentation in specs/007-code-quality-audit/
 
 ---
 
@@ -278,8 +279,8 @@ T052, T053, T054 can run together
 | US2 Duplicates | T027-T032 | Consolidate 2 critical patterns |
 | US3 Best Practices | T033-T040 | Fix 7 access control issues |
 | US4 Test Quality | T041-T056 | Fix 4 tests, add 9 new tests/mocks |
-| Polish | T057-T062 | Final validation |
-| **Total** | **62 tasks** | |
+| Polish | T057-T063 | Final validation + coverage |
+| **Total** | **63 tasks** | |
 
 ---
 
@@ -290,3 +291,10 @@ T052, T053, T054 can run together
 - Run tests after every modification phase
 - If any test fails, investigate before proceeding
 - Keep DC-010 (`checkPermission`) and DC-012 (`resetState`) - they're test helpers
+
+## Analysis Gaps (Intentionally Deferred)
+
+- **DUP-003 through DUP-012**: Medium/low-impact duplicates deferred to future iteration
+- **FR-014 (Concurrency)**: No violations found; no tasks needed
+- **SC-004 (Documentation)**: Verification-only; existing docs adequate
+- **TQ-010 (Duplicate test)**: Minor overlap; not blocking

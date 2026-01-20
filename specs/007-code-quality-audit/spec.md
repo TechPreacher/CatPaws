@@ -119,8 +119,8 @@ As a developer, I want tests reviewed for correctness, coverage gaps, and redund
 - **FR-010**: Audit MUST identify use of force unwrapping where safe alternatives exist
 - **FR-011**: Audit MUST identify improper use of optionals (unnecessary optional chaining, missing guard statements)
 - **FR-012**: Audit MUST verify access control is appropriately restrictive (private where possible)
-- **FR-013**: Audit MUST identify missing documentation on public interfaces
-- **FR-014**: Audit MUST verify proper use of Swift concurrency patterns (async/await, actors)
+- **FR-013**: Audit MUST identify missing documentation on public interfaces (verification only - existing documentation is sufficient per research.md findings)
+- **FR-014**: Audit MUST verify proper use of Swift concurrency patterns (async/await, actors) - NOTE: Research found no violations; codebase already uses modern patterns correctly
 
 #### Test Quality
 
@@ -136,6 +136,15 @@ As a developer, I want tests reviewed for correctness, coverage gaps, and redund
 - **Finding**: An identified issue with category (dead-code, duplicate, best-practice, test-quality), severity (critical, warning, info), file location, and remediation recommendation
 - **CodeMetrics**: Quantitative measures of code quality including lines of code, cyclomatic complexity, test coverage percentage
 - **AuditReport**: Aggregated summary of all findings organized by category with before/after metrics
+
+## Analysis Findings (2026-01-20)
+
+Post-analysis clarifications based on `/speckit.analyze` review:
+
+- **FR-014 (Concurrency)**: No violations found - codebase uses async/await correctly
+- **SC-004 (Documentation)**: Existing public interface documentation is adequate per research.md
+- **Duplicate Code**: Only critical duplicates (DUP-001, DUP-002) will be addressed; medium-impact patterns (DUP-003 through DUP-007) deferred to future iteration
+- **Test Coverage**: Coverage measurement task added to verify Constitution III (80% core detection coverage)
 
 ## Constraints
 
@@ -159,7 +168,7 @@ As a developer, I want tests reviewed for correctness, coverage gaps, and redund
 - **SC-001**: All identified dead code is removed and the application builds without errors
 - **SC-002**: Duplicate code is reduced by consolidating repeated patterns (target: no code block >10 lines appears more than once)
 - **SC-003**: Zero compiler warnings in the final codebase
-- **SC-004**: All public interfaces have documentation comments (public types, methods, properties only; internal/private excluded)
+- **SC-004**: All public interfaces have documentation comments (public types, methods, properties only; internal/private excluded) - NOTE: Verification task only; research.md confirms existing documentation is adequate
 - **SC-005**: No force unwraps (!) appear in production code unless accompanied by an inline comment explaining why it's safe (e.g., `// Safe: initialized in awakeFromNib`)
 - **SC-006**: All existing tests pass after refactoring
 - **SC-007**: Invalid or nonsensical tests are fixed or removed
