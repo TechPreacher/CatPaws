@@ -78,10 +78,32 @@ final class PermissionService: PermissionChecking, ObservableObject {
         AXIsProcessTrusted()
     }
 
-    /// Check if Input Monitoring permission is granted using CGPreflightListenEventAccess()
+    /// Check if Input Monitoring permission is granted
+    /// Note: Accessibility permission includes Input Monitoring capabilities
     /// - Returns: true if the process can listen to events
     func checkInputMonitoring() -> Bool {
-        CGPreflightListenEventAccess()
+        // Accessibility permission is a superset that includes Input Monitoring
+        if AXIsProcessTrusted() {
+            return true
+        }
+
+        // Fall back to event tap test for standalone Input Monitoring permission
+        let eventMask: CGEventMask = 1 << CGEventType.keyDown.rawValue
+
+        guard let tap = CGEvent.tapCreate(
+            tap: .cgSessionEventTap,
+            place: .headInsertEventTap,
+            options: .listenOnly,
+            eventsOfInterest: eventMask,
+            callback: { _, _, event, _ in Unmanaged.passUnretained(event) },
+            userInfo: nil
+        ) else {
+            return false
+        }
+
+        // Clean up the test tap immediately
+        CFMachPortInvalidate(tap)
+        return true
     }
 
     /// Get current snapshot of both permission statuses

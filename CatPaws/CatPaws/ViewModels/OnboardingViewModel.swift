@@ -53,7 +53,8 @@ final class OnboardingViewModel: ObservableObject {
     init() {
         // Check initial permission status
         hasAccessibility = AXIsProcessTrusted()
-        hasInputMonitoring = CGPreflightListenEventAccess()
+        // Accessibility permission includes Input Monitoring capabilities
+        hasInputMonitoring = hasAccessibility || Self.checkInputMonitoringPermission()
 
         // Restore persisted step
         let restoredStep = onboardingState.currentStep
@@ -61,14 +62,9 @@ final class OnboardingViewModel: ObservableObject {
         // Smart step restoration based on current permissions
         switch restoredStep {
         case .grantAccessibility where hasAccessibility:
-            // Accessibility granted - move to Input Monitoring step
-            if hasInputMonitoring {
-                currentStep = .testDetection
-                onboardingState.currentStep = .testDetection
-            } else {
-                currentStep = .grantInputMonitoring
-                onboardingState.currentStep = .grantInputMonitoring
-            }
+            // Accessibility granted - skip Input Monitoring (it's included)
+            currentStep = .testDetection
+            onboardingState.currentStep = .testDetection
         case .grantInputMonitoring where hasInputMonitoring:
             // Input Monitoring granted - move to test detection
             currentStep = .testDetection
@@ -103,7 +99,7 @@ final class OnboardingViewModel: ObservableObject {
 
     /// Move to the next step in the onboarding flow
     func nextStep() {
-        guard let next = currentStep.next else {
+        guard var next = currentStep.next else {
             completeOnboarding()
             return
         }
@@ -112,12 +108,21 @@ final class OnboardingViewModel: ObservableObject {
         switch currentStep {
         case .grantAccessibility:
             stopAccessibilityPolling()
+            // Update hasInputMonitoring since Accessibility includes it
+            if hasAccessibility {
+                hasInputMonitoring = true
+            }
         case .grantInputMonitoring:
             stopInputMonitoringPolling()
         case .testDetection:
             stopTestMonitoring()
         default:
             break
+        }
+
+        // Skip Input Monitoring step if Accessibility is granted (it's included)
+        if next == .grantInputMonitoring && hasAccessibility {
+            next = .testDetection
         }
 
         currentStep = next
@@ -204,7 +209,7 @@ final class OnboardingViewModel: ObservableObject {
 
     /// Check if Input Monitoring permission is granted
     func checkPermission() -> Bool {
-        hasInputMonitoring = CGPreflightListenEventAccess()
+        hasInputMonitoring = Self.checkInputMonitoringPermission()
         return hasInputMonitoring
     }
 
@@ -260,6 +265,10 @@ final class OnboardingViewModel: ObservableObject {
         let newStatus = AXIsProcessTrusted()
         if newStatus != hasAccessibility {
             hasAccessibility = newStatus
+            // Accessibility includes Input Monitoring capability
+            if hasAccessibility {
+                hasInputMonitoring = true
+            }
         }
     }
 
@@ -284,10 +293,31 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     private func pollInputMonitoringStatus() {
-        let newStatus = CGPreflightListenEventAccess()
+        let newStatus = Self.checkInputMonitoringPermission()
         if newStatus != hasInputMonitoring {
             hasInputMonitoring = newStatus
         }
+    }
+
+    /// Reliably check Input Monitoring permission by attempting to create an event tap
+    /// CGPreflightListenEventAccess() is unreliable and can return true before permission is granted
+    private static func checkInputMonitoringPermission() -> Bool {
+        let eventMask: CGEventMask = 1 << CGEventType.keyDown.rawValue
+
+        guard let tap = CGEvent.tapCreate(
+            tap: .cgSessionEventTap,
+            place: .headInsertEventTap,
+            options: .listenOnly,
+            eventsOfInterest: eventMask,
+            callback: { _, _, event, _ in Unmanaged.passUnretained(event) },
+            userInfo: nil
+        ) else {
+            return false
+        }
+
+        // Clean up the test tap immediately
+        CFMachPortInvalidate(tap)
+        return true
     }
 
     // MARK: - Test Monitoring
