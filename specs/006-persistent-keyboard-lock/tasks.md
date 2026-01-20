@@ -19,9 +19,9 @@
 
 **Purpose**: No new project setup needed - modifying existing codebase
 
-- [ ] T001 Review existing LockStateManager.swift implementation in CatPaws/CatPaws/Services/LockStateManager.swift
-- [ ] T002 [P] Review existing CatLockPopupView.swift implementation in CatPaws/CatPaws/Views/CatLockPopupView.swift
-- [ ] T003 [P] Review existing Configuration.swift implementation in CatPaws/CatPaws/Models/Configuration.swift
+- [X] T001 Review existing LockStateManager.swift implementation in CatPaws/CatPaws/Services/LockStateManager.swift
+- [X] T002 [P] Review existing CatLockPopupView.swift implementation in CatPaws/CatPaws/Views/CatLockPopupView.swift
+- [X] T003 [P] Review existing Configuration.swift implementation in CatPaws/CatPaws/Models/Configuration.swift
 
 ---
 
@@ -31,9 +31,9 @@
 
 **⚠️ CRITICAL**: These changes affect the lock state machine used by all user stories
 
-- [ ] T004 Remove autoUnlock() method from LockState struct in CatPaws/CatPaws/Models/LockState.swift
-- [ ] T005 Add hasUserExplicitlyDisabled property to Configuration in CatPaws/CatPaws/Models/Configuration.swift
-- [ ] T006 Update Configuration.isEnabled setter to track explicit user changes in CatPaws/CatPaws/Models/Configuration.swift
+- [X] T004 Remove autoUnlock() method from LockState struct in CatPaws/CatPaws/Models/LockState.swift
+- [X] T005 Add hasUserExplicitlyDisabled property to Configuration in CatPaws/CatPaws/Models/Configuration.swift
+- [X] T006 Update Configuration.isEnabled setter to track explicit user changes in CatPaws/CatPaws/Models/Configuration.swift
 
 **Checkpoint**: Foundation ready - state model updated for persistent lock behavior
 
@@ -47,13 +47,13 @@
 
 ### Implementation for User Stories 1 & 2
 
-- [ ] T007 [US1] Remove recheckTask property and cancelRecheckTimer() calls from LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
-- [ ] T008 [US1] Remove startRecheckTimer() method from LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
-- [ ] T009 [US1] Remove performRecheck() method from LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
-- [ ] T010 [US2] Remove autoUnlock() method from LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
-- [ ] T011 [US1] Remove startRecheckTimer() call from completeDebounce() in LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
-- [ ] T012 [US2] Remove performRecheck call from AppViewModel keyDidRelease handler in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T013 [US1] Remove recheckIntervalSec computed property from LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
+- [X] T007 [US1] Remove recheckTask property and cancelRecheckTimer() calls from LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
+- [X] T008 [US1] Remove startRecheckTimer() method from LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
+- [X] T009 [US1] Remove performRecheck() method from LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
+- [X] T010 [US2] Remove autoUnlock() method from LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
+- [X] T011 [US1] Remove startRecheckTimer() call from completeDebounce() in LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
+- [X] T012 [US2] Remove performRecheck call from AppViewModel keyDidRelease handler in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T013 [US1] Remove recheckIntervalSec computed property from LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
 
 **Checkpoint**: Lock now persists until manual dismiss - no automatic unlock occurs
 
@@ -67,14 +67,14 @@
 
 ### Implementation for Emergency Shortcut
 
-- [ ] T014 [US1] Add emergencyShortcutTask property to track hold duration in LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
-- [ ] T015 [US1] Add emergencyShortcutMonitor property for global event monitoring in NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T016 [US1] Implement startEmergencyShortcutMonitoring() method in NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T017 [US1] Implement stopEmergencyShortcutMonitoring() method in NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T018 [US1] Call startEmergencyShortcutMonitoring() in show() method of NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T019 [US1] Call stopEmergencyShortcutMonitoring() in hide() method of NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T020 [US1] Add emergency shortcut hint text to CatLockPopupView in CatPaws/CatPaws/Views/CatLockPopupView.swift
-- [ ] T021 [US1] Add accessibility label for emergency shortcut hint in CatLockPopupView in CatPaws/CatPaws/Views/CatLockPopupView.swift
+- [X] T014 [US1] Add emergencyShortcutTask property to track hold duration in LockStateManager in CatPaws/CatPaws/Services/LockStateManager.swift
+- [X] T015 [US1] Add emergencyShortcutMonitor property for global event monitoring in NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T016 [US1] Implement startEmergencyShortcutMonitoring() method in NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T017 [US1] Implement stopEmergencyShortcutMonitoring() method in NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T018 [US1] Call startEmergencyShortcutMonitoring() in show() method of NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T019 [US1] Call stopEmergencyShortcutMonitoring() in hide() method of NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T020 [US1] Add emergency shortcut hint text to CatLockPopupView in CatPaws/CatPaws/Views/CatLockPopupView.swift
+- [X] T021 [US1] Add accessibility label for emergency shortcut hint in CatLockPopupView in CatPaws/CatPaws/Views/CatLockPopupView.swift
 
 **Checkpoint**: User Story 1 complete - persistent lock with mouse dismiss and emergency shortcut
 
@@ -88,11 +88,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T022 [US3] Add shouldAutoEnable computed property to Configuration in CatPaws/CatPaws/Models/Configuration.swift
-- [ ] T023 [US3] Update AppViewModel init to check shouldAutoEnable and start monitoring in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T024 [US3] Add autoStartMonitoringIfNeeded() method to AppViewModel in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T025 [US3] Call autoStartMonitoringIfNeeded() after permission check in AppViewModel init in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T026 [US3] Update toggleActive() to set hasUserExplicitlyDisabled when user disables in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T022 [US3] Add shouldAutoEnable computed property to Configuration in CatPaws/CatPaws/Models/Configuration.swift
+- [X] T023 [US3] Update AppViewModel init to check shouldAutoEnable and start monitoring in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T024 [US3] Add autoStartMonitoringIfNeeded() method to AppViewModel in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T025 [US3] Call autoStartMonitoringIfNeeded() after permission check in AppViewModel init in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T026 [US3] Update toggleActive() to set hasUserExplicitlyDisabled when user disables in CatPaws/CatPaws/ViewModels/AppViewModel.swift
 
 **Checkpoint**: User Story 3 complete - app auto-enables on startup
 
@@ -106,11 +106,11 @@
 
 ### Implementation for User Story 4
 
-- [ ] T027 [US4] Update OnboardingViewModel completeOnboarding() to enable monitoring in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
-- [ ] T028 [US4] Update OnboardingViewModel skip() to enable monitoring in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
-- [ ] T029 [US4] Add enableMonitoringAfterOnboarding() callback to OnboardingViewModel in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
-- [ ] T030 [US4] Wire onComplete callback in AppDelegate to trigger monitoring enable in CatPaws/CatPaws/App/AppDelegate.swift
-- [ ] T031 [US4] Ensure Configuration.isEnabled is set to true on onboarding completion in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
+- [X] T027 [US4] Update OnboardingViewModel completeOnboarding() to enable monitoring in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
+- [X] T028 [US4] Update OnboardingViewModel skip() to enable monitoring in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
+- [X] T029 [US4] Add enableMonitoringAfterOnboarding() callback to OnboardingViewModel in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
+- [X] T030 [US4] Wire onComplete callback in AppDelegate to trigger monitoring enable in CatPaws/CatPaws/App/AppDelegate.swift
+- [X] T031 [US4] Ensure Configuration.isEnabled is set to true on onboarding completion in CatPaws/CatPaws/ViewModels/OnboardingViewModel.swift
 
 **Checkpoint**: User Story 4 complete - monitoring auto-enabled after onboarding
 
@@ -120,15 +120,15 @@
 
 **Purpose**: Cleanup and validation
 
-- [ ] T032 [P] Remove unused recheckIntervalSec from ConfigurationProviding protocol in CatPaws/CatPaws/Services/ConfigurationProviding.swift
-- [ ] T033 [P] Remove recheckIntervalSec property from Configuration in CatPaws/CatPaws/Models/Configuration.swift
-- [ ] T034 [P] Update any tests that reference removed auto-unlock behavior in CatPawsTests/
-- [ ] T040 [P] Handle edge case: dismiss lock and unlock keyboard when user disables monitoring while locked in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T035 [P] Verify lock popup displays correctly with emergency shortcut hint
-- [ ] T036 Build and test complete flow: detection → lock → mouse dismiss
-- [ ] T037 Build and test complete flow: detection → lock → emergency shortcut dismiss
-- [ ] T038 Build and test auto-enable on fresh app launch
-- [ ] T039 Build and test auto-enable after onboarding completion
+- [X] T032 [P] Remove unused recheckIntervalSec from ConfigurationProviding protocol in CatPaws/CatPaws/Services/ConfigurationProviding.swift
+- [X] T033 [P] Remove recheckIntervalSec property from Configuration in CatPaws/CatPaws/Models/Configuration.swift
+- [X] T034 [P] Update any tests that reference removed auto-unlock behavior in CatPawsTests/
+- [X] T040 [P] Handle edge case: dismiss lock and unlock keyboard when user disables monitoring while locked in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T035 [P] Verify lock popup displays correctly with emergency shortcut hint
+- [X] T036 Build and test complete flow: detection → lock → mouse dismiss
+- [X] T037 Build and test complete flow: detection → lock → emergency shortcut dismiss
+- [X] T038 Build and test auto-enable on fresh app launch
+- [X] T039 Build and test auto-enable after onboarding completion
 
 ---
 

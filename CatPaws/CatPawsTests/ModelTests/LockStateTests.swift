@@ -50,17 +50,6 @@ final class LockStateTests: XCTestCase {
         XCTAssertEqual(state.lockReason?.type, .paw)
     }
 
-    func testTransitionLockedToMonitoring() {
-        let detection = DetectionEvent(type: .paw, keyCount: 3)
-        var state = LockState(status: .locked, lockedAt: Date(), lockReason: detection)
-
-        state.autoUnlock()
-
-        XCTAssertEqual(state.status, .monitoring)
-        XCTAssertNil(state.lockedAt)
-        XCTAssertNil(state.lockReason)
-    }
-
     func testTransitionLockedToCooldown() {
         let detection = DetectionEvent(type: .paw, keyCount: 3)
         var state = LockState(status: .locked, lockedAt: Date(), lockReason: detection)
@@ -99,13 +88,13 @@ final class LockStateTests: XCTestCase {
 
     // MARK: - Validation Rules
 
-    func testLockedAtOnlyWhenLocked() {
+    func testLockedAtClearedOnManualUnlock() {
         let detection = DetectionEvent(type: .paw, keyCount: 3)
         var state = LockState(status: .locked, lockedAt: Date(), lockReason: detection)
 
         XCTAssertNotNil(state.lockedAt)
 
-        state.autoUnlock()
+        state.manualUnlock(cooldownDuration: 5.0)
 
         XCTAssertNil(state.lockedAt)
     }
@@ -140,5 +129,19 @@ final class LockStateTests: XCTestCase {
             cooldownUntil: Date().addingTimeInterval(-1.0)
         )
         XCTAssertTrue(state.isCooldownExpired)
+    }
+
+    // MARK: - Lock Persistence
+
+    func testLockStateRequiresManualUnlock() {
+        let detection = DetectionEvent(type: .paw, keyCount: 3)
+        var state = LockState(status: .locked, lockedAt: Date(), lockReason: detection)
+
+        // Lock persists - only manual unlock changes state
+        XCTAssertEqual(state.status, .locked)
+
+        state.manualUnlock(cooldownDuration: 5.0)
+
+        XCTAssertEqual(state.status, .cooldown)
     }
 }

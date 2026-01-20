@@ -46,22 +46,6 @@ final class LockStateManagerTests: XCTestCase {
 
     // MARK: - T045: Hide is Called When Exiting Locked State
 
-    func testHideCalledOnAutoUnlock() async throws {
-        let detection = DetectionEvent(type: .paw, keyCount: 3)
-
-        // Trigger detection and wait for lock
-        sut.handleDetection(detection)
-        try await Task.sleep(nanoseconds: 400_000_000)
-
-        XCTAssertEqual(sut.state.status, .locked)
-
-        // Simulate auto-unlock via recheck with no keys pressed
-        sut.performRecheck(pressedKeyCount: 0)
-
-        XCTAssertEqual(mockNotificationPresenter.hideCallCount, 1)
-        XCTAssertEqual(sut.state.status, .monitoring)
-    }
-
     func testHideCalledOnManualUnlock() async throws {
         let detection = DetectionEvent(type: .paw, keyCount: 3)
 
@@ -134,9 +118,9 @@ final class LockStateManagerTests: XCTestCase {
         XCTAssertEqual(sut.state.status, .cooldown)
     }
 
-    // MARK: - T054-T056: Automatic Unlock Tests
+    // MARK: - Lock Persistence Tests
 
-    func testPerformRecheckUnlocksWhenNoKeysPressed() async throws {
+    func testLockPersistsUntilManualDismiss() async throws {
         let detection = DetectionEvent(type: .paw, keyCount: 3)
 
         // Lock the keyboard
@@ -145,43 +129,14 @@ final class LockStateManagerTests: XCTestCase {
         XCTAssertEqual(sut.state.status, .locked)
         XCTAssertTrue(mockLockService.isLocked)
 
-        // Perform recheck with no keys pressed
-        sut.performRecheck(pressedKeyCount: 0)
+        // Wait additional time - lock should persist
+        try await Task.sleep(nanoseconds: 500_000_000)
+        XCTAssertEqual(sut.state.status, .locked)
+        XCTAssertTrue(mockLockService.isLocked)
 
-        // Should unlock
-        XCTAssertEqual(sut.state.status, .monitoring)
+        // Manual unlock required
+        sut.manualUnlock()
+        XCTAssertEqual(sut.state.status, .cooldown)
         XCTAssertFalse(mockLockService.isLocked)
-    }
-
-    func testKeyboardRemainsLockedIfKeysStillPressed() async throws {
-        let detection = DetectionEvent(type: .paw, keyCount: 3)
-
-        // Lock the keyboard
-        sut.handleDetection(detection)
-        try await Task.sleep(nanoseconds: 400_000_000)
-        XCTAssertEqual(sut.state.status, .locked)
-
-        // Perform recheck with keys still pressed
-        sut.performRecheck(pressedKeyCount: 3)
-
-        // Should remain locked
-        XCTAssertEqual(sut.state.status, .locked)
-        XCTAssertTrue(mockLockService.isLocked)
-        XCTAssertEqual(mockNotificationPresenter.hideCallCount, 0)
-    }
-
-    func testRecheckRecordsTimestamp() async throws {
-        let detection = DetectionEvent(type: .paw, keyCount: 3)
-
-        // Lock the keyboard
-        sut.handleDetection(detection)
-        try await Task.sleep(nanoseconds: 400_000_000)
-
-        XCTAssertNil(sut.state.lastRecheckAt)
-
-        // Perform recheck
-        sut.performRecheck(pressedKeyCount: 3)
-
-        XCTAssertNotNil(sut.state.lastRecheckAt)
     }
 }

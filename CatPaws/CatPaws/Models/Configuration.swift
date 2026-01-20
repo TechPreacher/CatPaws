@@ -15,6 +15,7 @@ final class Configuration: ConfigurationProviding, ObservableObject {
 
     private enum Keys {
         static let isEnabled = "catpaws.isEnabled"
+        static let hasUserExplicitlyDisabled = "catpaws.hasUserExplicitlyDisabled"
         static let debounceMs = "catpaws.debounceMs"
         static let recheckIntervalSec = "catpaws.recheckIntervalSec"
         static let cooldownSec = "catpaws.cooldownSec"
@@ -29,6 +30,7 @@ final class Configuration: ConfigurationProviding, ObservableObject {
 
     private enum Defaults {
         static let isEnabled = true
+        static let hasUserExplicitlyDisabled = false
         static let debounceMs = 300  // Middle of 200-500 range
         static let recheckIntervalSec = 2.0
         static let cooldownSec = 7.0  // Middle of 5-10 range
@@ -58,6 +60,7 @@ final class Configuration: ConfigurationProviding, ObservableObject {
     private func registerDefaults() {
         defaults.register(defaults: [
             Keys.isEnabled: Defaults.isEnabled,
+            Keys.hasUserExplicitlyDisabled: Defaults.hasUserExplicitlyDisabled,
             Keys.debounceMs: Defaults.debounceMs,
             Keys.recheckIntervalSec: Defaults.recheckIntervalSec,
             Keys.cooldownSec: Defaults.cooldownSec,
@@ -77,6 +80,22 @@ final class Configuration: ConfigurationProviding, ObservableObject {
             objectWillChange.send()
             defaults.set(newValue, forKey: Keys.isEnabled)
         }
+    }
+
+    /// Tracks whether the user has explicitly disabled monitoring.
+    /// Used to distinguish between "never configured" (auto-enable) and "user disabled" (respect choice).
+    var hasUserExplicitlyDisabled: Bool {
+        get { defaults.bool(forKey: Keys.hasUserExplicitlyDisabled) }
+        set {
+            objectWillChange.send()
+            defaults.set(newValue, forKey: Keys.hasUserExplicitlyDisabled)
+        }
+    }
+
+    /// Returns true if monitoring should auto-enable on app start.
+    /// Auto-enables unless user has explicitly disabled monitoring.
+    var shouldAutoEnable: Bool {
+        !hasUserExplicitlyDisabled
     }
 
     var debounceMs: Int {

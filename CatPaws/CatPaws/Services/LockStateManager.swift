@@ -43,9 +43,6 @@ final class LockStateManager: LockStateManaging {
     /// Current cooldown task
     private var cooldownTask: Task<Void, Never>?
 
-    /// Current recheck task
-    private var recheckTask: Task<Void, Never>?
-
     /// Pending detection during debounce
     private var pendingDetection: DetectionEvent?
 
@@ -57,10 +54,6 @@ final class LockStateManager: LockStateManaging {
 
     private var cooldownSec: Double {
         configuration?.cooldownSec ?? 7.0
-    }
-
-    private var recheckIntervalSec: Double {
-        configuration?.recheckIntervalSec ?? 2.0
     }
 
     // MARK: - LockStateManaging
@@ -104,7 +97,6 @@ final class LockStateManager: LockStateManaging {
     func manualUnlock() {
         guard state.status == .locked else { return }
 
-        cancelRecheckTimer()
         let previousStatus = String(describing: state.status)
         state.manualUnlock(cooldownDuration: cooldownSec)
         AppLogger.logStateTransition(from: previousStatus, to: String(describing: state.status))
@@ -120,17 +112,6 @@ final class LockStateManager: LockStateManaging {
         }
 
         startCooldownTimer()
-    }
-
-    func performRecheck(pressedKeyCount: Int) {
-        guard state.status == .locked else { return }
-
-        state.recordRecheck()
-
-        if pressedKeyCount == 0 {
-            // No keys pressed, auto-unlock
-            autoUnlock()
-        }
     }
 
     // MARK: - Private Methods
@@ -185,50 +166,6 @@ final class LockStateManager: LockStateManaging {
         // Show notification
         notificationPresenter?.show(detectionType: detection.type) { [weak self] in
             self?.manualUnlock()
-        }
-
-        startRecheckTimer()
-    }
-
-    private func startRecheckTimer() {
-        recheckTask?.cancel()
-
-        recheckTask = Task { [weak self] in
-            guard let self = self else { return }
-
-            while !Task.isCancelled && self.state.status == .locked {
-                let delayNs = UInt64(self.recheckIntervalSec * 1_000_000_000)
-                try? await Task.sleep(nanoseconds: delayNs)
-
-                guard !Task.isCancelled, self.state.status == .locked else { break }
-
-                // Recheck will be called externally with current key count
-                // This timer just ensures periodic checks happen
-                await MainActor.run {
-                    self.state.recordRecheck()
-                }
-            }
-        }
-    }
-
-    private func cancelRecheckTimer() {
-        recheckTask?.cancel()
-        recheckTask = nil
-    }
-
-    private func autoUnlock() {
-        cancelRecheckTimer()
-        let previousStatus = String(describing: state.status)
-        state.autoUnlock()
-        AppLogger.logStateTransition(from: previousStatus, to: String(describing: state.status))
-        AppLogger.logUnlock(reason: "keys released")
-        lockService?.unlock()
-        notificationPresenter?.hide()
-        delegate?.lockStateManagerDidUnlock(self)
-
-        // Play unlock sound if enabled
-        if configuration?.playSoundOnUnlock ?? true {
-            playUnlockSound()
         }
     }
 

@@ -16,6 +16,11 @@ final class NotificationWindowController: NotificationPresenting {
     private var hostingView: NSHostingView<CatLockPopupView>?
     private var currentDismissCallback: (() -> Void)?
 
+    // Emergency shortcut properties
+    private var localEventMonitor: Any?
+    private var emergencyShortcutTask: Task<Void, Never>?
+    private let emergencyHoldDuration: TimeInterval = 2.0
+
     // MARK: - NotificationPresenting
 
     func show(detectionType: DetectionType, onDismiss: @escaping () -> Void) {
@@ -67,9 +72,13 @@ final class NotificationWindowController: NotificationPresenting {
         // Show the panel
         panel.orderFrontRegardless()
         window = panel
+
+        // Start monitoring for emergency shortcut
+        startEmergencyShortcutMonitoring()
     }
 
     func hide() {
+        stopEmergencyShortcutMonitoring()
         window?.close()
         window = nil
         hostingView = nil
@@ -82,6 +91,77 @@ final class NotificationWindowController: NotificationPresenting {
         let callback = currentDismissCallback
         hide()
         callback?()
+    }
+
+    // MARK: - Emergency Shortcut Monitoring
+
+    /// Start monitoring for emergency keyboard shortcut (Cmd+Option+Escape held for 2 seconds)
+    private func startEmergencyShortcutMonitoring() {
+        // Monitor key down events for Escape with modifiers
+        localEventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.keyDown, .keyUp, .flagsChanged]) { [weak self] event in
+            self?.handleEmergencyShortcutEvent(event)
+            return event
+        }
+    }
+
+    /// Stop monitoring for emergency shortcut
+    private func stopEmergencyShortcutMonitoring() {
+        if let monitor = localEventMonitor {
+            NSEvent.removeMonitor(monitor)
+            localEventMonitor = nil
+        }
+        cancelEmergencyShortcutTimer()
+    }
+
+    /// Handle keyboard events to detect emergency shortcut
+    private func handleEmergencyShortcutEvent(_ event: NSEvent) {
+        // Check for Escape key (keyCode 53) with Command+Option modifiers
+        let escapeKeyCode: UInt16 = 53
+        let requiredModifiers: NSEvent.ModifierFlags = [.command, .option]
+
+        if event.type == .keyDown && event.keyCode == escapeKeyCode {
+            // Check if Command+Option are held
+            let currentModifiers = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+            if currentModifiers.contains(requiredModifiers) {
+                // Start timer if not already running
+                if emergencyShortcutTask == nil {
+                    startEmergencyShortcutTimer()
+                }
+            }
+        } else if event.type == .keyUp && event.keyCode == escapeKeyCode {
+            // Escape released, cancel timer
+            cancelEmergencyShortcutTimer()
+        } else if event.type == .flagsChanged {
+            // Modifier keys changed, check if Command+Option are still held
+            let currentModifiers = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+            if !currentModifiers.contains(requiredModifiers) {
+                cancelEmergencyShortcutTimer()
+            }
+        }
+    }
+
+    /// Start the 2-second timer for emergency unlock
+    private func startEmergencyShortcutTimer() {
+        emergencyShortcutTask = Task { @MainActor [weak self] in
+            guard let self = self else { return }
+
+            do {
+                try await Task.sleep(nanoseconds: UInt64(self.emergencyHoldDuration * 1_000_000_000))
+
+                // Timer completed - trigger emergency unlock
+                if !Task.isCancelled {
+                    self.handleDismiss()
+                }
+            } catch {
+                // Task was cancelled, do nothing
+            }
+        }
+    }
+
+    /// Cancel the emergency shortcut timer
+    private func cancelEmergencyShortcutTimer() {
+        emergencyShortcutTask?.cancel()
+        emergencyShortcutTask = nil
     }
 
     /// Determine the active screen where the user is working

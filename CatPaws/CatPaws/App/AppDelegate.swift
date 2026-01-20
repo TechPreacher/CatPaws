@@ -8,10 +8,13 @@
 import AppKit
 import SwiftUI
 
-final class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var onboardingWindow: NSWindow?
     private var onboardingViewModel: OnboardingViewModel?
     private var isTerminating = false
+
+    /// Published property that triggers when onboarding completes
+    @Published var onboardingDidComplete: Bool = false
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Check for duplicate instances and quit if another is already running
@@ -98,11 +101,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.activate(ignoringOtherApps: true)
     }
 
-    /// Close the onboarding window
+    /// Close the onboarding window and notify completion
     private func closeOnboardingWindow() {
         onboardingWindow?.close()
         onboardingWindow = nil
         onboardingViewModel = nil
+
+        // Notify that onboarding completed - triggers auto-enable
+        onboardingDidComplete = true
     }
 }
 

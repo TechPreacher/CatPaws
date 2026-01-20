@@ -94,6 +94,9 @@ final class AppViewModel: ObservableObject {
         updatePermissionState()
         updateIconState()
         updatePermissionPolling()
+
+        // Auto-start monitoring if conditions are met
+        autoStartMonitoringIfNeeded()
     }
 
     deinit {
@@ -107,8 +110,12 @@ final class AppViewModel: ObservableObject {
         appState.isActive.toggle()
 
         if appState.isActive {
+            // User explicitly enabled - clear the disabled flag
+            configuration.hasUserExplicitlyDisabled = false
             startMonitoring()
         } else {
+            // User explicitly disabled - set the flag
+            configuration.hasUserExplicitlyDisabled = true
             stopMonitoring()
         }
     }
@@ -146,6 +153,24 @@ final class AppViewModel: ObservableObject {
     /// Manually unlock the keyboard
     func manualUnlock() {
         lockStateManager.manualUnlock()
+    }
+
+    /// Auto-start monitoring if conditions are met (permission granted, not explicitly disabled)
+    /// Called on app launch and after onboarding completion
+    func autoStartMonitoringIfNeeded() {
+        // Only auto-start if:
+        // 1. User has not explicitly disabled monitoring
+        // 2. Permission is granted
+        // 3. Not already monitoring
+        guard configuration.shouldAutoEnable,
+              hasPermission,
+              !appState.isActive else {
+            return
+        }
+
+        // Auto-enable monitoring
+        appState.isActive = true
+        startMonitoring()
     }
 
     // MARK: - Private Methods
@@ -340,11 +365,7 @@ extension AppViewModel: KeyboardMonitorDelegate {
     nonisolated func keyDidRelease(_ keyCode: UInt16, at timestamp: Date) {
         Task { @MainActor in
             keyboardState.keyReleased(keyCode)
-
-            // Check for auto-unlock if we're locked
-            if lockStateManager.state.status == .locked {
-                lockStateManager.performRecheck(pressedKeyCount: keyboardState.nonModifierKeys.count)
-            }
+            // Lock persists until manual dismiss - no auto-unlock on key release
         }
     }
 

@@ -48,10 +48,10 @@ final class DetectionLockUnlockIntegrationTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Full Detection→Lock→Auto-Unlock Flow
+    // MARK: - Full Detection→Lock→Manual-Unlock Flow
 
-    /// Test: Simulates a cat paw pressing keys, then leaving, resulting in auto-unlock
-    func testFullDetectionLockAutoUnlockFlow() async throws {
+    /// Test: Simulates a cat paw pressing keys, then user manually dismissing
+    func testFullDetectionLockManualUnlockFlow() async throws {
         // 1. Verify initial state
         XCTAssertEqual(lockStateManager.state.status, .monitoring)
         XCTAssertFalse(lockService.isLocked)
@@ -86,16 +86,20 @@ final class DetectionLockUnlockIntegrationTests: XCTestCase {
         XCTAssertEqual(mockNotificationPresenter.showCallCount, 1, "Notification should be shown")
         XCTAssertEqual(mockNotificationPresenter.lastShownDetectionType, .paw)
 
-        // 8. Simulate cat leaving - release all keys
+        // 8. Simulate cat leaving - release all keys (lock persists)
         for keyCode in catPawKeys {
             keyboardState.keyReleased(keyCode)
         }
 
-        // 9. Perform recheck with no keys pressed (simulates auto-unlock timer)
-        lockStateManager.performRecheck(pressedKeyCount: keyboardState.nonModifierKeys.count)
+        // 9. Lock should persist until manual dismiss
+        XCTAssertEqual(lockStateManager.state.status, .locked)
+        XCTAssertTrue(lockService.isLocked, "Keyboard should remain locked until manual dismiss")
 
-        // 10. Verify unlocked state
-        XCTAssertEqual(lockStateManager.state.status, .monitoring)
+        // 10. User clicks dismiss button
+        mockNotificationPresenter.simulateDismiss()
+
+        // 11. Verify unlocked state (goes to cooldown after manual unlock)
+        XCTAssertEqual(lockStateManager.state.status, .cooldown)
         XCTAssertFalse(lockService.isLocked, "Keyboard should be unlocked")
         XCTAssertEqual(mockNotificationPresenter.hideCallCount, 1, "Notification should be hidden")
     }
@@ -285,10 +289,10 @@ final class DetectionLockUnlockIntegrationTests: XCTestCase {
         XCTAssertEqual(mockNotificationPresenter.showCallCount, 0, "Notification should not be shown")
     }
 
-    // MARK: - Keyboard Remains Locked If Keys Still Pressed
+    // MARK: - Lock Persists Until Manual Dismiss
 
-    /// Test: Auto-unlock recheck while keys still pressed should keep keyboard locked
-    func testRecheckWithKeysPressedKeepsLocked() async throws {
+    /// Test: Lock persists even when keys are released - requires manual dismiss
+    func testLockPersistsUntilManualDismiss() async throws {
         // Press cat paw keys
         let catPawKeys: Set<UInt16> = [0x00, 0x01, 0x02, 0x03]
         for keyCode in catPawKeys {
@@ -304,12 +308,23 @@ final class DetectionLockUnlockIntegrationTests: XCTestCase {
         try await Task.sleep(nanoseconds: 400_000_000)
         XCTAssertEqual(lockStateManager.state.status, .locked)
 
-        // Perform recheck while keys still pressed
-        lockStateManager.performRecheck(pressedKeyCount: keyboardState.nonModifierKeys.count)
+        // Release all keys
+        for keyCode in catPawKeys {
+            keyboardState.keyReleased(keyCode)
+        }
 
-        // Should remain locked
+        // Lock should persist - no automatic unlock
         XCTAssertEqual(lockStateManager.state.status, .locked)
         XCTAssertTrue(lockService.isLocked)
         XCTAssertEqual(mockNotificationPresenter.hideCallCount, 0, "Notification should remain visible")
+
+        // Wait additional time - lock should still persist
+        try await Task.sleep(nanoseconds: 500_000_000)
+        XCTAssertEqual(lockStateManager.state.status, .locked)
+
+        // Only manual dismiss unlocks
+        mockNotificationPresenter.simulateDismiss()
+        XCTAssertEqual(lockStateManager.state.status, .cooldown)
+        XCTAssertFalse(lockService.isLocked)
     }
 }
