@@ -12,6 +12,7 @@ import CoreGraphics
 import Foundation
 
 /// Protocol for checking system permissions
+@MainActor
 protocol PermissionChecking {
     /// Check if Accessibility permission is granted
     /// - Returns: true if the process is trusted for Accessibility
