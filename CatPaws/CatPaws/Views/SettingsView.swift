@@ -33,7 +33,7 @@ struct SettingsView: View {
 }
 
 /// General settings tab content
-struct GeneralSettingsView: View {
+private struct GeneralSettingsView: View {
     @ObservedObject private var loginItemService = LoginItemService.shared
     @StateObject private var statisticsService = StatisticsService()
     @StateObject private var configuration = Configuration()
@@ -148,7 +148,7 @@ struct GeneralSettingsView: View {
 }
 
 /// Detection settings tab content
-struct DetectionSettingsView: View {
+private struct DetectionSettingsView: View {
     @ObservedObject var configuration: Configuration
 
     var body: some View {
@@ -208,7 +208,7 @@ struct DetectionSettingsView: View {
 }
 
 /// About tab content
-struct AboutView: View {
+private struct AboutView: View {
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "pawprint.fill")

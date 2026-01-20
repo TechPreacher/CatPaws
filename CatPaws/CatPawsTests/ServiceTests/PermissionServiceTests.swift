@@ -32,19 +32,7 @@ final class PermissionServiceTests: XCTestCase {
         XCTAssertEqual(sut.state.inputMonitoring.type, .inputMonitoring)
     }
 
-    // MARK: - Permission Check Tests
-
-    func testCheckAccessibilityReturnsBoolean() {
-        // Should return a boolean (actual value depends on system state)
-        let result = sut.checkAccessibility()
-        XCTAssertTrue(result == true || result == false)
-    }
-
-    func testCheckInputMonitoringReturnsBoolean() {
-        // Should return a boolean (actual value depends on system state)
-        let result = sut.checkInputMonitoring()
-        XCTAssertTrue(result == true || result == false)
-    }
+    // MARK: - State Tests
 
     func testGetCurrentStateUpdatesState() {
         let state = sut.getCurrentState()

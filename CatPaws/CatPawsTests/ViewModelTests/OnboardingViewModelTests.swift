@@ -209,22 +209,4 @@ final class OnboardingViewModelTests: XCTestCase {
         // hasPermission is a computed property that returns hasInputMonitoring
         XCTAssertEqual(viewModel.hasPermission, viewModel.hasInputMonitoring)
     }
-
-    func testHasAccessibilityIsInitialized() {
-        let viewModel = OnboardingViewModel()
-
-        // hasAccessibility should be set during init
-        // Can only verify it returns a boolean value
-        let result = viewModel.hasAccessibility
-        XCTAssertTrue(result == true || result == false)
-    }
-
-    func testHasInputMonitoringIsInitialized() {
-        let viewModel = OnboardingViewModel()
-
-        // hasInputMonitoring should be set during init
-        // Can only verify it returns a boolean value
-        let result = viewModel.hasInputMonitoring
-        XCTAssertTrue(result == true || result == false)
-    }
 }

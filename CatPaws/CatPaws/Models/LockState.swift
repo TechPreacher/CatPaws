@@ -38,23 +38,18 @@ struct LockState {
     /// When cooldown expires after manual unlock
     var cooldownUntil: Date?
 
-    /// Timestamp of last periodic re-check
-    var lastRecheckAt: Date?
-
     // MARK: - Initialization
 
     init(
         status: LockStatus = .monitoring,
         lockedAt: Date? = nil,
         lockReason: DetectionEvent? = nil,
-        cooldownUntil: Date? = nil,
-        lastRecheckAt: Date? = nil
+        cooldownUntil: Date? = nil
     ) {
         self.status = status
         self.lockedAt = lockedAt
         self.lockReason = lockReason
         self.cooldownUntil = cooldownUntil
-        self.lastRecheckAt = lastRecheckAt
     }
 
     // MARK: - Computed Properties
@@ -93,7 +88,6 @@ struct LockState {
         status = .cooldown
         lockedAt = nil
         lockReason = nil
-        lastRecheckAt = nil
         cooldownUntil = Date().addingTimeInterval(cooldownDuration)
     }
 
@@ -102,10 +96,5 @@ struct LockState {
         guard status == .cooldown else { return }
         status = .monitoring
         cooldownUntil = nil
-    }
-
-    /// Record a re-check timestamp
-    mutating func recordRecheck() {
-        lastRecheckAt = Date()
     }
 }

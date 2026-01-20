@@ -53,14 +53,14 @@ final class AppViewModel: ObservableObject {
 
     // MARK: - Services
 
-    let keyboardMonitor: KeyboardMonitor
-    let configuration: Configuration
-    let catDetectionService: CatDetectionService
-    let lockStateManager: LockStateManager
-    let lockService: KeyboardLockService
-    let notificationController: NotificationWindowController
+    private let keyboardMonitor: KeyboardMonitor
+    private let configuration: Configuration
+    private let catDetectionService: CatDetectionService
+    private let lockStateManager: LockStateManager
+    private let lockService: KeyboardLockService
+    private let notificationController: NotificationWindowController
     let statisticsService: StatisticsService
-    let permissionService: PermissionService
+    private let permissionService: PermissionService
 
     // MARK: - Private
 
@@ -143,11 +143,6 @@ final class AppViewModel: ObservableObject {
                 self.updatePermissionPolling()
             }
         }
-    }
-
-    /// Open System Settings to grant permission
-    func openPermissionSettings() {
-        PermissionGuideView.openInputMonitoringSettings()
     }
 
     /// Manually unlock the keyboard
