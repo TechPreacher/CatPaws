@@ -67,7 +67,7 @@ final class OnboardingUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // Verify permission explanation step
-        XCTAssertTrue(app.staticTexts["Permission Required"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 2))
     }
 
     func testBackButtonReturnsToWelcome() throws {
@@ -79,7 +79,7 @@ final class OnboardingUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // Verify we're on permission explanation
-        XCTAssertTrue(app.staticTexts["Permission Required"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 2))
 
         // Tap Back
         app.buttons["Back"].tap()
@@ -97,7 +97,7 @@ final class OnboardingUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // Step 2: Permission Explanation
-        XCTAssertTrue(app.staticTexts["Permission Required"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
         // Step 3: Grant Accessibility
@@ -191,7 +191,7 @@ final class OnboardingUITests: XCTestCase {
         // Navigate to permission explanation
         XCTAssertTrue(app.staticTexts["Welcome to CatPaws"].waitForExistence(timeout: 5))
         app.buttons["Next"].tap()
-        XCTAssertTrue(app.staticTexts["Permission Required"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 2))
 
         // Find and tap Skip element
         var skipElement: XCUIElement?
@@ -211,7 +211,7 @@ final class OnboardingUITests: XCTestCase {
         skipElement?.tap()
 
         // Verify onboarding closed
-        let welcomeText = app.staticTexts["Permission Required"]
+        let welcomeText = app.staticTexts["Permissions Required"]
         XCTAssertFalse(welcomeText.waitForExistence(timeout: 3), "Onboarding should close when skipped")
     }
 
@@ -235,26 +235,37 @@ final class OnboardingUITests: XCTestCase {
         app.launchArguments = ["-catpaws.onboarding.completed", "false", "-catpaws.onboarding.currentStep", "0"]
         app.launch()
 
-        // Navigate to complete step
+        // Navigate to complete step - there are 6 steps total
+        // Step 1: Welcome
         XCTAssertTrue(app.staticTexts["Welcome to CatPaws"].waitForExistence(timeout: 5))
         app.buttons["Next"].tap()
+
+        // Step 2: Permission Explanation
+        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
-        // Handle permission step
-        if app.buttons["Continue Anyway"].exists {
+        // Step 3: Grant Accessibility
+        if app.buttons["Continue Anyway"].waitForExistence(timeout: 2) {
             app.buttons["Continue Anyway"].tap()
-        } else {
+        } else if app.buttons["Next"].exists {
             app.buttons["Next"].tap()
         }
 
-        // Handle test detection step
-        if app.buttons["Skip Test"].exists {
+        // Step 4: Grant Input Monitoring
+        if app.buttons["Continue Anyway"].waitForExistence(timeout: 2) {
+            app.buttons["Continue Anyway"].tap()
+        } else if app.buttons["Next"].exists {
+            app.buttons["Next"].tap()
+        }
+
+        // Step 5: Test Detection
+        if app.buttons["Skip Test"].waitForExistence(timeout: 2) {
             app.buttons["Skip Test"].tap()
-        } else {
+        } else if app.buttons["Finish"].exists {
             app.buttons["Finish"].tap()
         }
 
-        // Should be on complete step
+        // Step 6: Complete - should be on complete step
         XCTAssertTrue(app.staticTexts["You're All Set!"].waitForExistence(timeout: 2))
 
         // Tap Get Started

@@ -134,6 +134,7 @@ final class PermissionServiceTests: XCTestCase {
 // MARK: - Mock Permission Service for Testing
 
 /// A mock implementation of PermissionChecking for testing other components
+@MainActor
 final class MockPermissionService: PermissionChecking {
     var accessibilityGranted = false
     var inputMonitoringGranted = false
@@ -164,6 +165,7 @@ final class MockPermissionService: PermissionChecking {
 
 // MARK: - Mock Permission Service Tests
 
+@MainActor
 final class MockPermissionServiceTests: XCTestCase {
     var mockService: MockPermissionService!
 
