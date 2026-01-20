@@ -41,10 +41,15 @@ struct OnboardingView: View {
             WelcomeStepView()
         case .permissionExplanation:
             PermissionExplanationStepView()
-        case .grantPermission:
-            GrantPermissionStepView(
-                hasPermission: viewModel.hasPermission,
-                onOpenSettings: { viewModel.openPermissionSettings() }
+        case .grantAccessibility:
+            GrantAccessibilityStepView(
+                hasPermission: viewModel.hasAccessibility,
+                onOpenSettings: { viewModel.openAccessibilitySettings() }
+            )
+        case .grantInputMonitoring:
+            GrantInputMonitoringStepView(
+                hasPermission: viewModel.hasInputMonitoring,
+                onOpenSettings: { viewModel.openInputMonitoringSettings() }
             )
         case .testDetection:
             TestDetectionStepView(
@@ -91,8 +96,10 @@ struct OnboardingView: View {
         switch viewModel.currentStep {
         case .welcome, .permissionExplanation:
             return "Next"
-        case .grantPermission:
-            return viewModel.hasPermission ? "Next" : "Continue Anyway"
+        case .grantAccessibility:
+            return viewModel.hasAccessibility ? "Next" : "Continue Anyway"
+        case .grantInputMonitoring:
+            return viewModel.hasInputMonitoring ? "Next" : "Continue Anyway"
         case .testDetection:
             return viewModel.detectionTriggered ? "Finish" : "Skip Test"
         case .complete:
@@ -111,7 +118,7 @@ private struct OnboardingProgressView: View {
     let currentStep: OnboardingStep
 
     private let steps: [OnboardingStep] = [
-        .welcome, .permissionExplanation, .grantPermission, .testDetection, .complete
+        .welcome, .permissionExplanation, .grantAccessibility, .grantInputMonitoring, .testDetection, .complete
     ]
 
     var body: some View {
@@ -163,12 +170,12 @@ private struct PermissionExplanationStepView: View {
                 .font(.system(size: 64))
                 .foregroundColor(.orange)
 
-            Text("Permission Required")
+            Text("Permissions Required")
                 .font(.title)
                 .fontWeight(.bold)
 
             // swiftlint:disable:next line_length
-            Text("To detect cat paw patterns, CatPaws needs Input Monitoring permission. This allows the app to see when multiple keys are pressed simultaneously.")
+            Text("To detect cat paw patterns and protect your keyboard, CatPaws needs two permissions: Accessibility and Input Monitoring.")
                 .font(.body)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -188,7 +195,7 @@ private struct PermissionExplanationStepView: View {
                 PermissionInfoRow(
                     icon: "checkmark.shield.fill",
                     color: .green,
-                    text: "You can revoke permission at any time"
+                    text: "You can revoke permissions at any time"
                 )
             }
             .padding()
@@ -215,9 +222,9 @@ private struct PermissionInfoRow: View {
     }
 }
 
-// MARK: - Grant Permission Step (T027 continued)
+// MARK: - Grant Accessibility Step
 
-private struct GrantPermissionStepView: View {
+private struct GrantAccessibilityStepView: View {
     let hasPermission: Bool
     let onOpenSettings: () -> Void
 
@@ -229,26 +236,27 @@ private struct GrantPermissionStepView: View {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 64))
                     .foregroundColor(.green)
+                    .accessibilityLabel("Permission Granted")
 
                 Text("Permission Granted!")
                     .font(.title)
                     .fontWeight(.bold)
 
-                Text("CatPaws now has the permission it needs. Click Next to continue.")
+                Text("Accessibility permission is enabled. Click Next to continue.")
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
             } else {
-                Image(systemName: "gear.badge")
+                Image(systemName: "figure.stand")
                     .font(.system(size: 64))
-                    .foregroundColor(.blue)
+                    .foregroundColor(.purple)
 
-                Text("Grant Permission")
+                Text("Grant Accessibility")
                     .font(.title)
                     .fontWeight(.bold)
 
                 // swiftlint:disable:next line_length
-                Text("Click the button below to open System Settings, then enable CatPaws in the Input Monitoring list.")
+                Text("Accessibility permission allows CatPaws to detect keyboard patterns. Click the button below to open System Settings, then enable CatPaws in the Accessibility list.")
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -257,11 +265,72 @@ private struct GrantPermissionStepView: View {
                 Button(action: onOpenSettings) {
                     HStack {
                         Image(systemName: "gear")
-                        Text("Open System Settings")
+                        Text("Open Accessibility Settings")
                     }
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
+                .accessibilityHint("Opens System Settings to the Accessibility pane")
+
+                Text("This page will update automatically when permission is granted.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
+            Spacer()
+        }
+    }
+}
+
+// MARK: - Grant Input Monitoring Step
+
+private struct GrantInputMonitoringStepView: View {
+    let hasPermission: Bool
+    let onOpenSettings: () -> Void
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Spacer()
+
+            if hasPermission {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 64))
+                    .foregroundColor(.green)
+                    .accessibilityLabel("Permission Granted")
+
+                Text("Permission Granted!")
+                    .font(.title)
+                    .fontWeight(.bold)
+
+                Text("Input Monitoring permission is enabled. Click Next to continue.")
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            } else {
+                Image(systemName: "keyboard.badge.eye")
+                    .font(.system(size: 64))
+                    .foregroundColor(.blue)
+
+                Text("Grant Input Monitoring")
+                    .font(.title)
+                    .fontWeight(.bold)
+
+                // swiftlint:disable:next line_length
+                Text("Input Monitoring permission allows CatPaws to see when multiple keys are pressed simultaneously. Click the button below to open System Settings, then enable CatPaws in the Input Monitoring list.")
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                Button(action: onOpenSettings) {
+                    HStack {
+                        Image(systemName: "gear")
+                        Text("Open Input Monitoring Settings")
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .accessibilityHint("Opens System Settings to the Input Monitoring pane")
 
                 Text("This page will update automatically when permission is granted.")
                     .font(.caption)

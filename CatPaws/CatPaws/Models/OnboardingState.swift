@@ -11,9 +11,10 @@ import Foundation
 enum OnboardingStep: Int, CaseIterable {
     case welcome = 0
     case permissionExplanation = 1
-    case grantPermission = 2
-    case testDetection = 3
-    case complete = 4
+    case grantAccessibility = 2
+    case grantInputMonitoring = 3
+    case testDetection = 4
+    case complete = 5
 
     /// Returns the next step, or nil if at the end
     var next: OnboardingStep? {
@@ -29,6 +30,11 @@ enum OnboardingStep: Int, CaseIterable {
     var isFinal: Bool {
         self == .complete
     }
+
+    /// Whether this step involves granting a permission
+    var isPermissionStep: Bool {
+        self == .grantAccessibility || self == .grantInputMonitoring
+    }
 }
 
 /// Tracks first-run onboarding completion state
@@ -38,6 +44,7 @@ struct OnboardingState {
     private static let completedKey = "catpaws.onboarding.completed"
     private static let skippedKey = "catpaws.onboarding.skipped"
     private static let currentStepKey = "catpaws.onboarding.currentStep"
+    private static let migrationKey = "catpaws.onboarding.v2Migration"
 
     // MARK: - Persisted Properties
 
@@ -102,5 +109,37 @@ struct OnboardingState {
         UserDefaults.standard.removeObject(forKey: completedKey)
         UserDefaults.standard.removeObject(forKey: skippedKey)
         UserDefaults.standard.removeObject(forKey: currentStepKey)
+    }
+
+    // MARK: - Migration
+
+    /// Migrates step values for users who were mid-onboarding when the new Accessibility step was added.
+    /// Users with persisted step >= 2 (old grantPermission) need their step incremented by 1
+    /// to account for the new grantAccessibility step inserted at position 2.
+    static func migrateIfNeeded() {
+        let defaults = UserDefaults.standard
+
+        // Skip if already migrated
+        guard !defaults.bool(forKey: migrationKey) else { return }
+
+        let currentRaw = defaults.integer(forKey: currentStepKey)
+
+        // If user was on grantPermission (2) or later, increment to account for new step
+        if currentRaw >= 2 {
+            defaults.set(currentRaw + 1, forKey: currentStepKey)
+        }
+
+        // Mark migration as complete
+        defaults.set(true, forKey: migrationKey)
+    }
+
+    // MARK: - Reset
+
+    /// Clears all onboarding state (for reset functionality)
+    mutating func reset() {
+        UserDefaults.standard.removeObject(forKey: Self.completedKey)
+        UserDefaults.standard.removeObject(forKey: Self.skippedKey)
+        UserDefaults.standard.removeObject(forKey: Self.currentStepKey)
+        // Note: We don't remove migrationKey - migration should only run once per install
     }
 }

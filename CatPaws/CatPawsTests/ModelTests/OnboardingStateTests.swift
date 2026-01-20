@@ -13,11 +13,14 @@ final class OnboardingStateTests: XCTestCase {
         super.setUp()
         // Reset onboarding state before each test
         OnboardingState.resetForTesting()
+        // Also reset migration flag for migration tests
+        UserDefaults.standard.removeObject(forKey: "catpaws.onboarding.v2Migration")
     }
 
     override func tearDown() {
         // Clean up after each test
         OnboardingState.resetForTesting()
+        UserDefaults.standard.removeObject(forKey: "catpaws.onboarding.v2Migration")
         super.tearDown()
     }
 
@@ -26,15 +29,21 @@ final class OnboardingStateTests: XCTestCase {
     func testOnboardingStepOrder() {
         XCTAssertEqual(OnboardingStep.welcome.rawValue, 0)
         XCTAssertEqual(OnboardingStep.permissionExplanation.rawValue, 1)
-        XCTAssertEqual(OnboardingStep.grantPermission.rawValue, 2)
-        XCTAssertEqual(OnboardingStep.testDetection.rawValue, 3)
-        XCTAssertEqual(OnboardingStep.complete.rawValue, 4)
+        XCTAssertEqual(OnboardingStep.grantAccessibility.rawValue, 2)
+        XCTAssertEqual(OnboardingStep.grantInputMonitoring.rawValue, 3)
+        XCTAssertEqual(OnboardingStep.testDetection.rawValue, 4)
+        XCTAssertEqual(OnboardingStep.complete.rawValue, 5)
+    }
+
+    func testOnboardingStepCount() {
+        XCTAssertEqual(OnboardingStep.allCases.count, 6)
     }
 
     func testOnboardingStepNext() {
         XCTAssertEqual(OnboardingStep.welcome.next, .permissionExplanation)
-        XCTAssertEqual(OnboardingStep.permissionExplanation.next, .grantPermission)
-        XCTAssertEqual(OnboardingStep.grantPermission.next, .testDetection)
+        XCTAssertEqual(OnboardingStep.permissionExplanation.next, .grantAccessibility)
+        XCTAssertEqual(OnboardingStep.grantAccessibility.next, .grantInputMonitoring)
+        XCTAssertEqual(OnboardingStep.grantInputMonitoring.next, .testDetection)
         XCTAssertEqual(OnboardingStep.testDetection.next, .complete)
         XCTAssertNil(OnboardingStep.complete.next)
     }
@@ -42,17 +51,28 @@ final class OnboardingStateTests: XCTestCase {
     func testOnboardingStepPrevious() {
         XCTAssertNil(OnboardingStep.welcome.previous)
         XCTAssertEqual(OnboardingStep.permissionExplanation.previous, .welcome)
-        XCTAssertEqual(OnboardingStep.grantPermission.previous, .permissionExplanation)
-        XCTAssertEqual(OnboardingStep.testDetection.previous, .grantPermission)
+        XCTAssertEqual(OnboardingStep.grantAccessibility.previous, .permissionExplanation)
+        XCTAssertEqual(OnboardingStep.grantInputMonitoring.previous, .grantAccessibility)
+        XCTAssertEqual(OnboardingStep.testDetection.previous, .grantInputMonitoring)
         XCTAssertEqual(OnboardingStep.complete.previous, .testDetection)
     }
 
     func testOnboardingStepIsFinal() {
         XCTAssertFalse(OnboardingStep.welcome.isFinal)
         XCTAssertFalse(OnboardingStep.permissionExplanation.isFinal)
-        XCTAssertFalse(OnboardingStep.grantPermission.isFinal)
+        XCTAssertFalse(OnboardingStep.grantAccessibility.isFinal)
+        XCTAssertFalse(OnboardingStep.grantInputMonitoring.isFinal)
         XCTAssertFalse(OnboardingStep.testDetection.isFinal)
         XCTAssertTrue(OnboardingStep.complete.isFinal)
+    }
+
+    func testOnboardingStepIsPermissionStep() {
+        XCTAssertFalse(OnboardingStep.welcome.isPermissionStep)
+        XCTAssertFalse(OnboardingStep.permissionExplanation.isPermissionStep)
+        XCTAssertTrue(OnboardingStep.grantAccessibility.isPermissionStep)
+        XCTAssertTrue(OnboardingStep.grantInputMonitoring.isPermissionStep)
+        XCTAssertFalse(OnboardingStep.testDetection.isPermissionStep)
+        XCTAssertFalse(OnboardingStep.complete.isPermissionStep)
     }
 
     // MARK: - OnboardingState Persistence Tests
@@ -103,7 +123,10 @@ final class OnboardingStateTests: XCTestCase {
         XCTAssertEqual(state.currentStep, .permissionExplanation)
 
         XCTAssertTrue(state.advance())
-        XCTAssertEqual(state.currentStep, .grantPermission)
+        XCTAssertEqual(state.currentStep, .grantAccessibility)
+
+        XCTAssertTrue(state.advance())
+        XCTAssertEqual(state.currentStep, .grantInputMonitoring)
 
         XCTAssertTrue(state.advance())
         XCTAssertEqual(state.currentStep, .testDetection)
@@ -121,7 +144,10 @@ final class OnboardingStateTests: XCTestCase {
         state.currentStep = .testDetection
 
         XCTAssertTrue(state.goBack())
-        XCTAssertEqual(state.currentStep, .grantPermission)
+        XCTAssertEqual(state.currentStep, .grantInputMonitoring)
+
+        XCTAssertTrue(state.goBack())
+        XCTAssertEqual(state.currentStep, .grantAccessibility)
 
         XCTAssertTrue(state.goBack())
         XCTAssertEqual(state.currentStep, .permissionExplanation)
@@ -147,5 +173,72 @@ final class OnboardingStateTests: XCTestCase {
         let newState = OnboardingState()
         XCTAssertFalse(newState.hasCompletedOnboarding)
         XCTAssertFalse(newState.wasSkipped)
+    }
+
+    func testResetClearsOnboardingState() {
+        var state = OnboardingState()
+        state.complete()
+        state.currentStep = .testDetection
+
+        XCTAssertTrue(state.hasCompletedOnboarding)
+
+        state.reset()
+
+        // Create new instance to read from UserDefaults
+        let newState = OnboardingState()
+        XCTAssertFalse(newState.hasCompletedOnboarding)
+        XCTAssertFalse(newState.wasSkipped)
+        XCTAssertEqual(newState.currentStep, .welcome)
+    }
+
+    // MARK: - Migration Tests
+
+    func testMigrateIfNeededIncrementsStepForUsersOnOldStep2() {
+        // Simulate a user who was on old step 2 (grantPermission) before migration
+        UserDefaults.standard.set(2, forKey: "catpaws.onboarding.currentStep")
+        UserDefaults.standard.removeObject(forKey: "catpaws.onboarding.v2Migration")
+
+        OnboardingState.migrateIfNeeded()
+
+        // Should now be step 3 (grantInputMonitoring)
+        let migratedRawValue = UserDefaults.standard.integer(forKey: "catpaws.onboarding.currentStep")
+        XCTAssertEqual(migratedRawValue, 3)
+    }
+
+    func testMigrateIfNeededIncrementsStepForUsersOnOldStep3() {
+        // Simulate a user who was on old step 3 (testDetection) before migration
+        UserDefaults.standard.set(3, forKey: "catpaws.onboarding.currentStep")
+        UserDefaults.standard.removeObject(forKey: "catpaws.onboarding.v2Migration")
+
+        OnboardingState.migrateIfNeeded()
+
+        // Should now be step 4 (testDetection in new scheme)
+        let migratedRawValue = UserDefaults.standard.integer(forKey: "catpaws.onboarding.currentStep")
+        XCTAssertEqual(migratedRawValue, 4)
+    }
+
+    func testMigrateIfNeededDoesNotChangeStepForUsersOnStep0Or1() {
+        // Simulate a user who was on step 0 or 1 (welcome or permissionExplanation)
+        UserDefaults.standard.set(1, forKey: "catpaws.onboarding.currentStep")
+        UserDefaults.standard.removeObject(forKey: "catpaws.onboarding.v2Migration")
+
+        OnboardingState.migrateIfNeeded()
+
+        // Should still be step 1
+        let migratedRawValue = UserDefaults.standard.integer(forKey: "catpaws.onboarding.currentStep")
+        XCTAssertEqual(migratedRawValue, 1)
+    }
+
+    func testMigrateIfNeededOnlyRunsOnce() {
+        UserDefaults.standard.set(2, forKey: "catpaws.onboarding.currentStep")
+        UserDefaults.standard.removeObject(forKey: "catpaws.onboarding.v2Migration")
+
+        // First migration
+        OnboardingState.migrateIfNeeded()
+        XCTAssertEqual(UserDefaults.standard.integer(forKey: "catpaws.onboarding.currentStep"), 3)
+
+        // Second migration attempt - should not change anything
+        OnboardingState.migrateIfNeeded()
+        XCTAssertEqual(UserDefaults.standard.integer(forKey: "catpaws.onboarding.currentStep"), 3)
     }
 }

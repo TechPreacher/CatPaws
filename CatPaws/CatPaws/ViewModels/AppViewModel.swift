@@ -45,6 +45,12 @@ final class AppViewModel: ObservableObject {
     @Published private(set) var isLocked: Bool = false
     @Published private(set) var isMonitoring: Bool = false
 
+    /// Current state of both permissions (Accessibility and Input Monitoring)
+    @Published private(set) var permissionState: PermissionState = PermissionState()
+
+    /// Whether to show the permission revocation banner
+    @Published var showPermissionRevokedBanner: Bool = false
+
     // MARK: - Services
 
     let keyboardMonitor: KeyboardMonitor
@@ -54,6 +60,7 @@ final class AppViewModel: ObservableObject {
     let lockService: KeyboardLockService
     let notificationController: NotificationWindowController
     let statisticsService: StatisticsService
+    let permissionService: PermissionService
 
     // MARK: - Private
 
@@ -75,13 +82,16 @@ final class AppViewModel: ObservableObject {
         self.lockService = KeyboardLockService()
         self.notificationController = NotificationWindowController()
         self.statisticsService = StatisticsService()
+        self.permissionService = PermissionService.shared
 
         // Wire up services
         setupServices()
         setupBindings()
+        setupPermissionMonitoring()
 
         // Check permission and start polling if needed
         hasPermission = hasInputMonitoringPermission()
+        updatePermissionState()
         updateIconState()
         updatePermissionPolling()
     }
@@ -163,6 +173,46 @@ final class AppViewModel: ObservableObject {
                 self?.catDetectionService.minimumKeyCount = self?.configuration.minimumKeyCount ?? 3
             }
             .store(in: &cancellables)
+    }
+
+    /// Set up permission service to monitor for state changes
+    private func setupPermissionMonitoring() {
+        permissionService.onStateChange = { [weak self] newState in
+            Task { @MainActor in
+                self?.handlePermissionStateChange(newState)
+            }
+        }
+        permissionService.startPolling()
+    }
+
+    /// Update the local permission state from the service
+    private func updatePermissionState() {
+        permissionState = permissionService.getCurrentState()
+    }
+
+    /// Handle permission state changes from the service
+    private func handlePermissionStateChange(_ newState: PermissionState) {
+        let previousAllGranted = permissionState.allGranted
+        permissionState = newState
+        hasPermission = newState.inputMonitoring.isGranted
+
+        // Check for revocation
+        if previousAllGranted && newState.anyMissing {
+            showPermissionRevokedBanner = true
+            handlePermissionRevoked()
+        }
+
+        updateIconState()
+    }
+
+    /// Dismiss the permission revocation banner
+    func dismissPermissionRevokedBanner() {
+        showPermissionRevokedBanner = false
+    }
+
+    /// Open settings for a specific permission type
+    func openSettings(for type: PermissionType) {
+        permissionService.openSettings(for: type)
     }
 
     private func startMonitoring() {

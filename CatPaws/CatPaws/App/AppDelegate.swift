@@ -20,6 +20,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
 
+        // Migrate onboarding state for users updating from versions without Accessibility step
+        OnboardingState.migrateIfNeeded()
+
         // Ensure the app is properly activated (important when relaunched by System Settings)
         NSApp.activate(ignoringOtherApps: true)
 

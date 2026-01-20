@@ -5,9 +5,10 @@
 //  Created on 2026-01-18.
 //
 
-import Foundation
+import ApplicationServices
 import Combine
 import CoreGraphics
+import Foundation
 
 /// View model for managing the first-run onboarding flow
 @MainActor
@@ -15,8 +16,12 @@ final class OnboardingViewModel: ObservableObject {
     // MARK: - Published State
 
     @Published private(set) var currentStep: OnboardingStep = .welcome
-    @Published private(set) var hasPermission: Bool = false
+    @Published private(set) var hasAccessibility: Bool = false
+    @Published private(set) var hasInputMonitoring: Bool = false
     @Published private(set) var detectionTriggered: Bool = false
+
+    /// Legacy compatibility - returns true if Input Monitoring is granted
+    var hasPermission: Bool { hasInputMonitoring }
 
     // MARK: - Callbacks
 
@@ -26,7 +31,8 @@ final class OnboardingViewModel: ObservableObject {
     // MARK: - Private
 
     private var onboardingState = OnboardingState()
-    private var permissionPollingTimer: Timer?
+    private var accessibilityPollingTimer: Timer?
+    private var inputMonitoringPollingTimer: Timer?
     private static let permissionPollingInterval: TimeInterval = 1.0
 
     // MARK: - Test Detection
@@ -45,34 +51,45 @@ final class OnboardingViewModel: ObservableObject {
     // MARK: - Initialization
 
     init() {
-        hasPermission = CGPreflightListenEventAccess()
+        // Check initial permission status
+        hasAccessibility = AXIsProcessTrusted()
+        // Accessibility permission includes Input Monitoring capabilities
+        hasInputMonitoring = hasAccessibility || Self.checkInputMonitoringPermission()
 
         // Restore persisted step
         let restoredStep = onboardingState.currentStep
 
-        // If permission is already granted and we were on the grant permission step,
-        // skip ahead to test detection (user granted permission and restarted)
-        if hasPermission && restoredStep == .grantPermission {
+        // Smart step restoration based on current permissions
+        switch restoredStep {
+        case .grantAccessibility where hasAccessibility:
+            // Accessibility granted - skip Input Monitoring (it's included)
             currentStep = .testDetection
             onboardingState.currentStep = .testDetection
-        } else {
+        case .grantInputMonitoring where hasInputMonitoring:
+            // Input Monitoring granted - move to test detection
+            currentStep = .testDetection
+            onboardingState.currentStep = .testDetection
+        default:
             currentStep = restoredStep
         }
 
-        // Start permission polling if on grant permission step without permission
-        if currentStep == .grantPermission && !hasPermission {
+        // Start permission polling if on a permission step
+        if currentStep == .grantAccessibility && !hasAccessibility {
+            startAccessibilityPolling()
+        } else if currentStep == .grantInputMonitoring && !hasInputMonitoring {
             requestInputMonitoringPermission()
-            startPermissionPolling()
+            startInputMonitoringPolling()
         }
 
         // Start keyboard monitoring if on test detection step
-        if currentStep == .testDetection && hasPermission {
+        if currentStep == .testDetection && hasInputMonitoring {
             startTestMonitoring()
         }
     }
 
     deinit {
-        permissionPollingTimer?.invalidate()
+        accessibilityPollingTimer?.invalidate()
+        inputMonitoringPollingTimer?.invalidate()
         // Stop monitoring directly since we can't call MainActor methods from deinit
         keyboardMonitor.stopMonitoring()
         keyboardMonitor.delegate = nil
@@ -82,28 +99,46 @@ final class OnboardingViewModel: ObservableObject {
 
     /// Move to the next step in the onboarding flow
     func nextStep() {
-        guard let next = currentStep.next else {
+        guard var next = currentStep.next else {
             completeOnboarding()
             return
         }
 
         // Handle leaving current step
-        if currentStep == .grantPermission {
-            stopPermissionPolling()
-        } else if currentStep == .testDetection {
+        switch currentStep {
+        case .grantAccessibility:
+            stopAccessibilityPolling()
+            // Update hasInputMonitoring since Accessibility includes it
+            if hasAccessibility {
+                hasInputMonitoring = true
+            }
+        case .grantInputMonitoring:
+            stopInputMonitoringPolling()
+        case .testDetection:
             stopTestMonitoring()
+        default:
+            break
+        }
+
+        // Skip Input Monitoring step if Accessibility is granted (it's included)
+        if next == .grantInputMonitoring && hasAccessibility {
+            next = .testDetection
         }
 
         currentStep = next
         onboardingState.currentStep = next
 
         // Handle entering new step
-        if currentStep == .grantPermission && !hasPermission {
-            // Request permission to ensure CatPaws appears in Input Monitoring list
+        switch currentStep {
+        case .grantAccessibility where !hasAccessibility:
+            startAccessibilityPolling()
+        case .grantInputMonitoring where !hasInputMonitoring:
             requestInputMonitoringPermission()
-            startPermissionPolling()
-        } else if currentStep == .testDetection && hasPermission {
+            startInputMonitoringPolling()
+        case .testDetection where hasInputMonitoring:
             startTestMonitoring()
+        default:
+            break
         }
     }
 
@@ -112,25 +147,36 @@ final class OnboardingViewModel: ObservableObject {
         guard let previous = currentStep.previous else { return }
 
         // Handle leaving current step
-        if currentStep == .grantPermission {
-            stopPermissionPolling()
-        } else if currentStep == .testDetection {
+        switch currentStep {
+        case .grantAccessibility:
+            stopAccessibilityPolling()
+        case .grantInputMonitoring:
+            stopInputMonitoringPolling()
+        case .testDetection:
             stopTestMonitoring()
+        default:
+            break
         }
 
         currentStep = previous
         onboardingState.currentStep = previous
 
         // Handle entering previous step
-        if currentStep == .grantPermission && !hasPermission {
+        switch currentStep {
+        case .grantAccessibility where !hasAccessibility:
+            startAccessibilityPolling()
+        case .grantInputMonitoring where !hasInputMonitoring:
             requestInputMonitoringPermission()
-            startPermissionPolling()
+            startInputMonitoringPolling()
+        default:
+            break
         }
     }
 
     /// Skip the onboarding entirely
     func skip() {
-        stopPermissionPolling()
+        stopAccessibilityPolling()
+        stopInputMonitoringPolling()
         stopTestMonitoring()
         onboardingState.skip()
         onComplete?()
@@ -138,11 +184,21 @@ final class OnboardingViewModel: ObservableObject {
 
     // MARK: - Permission
 
+    /// Open System Settings to grant Accessibility permission
+    func openAccessibilitySettings() {
+        PermissionService.shared.openSettings(for: .accessibility)
+    }
+
     /// Open System Settings to grant Input Monitoring permission
-    func openPermissionSettings() {
+    func openInputMonitoringSettings() {
         // Request permission to ensure CatPaws appears in Input Monitoring list
         requestInputMonitoringPermission()
-        PermissionGuideView.openInputMonitoringSettings()
+        PermissionService.shared.openSettings(for: .inputMonitoring)
+    }
+
+    /// Legacy compatibility - opens Input Monitoring settings
+    func openPermissionSettings() {
+        openInputMonitoringSettings()
     }
 
     /// Request Input Monitoring permission to register app in system preferences
@@ -153,8 +209,14 @@ final class OnboardingViewModel: ObservableObject {
 
     /// Check if Input Monitoring permission is granted
     func checkPermission() -> Bool {
-        hasPermission = CGPreflightListenEventAccess()
-        return hasPermission
+        hasInputMonitoring = Self.checkInputMonitoringPermission()
+        return hasInputMonitoring
+    }
+
+    /// Check if Accessibility permission is granted
+    func checkAccessibilityPermission() -> Bool {
+        hasAccessibility = AXIsProcessTrusted()
+        return hasAccessibility
     }
 
     // MARK: - Detection Test
@@ -172,35 +234,90 @@ final class OnboardingViewModel: ObservableObject {
     // MARK: - Private Methods
 
     private func completeOnboarding() {
-        stopPermissionPolling()
+        stopAccessibilityPolling()
+        stopInputMonitoringPolling()
         stopTestMonitoring()
         onboardingState.complete()
         onComplete?()
     }
 
-    private func startPermissionPolling() {
-        guard permissionPollingTimer == nil else { return }
+    // MARK: - Accessibility Polling
 
-        permissionPollingTimer = Timer.scheduledTimer(
+    private func startAccessibilityPolling() {
+        guard accessibilityPollingTimer == nil else { return }
+
+        accessibilityPollingTimer = Timer.scheduledTimer(
             withTimeInterval: Self.permissionPollingInterval,
             repeats: true
         ) { [weak self] _ in
             Task { @MainActor in
-                self?.pollPermissionStatus()
+                self?.pollAccessibilityStatus()
             }
         }
     }
 
-    private func stopPermissionPolling() {
-        permissionPollingTimer?.invalidate()
-        permissionPollingTimer = nil
+    private func stopAccessibilityPolling() {
+        accessibilityPollingTimer?.invalidate()
+        accessibilityPollingTimer = nil
     }
 
-    private func pollPermissionStatus() {
-        let newStatus = CGPreflightListenEventAccess()
-        if newStatus != hasPermission {
-            hasPermission = newStatus
+    private func pollAccessibilityStatus() {
+        let newStatus = AXIsProcessTrusted()
+        if newStatus != hasAccessibility {
+            hasAccessibility = newStatus
+            // Accessibility includes Input Monitoring capability
+            if hasAccessibility {
+                hasInputMonitoring = true
+            }
         }
+    }
+
+    // MARK: - Input Monitoring Polling
+
+    private func startInputMonitoringPolling() {
+        guard inputMonitoringPollingTimer == nil else { return }
+
+        inputMonitoringPollingTimer = Timer.scheduledTimer(
+            withTimeInterval: Self.permissionPollingInterval,
+            repeats: true
+        ) { [weak self] _ in
+            Task { @MainActor in
+                self?.pollInputMonitoringStatus()
+            }
+        }
+    }
+
+    private func stopInputMonitoringPolling() {
+        inputMonitoringPollingTimer?.invalidate()
+        inputMonitoringPollingTimer = nil
+    }
+
+    private func pollInputMonitoringStatus() {
+        let newStatus = Self.checkInputMonitoringPermission()
+        if newStatus != hasInputMonitoring {
+            hasInputMonitoring = newStatus
+        }
+    }
+
+    /// Reliably check Input Monitoring permission by attempting to create an event tap
+    /// CGPreflightListenEventAccess() is unreliable and can return true before permission is granted
+    private static func checkInputMonitoringPermission() -> Bool {
+        let eventMask: CGEventMask = 1 << CGEventType.keyDown.rawValue
+
+        guard let tap = CGEvent.tapCreate(
+            tap: .cgSessionEventTap,
+            place: .headInsertEventTap,
+            options: .listenOnly,
+            eventsOfInterest: eventMask,
+            callback: { _, _, event, _ in Unmanaged.passUnretained(event) },
+            userInfo: nil
+        ) else {
+            return false
+        }
+
+        // Clean up the test tap immediately
+        CFMachPortInvalidate(tap)
+        return true
     }
 
     // MARK: - Test Monitoring
