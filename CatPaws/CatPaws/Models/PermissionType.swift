@@ -11,6 +11,7 @@ import Foundation
 enum PermissionType: String, CaseIterable {
     case accessibility
     case inputMonitoring
+    case microphone
 
     /// Human-readable name for the permission
     var displayName: String {
@@ -19,6 +20,8 @@ enum PermissionType: String, CaseIterable {
             return "Accessibility"
         case .inputMonitoring:
             return "Input Monitoring"
+        case .microphone:
+            return "Microphone"
         }
     }
 
@@ -31,6 +34,9 @@ enum PermissionType: String, CaseIterable {
         case .inputMonitoring:
             // swiftlint:disable:next force_unwrapping
             return URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent")!
+        case .microphone:
+            // swiftlint:disable:next force_unwrapping
+            return URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone")!
         }
     }
 
@@ -41,6 +47,8 @@ enum PermissionType: String, CaseIterable {
             return "Required to detect keyboard patterns and identify when your cat is on the keyboard."
         case .inputMonitoring:
             return "Required to monitor keyboard input and temporarily block keys when cat activity is detected."
+        case .microphone:
+            return "Required to detect cat purring sounds and protect your keyboard before your cat reaches it."
         }
     }
 }

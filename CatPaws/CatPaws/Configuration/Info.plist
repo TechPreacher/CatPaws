@@ -32,5 +32,7 @@
 	<string>NSApplication</string>
 	<key>NSInputMonitoringUsageDescription</key>
 	<string>CatPaws needs to monitor keyboard input to detect when your cat is on the keyboard and protect your work from unwanted keystrokes.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>CatPaws uses the microphone to detect cat purring sounds and protect your keyboard before your cat reaches it.</string>
 </dict>
 </plist>

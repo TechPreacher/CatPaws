@@ -7,6 +7,7 @@
 
 import AppKit
 import ApplicationServices
+import AVFoundation
 import Combine
 import CoreGraphics
 import Foundation
@@ -21,6 +22,14 @@ protocol PermissionChecking {
     /// Check if Input Monitoring permission is granted
     /// - Returns: true if the process can listen to events
     func checkInputMonitoring() -> Bool
+
+    /// Check if Microphone permission is granted
+    /// - Returns: true if the process has microphone access
+    func checkMicrophone() -> Bool
+
+    /// Request microphone permission asynchronously
+    /// - Returns: true if permission was granted
+    func requestMicrophonePermission() async -> Bool
 
     /// Get current status of both permissions
     /// - Returns: PermissionState with both statuses
@@ -104,6 +113,25 @@ final class PermissionService: PermissionChecking, ObservableObject {
         // Clean up the test tap immediately
         CFMachPortInvalidate(tap)
         return true
+    }
+
+    /// Check if Microphone permission is granted
+    /// - Returns: true if the process has microphone access
+    func checkMicrophone() -> Bool {
+        switch AVCaptureDevice.authorizationStatus(for: .audio) {
+        case .authorized:
+            return true
+        case .denied, .restricted, .notDetermined:
+            return false
+        @unknown default:
+            return false
+        }
+    }
+
+    /// Request microphone permission asynchronously
+    /// - Returns: true if permission was granted
+    func requestMicrophonePermission() async -> Bool {
+        await AVCaptureDevice.requestAccess(for: .audio)
     }
 
     /// Get current snapshot of both permission statuses
