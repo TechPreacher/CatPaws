@@ -108,21 +108,16 @@
         }
 
         .hero-icon {
-            font-size: 8rem;
+            width: 500px;
+            max-width: 90%;
             margin-bottom: 1.5rem;
-            animation: bounce 2s ease-in-out infinite;
         }
 
-        @keyframes bounce {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
+        .hero-icon img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
         .hero h1 {
@@ -600,7 +595,9 @@
             }
 
             .hero-icon {
-                font-size: 5rem;
+                width: 100%;
+                max-width: 100%;
+                padding: 0 1rem;
             }
 
             .nav-links {
@@ -636,7 +633,7 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-icon">🐱</div>
+        <div class="hero-icon"><img src="images/catpaw-logo.png" alt="CatPaws Logo"></div>
         <h1>CatPaws</h1>
         <p class="hero-tagline">Protect your work from curious cats. Detects when your feline friend walks on your
             keyboard and automatically locks input.</p>
