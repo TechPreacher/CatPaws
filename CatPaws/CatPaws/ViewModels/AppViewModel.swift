@@ -465,6 +465,9 @@ final class AppViewModel: ObservableObject {
     private func handlePurrDetection(_ result: PurrDetectionResult) {
         guard result.detected else { return }
 
+        // Record purr detection in statistics
+        statisticsService.recordPurrDetection()
+
         // Create a detection event for purr
         let detection = DetectionEvent(
             type: .purr,

@@ -11,11 +11,11 @@
 
 ## Phase 1: Foundation - Permissions & Configuration
 
-- [ ] T001 [INFRA] Add `com.apple.security.device.audio-input` entitlement to `CatPaws.entitlements`
-- [ ] T002 [INFRA] Add `NSMicrophoneUsageDescription` to `Info.plist` with appropriate message
-- [ ] T003 [P] [INFRA] Add `.microphone` case to `PermissionType` enum with settingsURL and descriptions
-- [ ] T004 [P] [INFRA] Extend `PermissionService` with microphone permission checking using `AVCaptureDevice`
-- [ ] T005 [P] [INFRA] Add purr detection settings to `Configuration.swift` (enabled, sensitivity, threshold)
+- [x] T001 [INFRA] Add `com.apple.security.device.audio-input` entitlement to `CatPaws.entitlements`
+- [x] T002 [INFRA] Add `NSMicrophoneUsageDescription` to `Info.plist` with appropriate message
+- [x] T003 [P] [INFRA] Add `.microphone` case to `PermissionType` enum with settingsURL and descriptions
+- [x] T004 [P] [INFRA] Extend `PermissionService` with microphone permission checking using `AVCaptureDevice`
+- [x] T005 [P] [INFRA] Add purr detection settings to `Configuration.swift` (enabled, sensitivity, threshold)
 - [ ] T006 [INFRA] Write unit tests for microphone permission checking
 
 **Phase 1 Exit Criteria**: Microphone permission can be checked and requested; purr settings persist.
@@ -24,12 +24,12 @@
 
 ## Phase 2: Audio Capture - AudioMonitor Service
 
-- [ ] T007 [US1] Create `AudioMonitoring` protocol in `contracts/audio-monitoring-protocol.md`
-- [ ] T008 [US1] Create `AudioMonitorDelegate` protocol for buffer callbacks
-- [ ] T009 [US1] Implement `AudioMonitor` service with AVAudioEngine
-- [ ] T010 [US1] Add wake-on-sound threshold logic (RMS level calculation)
-- [ ] T011 [US1] Add start/stop/pause monitoring methods
-- [ ] T012 [P] [INFRA] Create `AudioMonitorState` model
+- [x] T007 [US1] Create `AudioMonitoring` protocol in `contracts/audio-monitoring-protocol.md`
+- [x] T008 [US1] Create `AudioMonitorDelegate` protocol for buffer callbacks
+- [x] T009 [US1] Implement `AudioMonitor` service with AVAudioEngine
+- [x] T010 [US1] Add wake-on-sound threshold logic (RMS level calculation)
+- [x] T011 [US1] Add start/stop/pause monitoring methods
+- [x] T012 [P] [INFRA] Create `AudioMonitorState` model
 - [ ] T013 [US1] Write unit tests for AudioMonitor with mock audio engine
 
 **Phase 2 Exit Criteria**: AudioMonitor captures microphone input and forwards buffers above threshold.
@@ -39,11 +39,11 @@
 ## Phase 3: Detection - PurrDetectionService
 
 - [ ] T014 [INFRA] Add WhisperKit SPM dependency to Xcode project
-- [ ] T015 [US1] Create `PurrDetecting` protocol in `contracts/purr-detecting-protocol.md`
-- [ ] T016 [US1] Create `PurrDetectionResult` model
-- [ ] T017 [US1] Implement `PurrDetectionService` with WhisperKit integration
-- [ ] T018 [US1] Implement multi-signal detection algorithm (keywords + frequency analysis)
-- [ ] T019 [US2] Add sensitivity-based threshold adjustment
+- [x] T015 [US1] Create `PurrDetecting` protocol in `contracts/purr-detecting-protocol.md`
+- [x] T016 [US1] Create `PurrDetectionResult` model
+- [x] T017 [US1] Implement `PurrDetectionService` with WhisperKit integration
+- [x] T018 [US1] Implement multi-signal detection algorithm (keywords + frequency analysis)
+- [x] T019 [US2] Add sensitivity-based threshold adjustment
 - [ ] T020 [US1] Write unit tests for PurrDetectionService with mock WhisperKit
 
 **Phase 3 Exit Criteria**: PurrDetectionService analyzes audio and returns detection results.
@@ -52,12 +52,12 @@
 
 ## Phase 4: Integration - AppViewModel & Lock Flow
 
-- [ ] T021 [US1] Add `.purr` case to `DetectionType` enum
-- [ ] T022 [US1] Create `DetectionEvent` factory method for purr events
-- [ ] T023 [US1] Integrate `AudioMonitor` into `AppViewModel`
-- [ ] T024 [US1] Integrate `PurrDetectionService` into `AppViewModel`
-- [ ] T025 [US1] Connect purr detection to `LockStateManager` flow
-- [ ] T026 [US1] Handle audio monitoring lifecycle (app active/inactive, system sleep)
+- [x] T021 [US1] Add `.purr` case to `DetectionType` enum
+- [x] T022 [US1] Create `DetectionEvent` factory method for purr events
+- [x] T023 [US1] Integrate `AudioMonitor` into `AppViewModel`
+- [x] T024 [US1] Integrate `PurrDetectionService` into `AppViewModel`
+- [x] T025 [US1] Connect purr detection to `LockStateManager` flow
+- [x] T026 [US1] Handle audio monitoring lifecycle (app active/inactive, system sleep)
 - [ ] T027 [US1] Write integration tests for purr → lock flow
 
 **Phase 4 Exit Criteria**: Purr detection triggers keyboard lock through existing lock flow.
@@ -66,9 +66,9 @@
 
 ## Phase 5: Statistics - Tracking & Persistence
 
-- [ ] T028 [US3] Add `totalPurrDetections` and `lastPurrDetection` to `AppStatistics`
-- [ ] T029 [US3] Update statistics on purr detection events
-- [ ] T030 [US3] Add UserDefaults persistence for purr statistics
+- [x] T028 [US3] Add `totalPurrDetections` and `lastPurrDetection` to `AppStatistics`
+- [x] T029 [US3] Update statistics on purr detection events
+- [x] T030 [US3] Add UserDefaults persistence for purr statistics
 - [ ] T031 [US3] Write unit tests for purr statistics
 
 **Phase 5 Exit Criteria**: Purr detection events are counted and persisted in statistics.
@@ -77,11 +77,11 @@
 
 ## Phase 6: UI - Settings & Status Display
 
-- [ ] T032 [US1] Create `PurrDetectionSettingsView` with enable toggle
-- [ ] T033 [US1] Add microphone permission status indicator with "Open Settings" button
-- [ ] T034 [US2] Add sensitivity slider to settings view
-- [ ] T035 [US3] Update statistics view to display purr detection counts
-- [ ] T036 [P] [INFRA] Add purr detection section to main settings navigation
+- [x] T032 [US1] Create `PurrDetectionSettingsView` with enable toggle
+- [x] T033 [US1] Add microphone permission status indicator with "Open Settings" button
+- [x] T034 [US2] Add sensitivity slider to settings view
+- [x] T035 [US3] Update statistics view to display purr detection counts
+- [x] T036 [P] [INFRA] Add purr detection section to main settings navigation
 - [ ] T037 [US1] Write UI tests for purr detection settings
 
 **Phase 6 Exit Criteria**: Users can enable/configure purr detection and view statistics.
