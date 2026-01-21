@@ -318,6 +318,100 @@
             font-size: 1.25rem;
         }
 
+        /* Using CatPaws Section */
+        .using-catpaws {
+            padding: 6rem 2rem;
+            background: var(--card-bg);
+        }
+
+        .usage-guide {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .usage-item {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .usage-item.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .usage-content {
+            flex: 1;
+        }
+
+        .usage-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .usage-content p {
+            color: var(--secondary-text);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .usage-screenshot {
+            flex: 1;
+            position: relative;
+            background: var(--bg-color);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 16/10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .usage-screenshot {
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        .usage-screenshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .usage-screenshot img[src]:not([src=""]) {
+            display: block;
+        }
+
+        .usage-screenshot img[src]:not([src=""]) + .screenshot-placeholder {
+            display: none;
+        }
+
+        .screenshot-placeholder {
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            font-style: italic;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .usage-item,
+            .usage-item.reverse {
+                flex-direction: column;
+            }
+
+            .usage-screenshot {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+
         /* Download Section */
         .download {
             padding: 6rem 2rem;
@@ -422,6 +516,7 @@
         <ul class="nav-links">
             <li><a href="#features">Features</a></li>
             <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#using-catpaws">Using CatPaws</a></li>
             <li><a href="#download">Download</a></li>
             <li><a href="privacy-policy.html">Privacy</a></li>
             <li><a href="https://github.com/TechPreacher/CatPaws">GitHub</a></li>
@@ -559,6 +654,70 @@
                         <span>A curious cat (recommended)</span>
                     </li>
                 </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="using-catpaws" id="using-catpaws">
+        <div class="container">
+            <h2 class="section-title">Using CatPaws</h2>
+            <p class="section-subtitle">A quick guide to get you started.</p>
+            
+            <div class="usage-guide">
+                <div class="usage-item">
+                    <div class="usage-content">
+                        <h3>🚀 First Launch & Setup</h3>
+                        <p>When you first launch CatPaws, you'll see the onboarding screen. Grant Input Monitoring permission in System Settings to allow CatPaws to detect keyboard patterns. The app will guide you through the process.</p>
+                    </div>
+                    <div class="usage-screenshot">
+                        <img src="screenshots/onboarding.png" alt="CatPaws onboarding screen" />
+                        <span class="screenshot-placeholder">Screenshot: Onboarding</span>
+                    </div>
+                </div>
+
+                <div class="usage-item reverse">
+                    <div class="usage-content">
+                        <h3>📍 Menu Bar Icon</h3>
+                        <p>CatPaws lives in your menu bar as a small paw icon. Click it to see the current status, access settings, view statistics, or quit the app. The icon changes to show when the keyboard is locked.</p>
+                    </div>
+                    <div class="usage-screenshot">
+                        <img src="screenshots/menubar.png" alt="CatPaws menu bar" />
+                        <span class="screenshot-placeholder">Screenshot: Menu Bar</span>
+                    </div>
+                </div>
+
+                <div class="usage-item">
+                    <div class="usage-content">
+                        <h3>🔒 When Cat Detected</h3>
+                        <p>When CatPaws detects a cat on your keyboard, it shows a friendly notification and locks keyboard input. Click the notification or wait for your cat to leave—the keyboard unlocks automatically.</p>
+                    </div>
+                    <div class="usage-screenshot">
+                        <img src="screenshots/locked.png" alt="CatPaws lock notification" />
+                        <span class="screenshot-placeholder">Screenshot: Lock Notification</span>
+                    </div>
+                </div>
+
+                <div class="usage-item reverse">
+                    <div class="usage-content">
+                        <h3>⚙️ Settings</h3>
+                        <p>Customize CatPaws to your preferences. Adjust detection sensitivity, enable launch at login, and configure notification behavior. Access settings from the menu bar icon.</p>
+                    </div>
+                    <div class="usage-screenshot">
+                        <img src="screenshots/settings.png" alt="CatPaws settings" />
+                        <span class="screenshot-placeholder">Screenshot: Settings</span>
+                    </div>
+                </div>
+
+                <div class="usage-item">
+                    <div class="usage-content">
+                        <h3>📊 Statistics</h3>
+                        <p>See how often your cat visits your keyboard! CatPaws tracks detection events and shows you statistics including total detections, today's count, and average daily visits.</p>
+                    </div>
+                    <div class="usage-screenshot">
+                        <img src="screenshots/statistics.png" alt="CatPaws statistics" />
+                        <span class="screenshot-placeholder">Screenshot: Statistics</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
