@@ -76,6 +76,7 @@ final class PurrDetectionService: PurrDetecting {
 
         // For now, mark as ready using frequency-based detection
         isReady = true
+        AppLogger.logPurrDetectionInitialized()
     }
 
     /// Analyze an audio buffer for cat purring sounds
@@ -95,17 +96,20 @@ final class PurrDetectionService: PurrDetecting {
         let threshold = 1.0 - sensitivity
         let detected = totalConfidence >= threshold
 
-        return PurrDetectionResult(
+        let result = PurrDetectionResult(
             confidence: totalConfidence,
             detected: detected,
             timestamp: Date(),
             duration: Double(audioBuffer.frameLength) / audioBuffer.format.sampleRate
         )
+        AppLogger.logPurrDetectionResult(detected: detected, confidence: totalConfidence)
+        return result
     }
 
     /// Update detection sensitivity
     func setSensitivity(_ sensitivity: Float) {
         self.sensitivity = max(0, min(1, sensitivity))
+        AppLogger.logPurrSensitivityChanged(sensitivity: self.sensitivity)
     }
 
     // MARK: - Private Analysis Methods

@@ -122,6 +122,7 @@ final class AudioMonitor: AudioMonitoring {
 
         do {
             try audioEngine.start()
+            AppLogger.logAudioMonitoringStarted()
         } catch {
             inputNode.removeTap(onBus: 0)
             throw AudioMonitorError.engineStartFailed(error)
@@ -138,6 +139,7 @@ final class AudioMonitor: AudioMonitoring {
         audioEngine.inputNode.removeTap(onBus: 0)
         audioEngine.stop()
         currentLevel = 0.0
+        AppLogger.logAudioMonitoringStopped()
     }
 
     /// Pause monitoring temporarily
@@ -181,6 +183,7 @@ final class AudioMonitor: AudioMonitoring {
 
         // Only forward buffers that exceed the sound threshold
         if level > soundThreshold {
+            AppLogger.logAudioThresholdExceeded(level: level)
             delegate?.audioMonitor(self, didCaptureBuffer: buffer)
         }
     }

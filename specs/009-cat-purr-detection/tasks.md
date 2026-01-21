@@ -16,7 +16,7 @@
 - [x] T003 [P] [INFRA] Add `.microphone` case to `PermissionType` enum with settingsURL and descriptions
 - [x] T004 [P] [INFRA] Extend `PermissionService` with microphone permission checking using `AVCaptureDevice`
 - [x] T005 [P] [INFRA] Add purr detection settings to `Configuration.swift` (enabled, sensitivity, threshold)
-- [ ] T006 [INFRA] Write unit tests for microphone permission checking
+- [x] T006 [INFRA] Write unit tests for microphone permission checking
 
 **Phase 1 Exit Criteria**: Microphone permission can be checked and requested; purr settings persist.
 
@@ -30,7 +30,7 @@
 - [x] T010 [US1] Add wake-on-sound threshold logic (RMS level calculation)
 - [x] T011 [US1] Add start/stop/pause monitoring methods
 - [x] T012 [P] [INFRA] Create `AudioMonitorState` model
-- [ ] T013 [US1] Write unit tests for AudioMonitor with mock audio engine
+- [x] T013 [US1] Write unit tests for AudioMonitor with mock audio engine
 
 **Phase 2 Exit Criteria**: AudioMonitor captures microphone input and forwards buffers above threshold.
 
@@ -38,13 +38,13 @@
 
 ## Phase 3: Detection - PurrDetectionService
 
-- [ ] T014 [INFRA] Add WhisperKit SPM dependency to Xcode project
+- [~] T014 [INFRA] Add WhisperKit SPM dependency to Xcode project (see whisperkit-integration.md)
 - [x] T015 [US1] Create `PurrDetecting` protocol in `contracts/purr-detecting-protocol.md`
 - [x] T016 [US1] Create `PurrDetectionResult` model
 - [x] T017 [US1] Implement `PurrDetectionService` with WhisperKit integration
 - [x] T018 [US1] Implement multi-signal detection algorithm (keywords + frequency analysis)
 - [x] T019 [US2] Add sensitivity-based threshold adjustment
-- [ ] T020 [US1] Write unit tests for PurrDetectionService with mock WhisperKit
+- [x] T020 [US1] Write unit tests for PurrDetectionService with mock WhisperKit
 
 **Phase 3 Exit Criteria**: PurrDetectionService analyzes audio and returns detection results.
 
@@ -69,7 +69,7 @@
 - [x] T028 [US3] Add `totalPurrDetections` and `lastPurrDetection` to `AppStatistics`
 - [x] T029 [US3] Update statistics on purr detection events
 - [x] T030 [US3] Add UserDefaults persistence for purr statistics
-- [ ] T031 [US3] Write unit tests for purr statistics
+- [x] T031 [US3] Write unit tests for purr statistics
 
 **Phase 5 Exit Criteria**: Purr detection events are counted and persisted in statistics.
 
@@ -92,7 +92,7 @@
 
 - [ ] T038 [INFRA] Performance optimization - profile and optimize audio processing
 - [ ] T039 [INFRA] Memory leak testing for extended monitoring sessions
-- [ ] T040 [INFRA] Add logging for purr detection debugging
+- [x] T040 [INFRA] Add logging for purr detection debugging
 - [ ] T041 [INFRA] Update README with purr detection feature documentation
 - [ ] T042 [INFRA] Code review and cleanup
 - [ ] T043 [INFRA] Run full test suite and verify >80% coverage
