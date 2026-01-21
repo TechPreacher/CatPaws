@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFoundation
 import Combine
 import CoreGraphics
 
@@ -62,6 +63,12 @@ final class AppViewModel: ObservableObject {
     let statisticsService: StatisticsService
     private let permissionService: PermissionService
 
+    // MARK: - Purr Detection Services
+
+    private let audioMonitor: AudioMonitor
+    private let purrDetectionService: PurrDetectionService
+    private var isPurrDetectionInitialized: Bool = false
+
     // MARK: - Private
 
     private var keyboardState: KeyboardState
@@ -83,6 +90,8 @@ final class AppViewModel: ObservableObject {
         self.notificationController = NotificationWindowController()
         self.statisticsService = StatisticsService()
         self.permissionService = PermissionService.shared
+        self.audioMonitor = AudioMonitor.shared
+        self.purrDetectionService = PurrDetectionService()
 
         // Initialize KeyboardState with time window from configuration
         let timeWindowSeconds = TimeInterval(configuration.detectionTimeWindowMs) / 1000.0
@@ -92,6 +101,7 @@ final class AppViewModel: ObservableObject {
         setupServices()
         setupBindings()
         setupPermissionMonitoring()
+        setupPurrDetection()
 
         // Check permission and start polling if needed
         hasPermission = hasInputMonitoringPermission()
@@ -364,6 +374,108 @@ final class AppViewModel: ObservableObject {
             lockStateManager.handleKeysReleased()
         }
     }
+
+    // MARK: - Purr Detection
+
+    /// Set up purr detection based on configuration
+    private func setupPurrDetection() {
+        // Set delegate for audio callbacks
+        audioMonitor.delegate = self
+
+        // Observe purr detection configuration changes
+        configuration.objectWillChange
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.updatePurrDetectionState()
+            }
+            .store(in: &cancellables)
+
+        // Initialize if already enabled
+        if configuration.purrDetectionEnabled {
+            Task {
+                await initializePurrDetection()
+            }
+        }
+    }
+
+    /// Initialize the purr detection service
+    private func initializePurrDetection() async {
+        guard !isPurrDetectionInitialized else { return }
+
+        do {
+            try await purrDetectionService.initialize()
+            isPurrDetectionInitialized = true
+            purrDetectionService.setSensitivity(Float(configuration.purrSensitivity))
+            audioMonitor.setSoundThreshold(Float(configuration.purrSoundThreshold))
+
+            // Start monitoring if enabled and has microphone permission
+            if configuration.purrDetectionEnabled && permissionService.checkMicrophone() {
+                startPurrDetection()
+            }
+        } catch {
+            // Log error but don't crash
+            if configuration.debugLoggingEnabled {
+                print("[CatPaws] Failed to initialize purr detection: \(error)")
+            }
+        }
+    }
+
+    /// Update purr detection state based on configuration
+    private func updatePurrDetectionState() {
+        purrDetectionService.setSensitivity(Float(configuration.purrSensitivity))
+        audioMonitor.setSoundThreshold(Float(configuration.purrSoundThreshold))
+
+        if configuration.purrDetectionEnabled {
+            if !isPurrDetectionInitialized {
+                Task {
+                    await initializePurrDetection()
+                }
+            } else if permissionService.checkMicrophone() {
+                startPurrDetection()
+            }
+        } else {
+            stopPurrDetection()
+        }
+    }
+
+    /// Start purr detection audio monitoring
+    private func startPurrDetection() {
+        guard isPurrDetectionInitialized,
+              configuration.purrDetectionEnabled,
+              !audioMonitor.isMonitoring else { return }
+
+        do {
+            try audioMonitor.startMonitoring()
+        } catch {
+            if configuration.debugLoggingEnabled {
+                print("[CatPaws] Failed to start purr detection: \(error)")
+            }
+        }
+    }
+
+    /// Stop purr detection audio monitoring
+    private func stopPurrDetection() {
+        if audioMonitor.isMonitoring {
+            audioMonitor.stopMonitoring()
+        }
+    }
+
+    /// Handle a purr detection event
+    private func handlePurrDetection(_ result: PurrDetectionResult) {
+        guard result.detected else { return }
+
+        // Create a detection event for purr
+        let detection = DetectionEvent(
+            type: .purr,
+            keyCount: 0,
+            timestamp: result.timestamp,
+            triggeredLock: false
+        )
+
+        // Send to lock state manager
+        lockStateManager.handleDetection(detection)
+    }
 }
 
 // MARK: - KeyboardMonitorDelegate
@@ -404,6 +516,18 @@ extension AppViewModel: LockStateManagerDelegate {
         Task { @MainActor in
             isLocked = false
             updateIconState()
+        }
+    }
+}
+
+// MARK: - AudioMonitorDelegate
+
+extension AppViewModel: AudioMonitorDelegate {
+    nonisolated func audioMonitor(_ monitor: AudioMonitor, didCaptureBuffer buffer: AVAudioPCMBuffer) {
+        Task { @MainActor in
+            // Analyze buffer for purr detection
+            let result = await purrDetectionService.detectPurr(audioBuffer: buffer)
+            handlePurrDetection(result)
         }
     }
 }
