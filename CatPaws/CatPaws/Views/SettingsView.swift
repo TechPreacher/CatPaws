@@ -174,7 +174,7 @@ private struct DetectionSettingsView: View {
                             get: { Double(configuration.debounceMs) },
                             set: { configuration.debounceMs = Int($0) }
                         ),
-                        in: 200...500,
+                        in: 100...500,
                         step: 50
                     )
                     .frame(width: 150)

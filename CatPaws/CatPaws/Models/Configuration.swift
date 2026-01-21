@@ -30,7 +30,7 @@ final class Configuration: ConfigurationProviding, ObservableObject {
     private enum Defaults {
         static let isEnabled = true
         static let hasUserExplicitlyDisabled = false
-        static let debounceMs = 300  // Middle of 200-500 range
+        static let debounceMs = 200  // Lower end for faster response
         static let cooldownSec = 7.0  // Middle of 5-10 range
         static let minimumKeyCount = 3
         static let playSoundOnLock = true
@@ -42,7 +42,7 @@ final class Configuration: ConfigurationProviding, ObservableObject {
     // MARK: - Ranges
 
     private enum Ranges {
-        static let debounceMs = 200...500
+        static let debounceMs = 100...500
         static let cooldownSec = 5.0...10.0
         static let minimumKeyCount = 3...5
         static let detectionTimeWindowMs = 100...500
