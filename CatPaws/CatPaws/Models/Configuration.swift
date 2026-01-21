@@ -162,7 +162,8 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         }
         set {
             objectWillChange.send()
-            let clamped = min(max(newValue, Ranges.detectionTimeWindowMs.lowerBound), Ranges.detectionTimeWindowMs.upperBound)
+            let range = Ranges.detectionTimeWindowMs
+            let clamped = min(max(newValue, range.lowerBound), range.upperBound)
             defaults.set(clamped, forKey: Keys.detectionTimeWindowMs)
         }
     }

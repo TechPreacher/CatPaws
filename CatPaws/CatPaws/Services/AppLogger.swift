@@ -71,11 +71,11 @@ struct AppLogger {
 
     /// Logs a state transition
     /// - Parameters:
-    ///   - from: The previous state
-    ///   - to: The new state
-    static func logStateTransition(from: String, to: String) {
+    ///   - fromState: The previous state
+    ///   - toState: The new state
+    static func logStateTransition(fromState: String, toState: String) {
         guard isDebugEnabled else { return }
-        lock.info("State transition: \(from) -> \(to)")
+        lock.info("State transition: \(fromState) -> \(toState)")
     }
 
     /// Logs a debounce event
