@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CatPaws - Protect Your Work from Curious Cats</title>
-    <meta name="description" content="CatPaws is a free macOS app that detects when your cat walks on the keyboard and automatically locks input to protect your work.">
+    <meta name="description"
+        content="CatPaws is a free macOS app that detects when your cat walks on the keyboard and automatically locks input to protect your work.">
     <link rel="canonical" href="https://catpaws.app/">
     <style>
         :root {
@@ -112,8 +114,15 @@
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
         }
 
         .hero h1 {
@@ -388,7 +397,7 @@
             display: block;
         }
 
-        .usage-screenshot img[src]:not([src=""]) + .screenshot-placeholder {
+        .usage-screenshot img[src]:not([src=""])+.screenshot-placeholder {
             display: none;
         }
 
@@ -401,6 +410,7 @@
         }
 
         @media (max-width: 768px) {
+
             .usage-item,
             .usage-item.reverse {
                 flex-direction: column;
@@ -437,6 +447,107 @@
             gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
+        }
+
+        /* Feedback Section */
+        .feedback {
+            padding: 5rem 2rem;
+            background: var(--bg-color);
+            text-align: center;
+        }
+
+        .feedback-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .feedback h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .feedback p {
+            color: var(--secondary-text);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .feedback-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            background: transparent;
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* Support Section */
+        .support {
+            padding: 5rem 2rem;
+            background: var(--card-bg);
+            text-align: center;
+        }
+
+        .support-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .support-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .support h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .support p {
+            color: var(--secondary-text);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .btn-coffee {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            background: #FFDD00;
+            color: #000000;
+            transition: all 0.2s;
+        }
+
+        .btn-coffee:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 221, 0, 0.3);
         }
 
         /* Footer */
@@ -508,6 +619,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav>
         <a href="/" class="nav-brand">
@@ -526,17 +638,19 @@
     <section class="hero">
         <div class="hero-icon">🐱</div>
         <h1>CatPaws</h1>
-        <p class="hero-tagline">Protect your work from curious cats. Detects when your feline friend walks on your keyboard and automatically locks input.</p>
+        <p class="hero-tagline">Protect your work from curious cats. Detects when your feline friend walks on your
+            keyboard and automatically locks input.</p>
         <div class="hero-buttons">
             <a href="https://github.com/TechPreacher/CatPaws/releases" class="btn btn-primary">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
                 </svg>
                 Download for Mac
             </a>
             <a href="https://github.com/TechPreacher/CatPaws" class="btn btn-secondary">
                 <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    <path
+                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
                 </svg>
                 View on GitHub
             </a>
@@ -547,42 +661,47 @@
         <div class="container">
             <h2 class="section-title">Why CatPaws?</h2>
             <p class="section-subtitle">Every cat owner knows the struggle. CatPaws solves it elegantly.</p>
-            
+
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🔍</div>
                     <h3>Smart Detection</h3>
-                    <p>Recognizes cat-like keyboard patterns—multiple adjacent keys pressed simultaneously—and distinguishes them from normal typing.</p>
+                    <p>Recognizes cat-like keyboard patterns—multiple adjacent keys pressed simultaneously—and
+                        distinguishes them from normal typing.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">🔒</div>
                     <h3>Instant Protection</h3>
-                    <p>Blocks all keyboard input within milliseconds of detecting your cat, preventing unwanted characters in your documents.</p>
+                    <p>Blocks all keyboard input within milliseconds of detecting your cat, preventing unwanted
+                        characters in your documents.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">🔓</div>
                     <h3>Auto Unlock</h3>
-                    <p>Automatically unlocks when your cat leaves. No manual intervention needed—just seamless protection.</p>
+                    <p>Automatically unlocks when your cat leaves. No manual intervention needed—just seamless
+                        protection.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">📍</div>
                     <h3>Menu Bar App</h3>
-                    <p>Lives quietly in your menu bar. Minimal footprint, maximum protection. See status at a glance.</p>
+                    <p>Lives quietly in your menu bar. Minimal footprint, maximum protection. See status at a glance.
+                    </p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">🔔</div>
                     <h3>Visual Feedback</h3>
                     <p>Clear on-screen notification when keyboard is locked so you always know what's happening.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">🛡️</div>
                     <h3>Privacy First</h3>
-                    <p>No data collection. No network access. Everything stays on your Mac. Open source for full transparency.</p>
+                    <p>No data collection. No network access. Everything stays on your Mac. Open source for full
+                        transparency.</p>
                 </div>
             </div>
         </div>
@@ -592,37 +711,41 @@
         <div class="container">
             <h2 class="section-title">How It Works</h2>
             <p class="section-subtitle">Simple, effective, automatic.</p>
-            
+
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-content">
                         <h3>Install & Grant Permission</h3>
-                        <p>Download CatPaws and grant Input Monitoring permission in System Settings. This allows the app to detect keyboard patterns.</p>
+                        <p>Download CatPaws and grant Input Monitoring and Accessibility permissions in System Settings.
+                            This allows the app to detect keyboard patterns.</p>
                     </div>
                 </div>
-                
+
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
                         <h3>Cat Approaches Keyboard</h3>
-                        <p>When your cat steps on the keyboard, CatPaws detects the characteristic pattern of multiple adjacent keys being pressed simultaneously.</p>
+                        <p>When your cat steps on the keyboard, CatPaws detects the characteristic pattern of multiple
+                            adjacent keys being pressed simultaneously.</p>
                     </div>
                 </div>
-                
+
                 <div class="step">
                     <div class="step-number">3</div>
                     <div class="step-content">
                         <h3>Keyboard Locks Instantly</h3>
-                        <p>CatPaws blocks all keyboard input and shows a notification. Your work is safe from random cat-generated text.</p>
+                        <p>CatPaws blocks all keyboard input and shows a notification. Your work is safe from random
+                            cat-generated text.</p>
                     </div>
                 </div>
-                
+
                 <div class="step">
                     <div class="step-number">4</div>
                     <div class="step-content">
                         <h3>Cat Leaves, You Continue</h3>
-                        <p>When the keys are released, CatPaws automatically unlocks. Resume typing as if nothing happened.</p>
+                        <p>When the keys are released, CatPaws is unlocked with a mouse click or 5 presses of the ESC
+                            key. Resume your work as if nothing happened.</p>
                     </div>
                 </div>
             </div>
@@ -633,7 +756,7 @@
         <div class="container">
             <h2 class="section-title">System Requirements</h2>
             <p class="section-subtitle">Designed for modern Macs.</p>
-            
+
             <div class="requirements-box">
                 <h3>What You Need</h3>
                 <ul class="requirements-list">
@@ -647,7 +770,7 @@
                     </li>
                     <li>
                         <span class="check-icon">✓</span>
-                        <span>Input Monitoring permission</span>
+                        <span>Input Monitoring and Accessibility permissions</span>
                     </li>
                     <li>
                         <span class="check-icon">✓</span>
@@ -662,12 +785,14 @@
         <div class="container">
             <h2 class="section-title">Using CatPaws</h2>
             <p class="section-subtitle">A quick guide to get you started.</p>
-            
+
             <div class="usage-guide">
                 <div class="usage-item">
                     <div class="usage-content">
                         <h3>🚀 First Launch & Setup</h3>
-                        <p>When you first launch CatPaws, you'll see the onboarding screen. Grant Input Monitoring permission in System Settings to allow CatPaws to detect keyboard patterns. The app will guide you through the process.</p>
+                        <p>When you first launch CatPaws, you'll see the onboarding screen. Grant Input Monitoring and
+                            Accessibility permissions in System Settings to allow CatPaws to detect keyboard patterns.
+                            The app will guide you through the process.</p>
                     </div>
                     <div class="usage-screenshot">
                         <img src="screenshots/onboarding.png" alt="CatPaws onboarding screen" />
@@ -678,7 +803,10 @@
                 <div class="usage-item reverse">
                     <div class="usage-content">
                         <h3>📍 Menu Bar Icon</h3>
-                        <p>CatPaws lives in your menu bar as a small paw icon. Click it to see the current status, access settings, view statistics, or quit the app. The icon changes to show when the keyboard is locked.</p>
+                        <p>CatPaws lives in your menu bar as a small paw icon. The icon shows you the status: filled paw
+                            means active, empty paw means idle and paw with an X means missing permissions. Click it to
+                            access settings, view statistics, or quit the app. The icon changes to show when the
+                            keyboard is locked.</p>
                     </div>
                     <div class="usage-screenshot">
                         <img src="screenshots/menubar.png" alt="CatPaws menu bar" />
@@ -689,7 +817,9 @@
                 <div class="usage-item">
                     <div class="usage-content">
                         <h3>🔒 When Cat Detected</h3>
-                        <p>When CatPaws detects a cat on your keyboard, it shows a friendly notification and locks keyboard input. Click the notification or wait for your cat to leave—the keyboard unlocks automatically.</p>
+                        <p>When CatPaws detects a cat on your keyboard, it shows a friendly notification and locks
+                            keyboard input. Click the notification or press ESC 5 times in a row to unlock your
+                            keyboard.</p>
                     </div>
                     <div class="usage-screenshot">
                         <img src="screenshots/locked.png" alt="CatPaws lock notification" />
@@ -700,7 +830,8 @@
                 <div class="usage-item reverse">
                     <div class="usage-content">
                         <h3>⚙️ Settings</h3>
-                        <p>Customize CatPaws to your preferences. Adjust detection sensitivity, enable launch at login, and configure notification behavior. Access settings from the menu bar icon.</p>
+                        <p>Customize CatPaws to your preferences. Adjust detection sensitivity, enable launch at login,
+                            and configure notification behavior. Access settings from the menu bar icon.</p>
                     </div>
                     <div class="usage-screenshot">
                         <img src="screenshots/settings.png" alt="CatPaws settings" />
@@ -711,7 +842,8 @@
                 <div class="usage-item">
                     <div class="usage-content">
                         <h3>📊 Statistics</h3>
-                        <p>See how often your cat visits your keyboard! CatPaws tracks detection events and shows you statistics including total detections, today's count, and average daily visits.</p>
+                        <p>See how often your cat visits your keyboard! CatPaws tracks detection events and shows you
+                            statistics including total detections, today's count, and average daily visits.</p>
                     </div>
                     <div class="usage-screenshot">
                         <img src="screenshots/statistics.png" alt="CatPaws statistics" />
@@ -728,10 +860,162 @@
         <div class="download-buttons">
             <a href="https://github.com/TechPreacher/CatPaws/releases" class="btn btn-primary">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
                 </svg>
                 Download Latest Release
             </a>
+        </div>
+    </section>
+
+    <section class="feedback" id="feedback">
+        <div class="feedback-content">
+            <h2>💬 Feedback & Contributions</h2>
+            <p>CatPaws is open source and I'd love to hear from you! Found a bug? Have a feature idea? Want to
+                contribute code? Your feedback helps make CatPaws better for everyone.</p>
+            <div class="feedback-buttons">
+                <a href="https://github.com/TechPreacher/CatPaws/issues" class="btn-outline">
+                    <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    Open an Issue
+                </a>
+                <a href="https://github.com/TechPreacher/CatPaws/pulls" class="btn-outline">
+                    <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M5 3.254V3.25v.005a.75.75 0 1 1 0-.005v.004zm.45 1.9a2.25 2.25 0 1 0-1.95.218v5.256a2.25 2.25 0 1 0 1.5 0V5.154zm-.95 7.346a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5zm8.05-7.5a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5zm-3.25 0a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5zm5.5 7.5a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5z" />
+                    </svg>
+                    Contribute Code
+                </a>
+                <a href="mailto:sascha@corti.com" class="btn-outline">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                    </svg>
+                    Send Email
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="support" id="support">
+        <div class="support-content">
+            <div class="support-icon">☕</div>
+            <h2>Buy Me a Coffee</h2>
+            <p>CatPaws is completely free and built as a hobby project with love (and cats). If it's saved your work
+                from curious paws, consider buying me a coffee to fuel future development!</p>
+            <a href="https://buymeacoffee.com/techpreacher" class="btn-coffee">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M2 21v-2h18v2H2zm2-4v-6h2v6H4zm4 0v-6h2v6H8zm4 0V7h2v10h-2zm4 0V3h2v14h-2z" />
+                </svg>
+                Buy me a coffee
+            </a>
+            <p>or</p>
+            <style>
+                .btcpay-form {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .btcpay-form--inline {
+                    flex-direction: row;
+                }
+
+                .btcpay-form--block {
+                    flex-direction: column;
+                }
+
+                .btcpay-form--inline .submit {
+                    margin-left: 15px;
+                }
+
+                .btcpay-form--block select {
+                    margin-bottom: 10px;
+                }
+
+                .btcpay-form .btcpay-custom-container {
+                    text-align: center;
+                }
+
+                .btcpay-custom {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .btcpay-form .plus-minus {
+                    cursor: pointer;
+                    font-size: 25px;
+                    line-height: 25px;
+                    background: #DFE0E1;
+                    height: 30px;
+                    width: 45px;
+                    border: none;
+                    border-radius: 60px;
+                    margin: auto 5px;
+                    display: inline-flex;
+                    justify-content: center;
+                }
+
+                .btcpay-form select {
+                    -moz-appearance: none;
+                    -webkit-appearance: none;
+                    appearance: none;
+                    color: currentColor;
+                    background: transparent;
+                    border: 1px solid transparent;
+                    display: block;
+                    padding: 1px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    font-size: 11px;
+                    cursor: pointer;
+                }
+
+                .btcpay-form select:hover {
+                    border-color: #ccc;
+                }
+
+                .btcpay-form option {
+                    color: #000;
+                    background: rgba(0, 0, 0, .1);
+                }
+
+                .btcpay-input-price {
+                    -moz-appearance: textfield;
+                    border: none;
+                    box-shadow: none;
+                    text-align: center;
+                    font-size: 25px;
+                    margin: auto;
+                    border-radius: 5px;
+                    line-height: 35px;
+                    background: #fff;
+                }
+
+                .btcpay-input-price::-webkit-outer-spin-button,
+                .btcpay-input-price::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+            </style>
+            <form method="POST" action="https://crypto.corti.com/api/v1/invoices"
+                class="btcpay-form btcpay-form--block">
+                <input type="hidden" name="storeId" value="CavGKkiu7j1UBx9CbxEpFJDVcnybg36BiyXjUTrjmc4T" />
+                <input type="hidden" name="checkoutDesc" value="Donation for CatPaws app." />
+                <input type="hidden" name="browserRedirect" value="https://corti.com/thank-you-very-much/" />
+                <input type="hidden" name="notifyEmail" value="sascha@corti.com" />
+                <input type="hidden" name="price" value="5" />
+                <input type="hidden" name="currency" value="CHF" />
+                <button type="submit" class="submit" name="submit"
+                    style="min-width:209px;min-height:57px;border-radius:4px;border-style:none;background-color:#0f3b21;cursor:pointer;"
+                    title="Pay with BTCPay Server, a Self-Hosted Bitcoin Payment Processor"><span style="color:#fff">Buy
+                        me a coffee with</span>
+                    <img src="https://crypto.corti.com/img/paybutton/logo.svg"
+                        style="height:57px;display:inline-block;padding:5% 0 5% 5px;vertical-align:middle;">
+                </button>
+            </form>
         </div>
     </section>
 
@@ -746,4 +1030,5 @@
         </div>
     </footer>
 </body>
+
 </html>
