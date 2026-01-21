@@ -5,6 +5,7 @@
 //  Created on 2026-01-21.
 //
 
+import Accelerate
 import AVFoundation
 import Foundation
 
@@ -189,6 +190,7 @@ final class AudioMonitor: AudioMonitoring {
     }
 
     /// Calculate the RMS (Root Mean Square) level of an audio buffer
+    /// Uses vDSP for SIMD-accelerated computation
     /// - Parameter buffer: The audio buffer to analyze
     /// - Returns: RMS level as a Float
     private func calculateRMSLevel(_ buffer: AVAudioPCMBuffer) -> Float {
@@ -197,12 +199,10 @@ final class AudioMonitor: AudioMonitoring {
         let frames = Int(buffer.frameLength)
         guard frames > 0 else { return 0 }
 
-        var sum: Float = 0
-        for index in 0..<frames {
-            let sample = channelData[0][index]
-            sum += sample * sample
-        }
+        // Use vDSP for vectorized mean square calculation
+        var meanSquare: Float = 0
+        vDSP_measqv(channelData[0], 1, &meanSquare, vDSP_Length(frames))
 
-        return sqrt(sum / Float(frames))
+        return sqrt(meanSquare)
     }
 }

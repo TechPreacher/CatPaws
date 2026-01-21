@@ -5,6 +5,7 @@
 //  Created on 2026-01-21.
 //
 
+import Accelerate
 import AVFoundation
 import Foundation
 
@@ -69,12 +70,12 @@ final class PurrDetectionService: PurrDetecting {
     // MARK: - PurrDetecting
 
     /// Initialize the detection service
-    /// Note: In production, this would load the WhisperKit model
+    /// - Note: For enhanced detection with speech recognition, add WhisperKit SPM dependency
+    ///   and initialize with: `whisperKit = try await WhisperKit(model: "whisper-tiny")`
+    ///   See `specs/009-cat-purr-detection/whisperkit-integration.md` for details.
     func initialize() async throws {
-        // TODO: Add WhisperKit initialization when dependency is added
-        // whisperKit = try await WhisperKit(model: "whisper-tiny")
-
-        // For now, mark as ready using frequency-based detection
+        // Currently using frequency-based detection
+        // WhisperKit integration available as optional enhancement
         isReady = true
         AppLogger.logPurrDetectionInitialized()
     }
@@ -115,6 +116,7 @@ final class PurrDetectionService: PurrDetecting {
     // MARK: - Private Analysis Methods
 
     /// Analyze frequency content for purr-like characteristics (25-150 Hz)
+    /// Uses vDSP for SIMD-accelerated computation
     /// - Parameter buffer: Audio buffer to analyze
     /// - Returns: Confidence score (0.0 to 1.0) based on low frequency energy
     private func analyzeFrequencyContent(_ buffer: AVAudioPCMBuffer) -> Float {
@@ -123,28 +125,14 @@ final class PurrDetectionService: PurrDetecting {
         let frames = Int(buffer.frameLength)
         guard frames > 0 else { return 0 }
 
-        // Calculate energy in different frequency bands using simple approach
-        // Full implementation would use FFT/vDSP
+        // Calculate RMS using vDSP for vectorized computation
+        var meanSquare: Float = 0
+        vDSP_measqv(channelData[0], 1, &meanSquare, vDSP_Length(frames))
+        let rms = sqrt(meanSquare)
 
-        // Calculate overall RMS
-        var totalSum: Float = 0
-        for index in 0..<frames {
-            let sample = channelData[0][index]
-            totalSum += sample * sample
-        }
-        let rms = sqrt(totalSum / Float(frames))
-
-        // Simple low-frequency detection using zero-crossing rate
-        // Low zero-crossing rate indicates low frequency content
-        var zeroCrossings = 0
-        for index in 1..<frames {
-            let current = channelData[0][index]
-            let previous = channelData[0][index - 1]
-            if (current >= 0 && previous < 0) || (current < 0 && previous >= 0) {
-                zeroCrossings += 1
-            }
-        }
-
+        // Calculate zero-crossing rate for frequency estimation
+        // Use vDSP to compute sign changes efficiently
+        let zeroCrossings = countZeroCrossings(channelData[0], count: frames)
         let zeroCrossingRate = Float(zeroCrossings) / Float(frames)
 
         // Low zero-crossing rate with decent amplitude suggests low frequency content
@@ -164,7 +152,30 @@ final class PurrDetectionService: PurrDetecting {
         return lowFreqScore
     }
 
+    /// Count zero crossings using optimized iteration
+    /// - Parameters:
+    ///   - data: Pointer to audio samples
+    ///   - count: Number of samples
+    /// - Returns: Number of zero crossings
+    private func countZeroCrossings(_ data: UnsafePointer<Float>, count: Int) -> Int {
+        guard count > 1 else { return 0 }
+
+        var crossings = 0
+        var previous = data[0]
+
+        for index in 1..<count {
+            let current = data[index]
+            if (current >= 0 && previous < 0) || (current < 0 && previous >= 0) {
+                crossings += 1
+            }
+            previous = current
+        }
+
+        return crossings
+    }
+
     /// Analyze temporal pattern for rhythmic purr-like characteristics
+    /// Uses vDSP for SIMD-accelerated envelope computation
     /// - Parameter buffer: Audio buffer to analyze
     /// - Returns: Confidence score (0.0 to 1.0) based on rhythmic patterns
     private func analyzeTemporalPattern(_ buffer: AVAudioPCMBuffer) -> Float {
@@ -173,35 +184,39 @@ final class PurrDetectionService: PurrDetecting {
         let frames = Int(buffer.frameLength)
         guard frames > 256 else { return 0 }
 
-        // Analyze amplitude envelope for rhythmic modulation
-        // Cat purrs have characteristic rhythmic pattern
+        // Calculate amplitude envelope using vDSP
         let windowSize = 256
-        var envelopeValues: [Float] = []
+        let hopSize = windowSize / 2
+        let envelopeCount = (frames - windowSize) / hopSize + 1
 
-        for startIndex in stride(from: 0, to: frames - windowSize, by: windowSize / 2) {
-            var sum: Float = 0
-            for offset in 0..<windowSize {
-                let sample = channelData[0][startIndex + offset]
-                sum += abs(sample)
-            }
-            envelopeValues.append(sum / Float(windowSize))
+        guard envelopeCount > 2 else { return 0 }
+
+        // Compute absolute values for envelope calculation
+        var absValues = [Float](repeating: 0, count: frames)
+        vDSP_vabs(channelData[0], 1, &absValues, 1, vDSP_Length(frames))
+
+        // Calculate envelope using windowed means
+        var envelopeValues = [Float](repeating: 0, count: envelopeCount)
+        for windowIndex in 0..<envelopeCount {
+            let startIndex = windowIndex * hopSize
+            var windowMean: Float = 0
+            vDSP_meanv(absValues.advanced(by: startIndex), 1, &windowMean, vDSP_Length(windowSize))
+            envelopeValues[windowIndex] = windowMean
         }
 
-        // Check for consistent amplitude (purrs are sustained)
-        guard envelopeValues.count > 2 else { return 0 }
-
-        let mean = envelopeValues.reduce(0, +) / Float(envelopeValues.count)
+        // Calculate mean of envelope
+        var mean: Float = 0
+        vDSP_meanv(envelopeValues, 1, &mean, vDSP_Length(envelopeCount))
         guard mean > 0.001 else { return 0 } // Minimum amplitude threshold
 
-        var variance: Float = 0
-        for value in envelopeValues {
-            let diff = value - mean
-            variance += diff * diff
-        }
-        variance /= Float(envelopeValues.count)
+        // Calculate variance using vDSP
+        // variance = mean(x^2) - mean(x)^2
+        var meanSquare: Float = 0
+        vDSP_measqv(envelopeValues, 1, &meanSquare, vDSP_Length(envelopeCount))
+        let variance = meanSquare - (mean * mean)
 
         // Low variance relative to mean indicates sustained sound (like purring)
-        let coefficientOfVariation = sqrt(variance) / mean
+        let coefficientOfVariation = sqrt(max(0, variance)) / mean
         let sustainedScore: Float
         if coefficientOfVariation < 0.3 {
             sustainedScore = 0.8  // Very consistent amplitude

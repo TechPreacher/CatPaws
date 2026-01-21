@@ -305,3 +305,83 @@ final class MockPurrDetectingTests: XCTestCase {
         XCTAssertNil(mockService.lastSensitivity)
     }
 }
+
+// MARK: - Memory Leak Tests (T039)
+
+final class PurrDetectionServiceMemoryTests: XCTestCase {
+
+    /// Test that PurrDetectionService deallocates properly
+    func testServiceDeallocatesAfterUse() {
+        weak var weakService: PurrDetectionService?
+
+        autoreleasepool {
+            let service = PurrDetectionService()
+            weakService = service
+            service.setSensitivity(0.5)
+        }
+
+        XCTAssertNil(weakService, "PurrDetectionService should be deallocated")
+    }
+
+    /// Test that service deallocates after async initialization
+    func testServiceDeallocatesAfterInitialization() async {
+        weak var weakService: PurrDetectionService?
+
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            Task {
+                autoreleasepool {
+                    let service = PurrDetectionService()
+                    weakService = service
+                    try? await service.initialize()
+                }
+                continuation.resume()
+            }
+        }
+
+        // Give time for async cleanup
+        try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+
+        XCTAssertNil(weakService, "PurrDetectionService should deallocate after init")
+    }
+
+    /// Test repeated detection calls don't leak buffers
+    func testRepeatedDetectionNoBufferLeak() async throws {
+        let service = PurrDetectionService()
+        try await service.initialize()
+
+        // Perform multiple detections
+        for _ in 0..<10 {
+            let buffer = createTestBuffer()
+            _ = await service.detectPurr(audioBuffer: buffer)
+        }
+
+        // Service should still be functional
+        XCTAssertTrue(service.isReady)
+    }
+
+    /// Test sensitivity changes don't accumulate state
+    func testSensitivityChangesNoStateLeak() {
+        weak var weakService: PurrDetectionService?
+
+        autoreleasepool {
+            let service = PurrDetectionService()
+            weakService = service
+
+            // Change sensitivity many times
+            for i in 0..<100 {
+                service.setSensitivity(Float(i % 10) / 10.0)
+            }
+        }
+
+        XCTAssertNil(weakService, "Service should deallocate after sensitivity changes")
+    }
+
+    // MARK: - Test Helpers
+
+    private func createTestBuffer() -> AVAudioPCMBuffer {
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
+        let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 4096)!
+        buffer.frameLength = 4096
+        return buffer
+    }
+}

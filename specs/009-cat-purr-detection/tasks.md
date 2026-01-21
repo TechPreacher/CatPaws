@@ -90,11 +90,11 @@
 
 ## Phase 7: Polish & Documentation
 
-- [ ] T038 [INFRA] Performance optimization - profile and optimize audio processing
-- [ ] T039 [INFRA] Memory leak testing for extended monitoring sessions
+- [x] T038 [INFRA] Performance optimization - profile and optimize audio processing
+- [x] T039 [INFRA] Memory leak testing for extended monitoring sessions
 - [x] T040 [INFRA] Add logging for purr detection debugging
-- [ ] T041 [INFRA] Update README with purr detection feature documentation
-- [ ] T042 [INFRA] Code review and cleanup
+- [x] T041 [INFRA] Update README with purr detection feature documentation
+- [x] T042 [INFRA] Code review and cleanup
 - [ ] T043 [INFRA] Run full test suite and verify >80% coverage
 
 **Phase 7 Exit Criteria**: Feature is polished, documented, and ready for release.

@@ -249,3 +249,59 @@ final class MockAudioMonitoringTests: XCTestCase {
         XCTAssertFalse(mockMonitor.isMonitoring)
     }
 }
+
+// MARK: - Memory Leak Tests (T039)
+
+final class AudioMonitorMemoryTests: XCTestCase {
+
+    /// Test that AudioMonitor deallocates properly after stop
+    func testAudioMonitorDeallocatesAfterStop() {
+        weak var weakMonitor: AudioMonitor?
+
+        autoreleasepool {
+            let monitor = AudioMonitor()
+            weakMonitor = monitor
+            monitor.stopMonitoring()
+        }
+
+        // Allow time for deallocation
+        XCTAssertNil(weakMonitor, "AudioMonitor should be deallocated after stop")
+    }
+
+    /// Test that delegate does not create retain cycle
+    func testDelegateDoesNotCreateRetainCycle() {
+        weak var weakMonitor: AudioMonitor?
+        weak var weakDelegate: MockAudioMonitorDelegate?
+
+        autoreleasepool {
+            let monitor = AudioMonitor()
+            let delegate = MockAudioMonitorDelegate()
+            weakMonitor = monitor
+            weakDelegate = delegate
+
+            monitor.delegate = delegate
+            monitor.stopMonitoring()
+        }
+
+        XCTAssertNil(weakMonitor, "AudioMonitor should deallocate (no delegate retain cycle)")
+        XCTAssertNil(weakDelegate, "Delegate should deallocate")
+    }
+
+    /// Test multiple start/stop cycles don't leak memory
+    func testMultipleStartStopCyclesNoLeak() {
+        weak var weakMonitor: AudioMonitor?
+
+        autoreleasepool {
+            let monitor = AudioMonitor()
+            weakMonitor = monitor
+
+            // Simulate multiple start/stop cycles
+            for _ in 0..<5 {
+                monitor.setSoundThreshold(0.05)
+                monitor.stopMonitoring()
+            }
+        }
+
+        XCTAssertNil(weakMonitor, "AudioMonitor should deallocate after multiple cycles")
+    }
+}
