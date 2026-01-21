@@ -18,6 +18,7 @@ final class MockConfigurationProviding: ConfigurationProviding {
     var minimumKeyCount: Int = 3
     var playSoundOnLock: Bool = true
     var playSoundOnUnlock: Bool = true
+    var detectionTimeWindowMs: Int = 300
 
     // MARK: - Call Tracking
 
@@ -33,6 +34,7 @@ final class MockConfigurationProviding: ConfigurationProviding {
         minimumKeyCount = 3
         playSoundOnLock = true
         playSoundOnUnlock = true
+        detectionTimeWindowMs = 300
     }
 
     // MARK: - Testing Support

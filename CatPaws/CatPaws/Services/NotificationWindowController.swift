@@ -16,10 +16,12 @@ final class NotificationWindowController: NotificationPresenting {
     private var hostingView: NSHostingView<CatLockPopupView>?
     private var currentDismissCallback: (() -> Void)?
 
-    // Emergency shortcut properties
+    // ESC unlock properties
     private var localEventMonitor: Any?
-    private var emergencyShortcutTask: Task<Void, Never>?
-    private let emergencyHoldDuration: TimeInterval = 2.0
+    private var escPressCount: Int = 0
+    private var lastEscPressTime: Date?
+    private let escTimeoutSeconds: TimeInterval = 2.0
+    private let requiredEscPresses: Int = 5
 
     // MARK: - NotificationPresenting
 
@@ -95,74 +97,61 @@ final class NotificationWindowController: NotificationPresenting {
 
     // MARK: - Emergency Shortcut Monitoring
 
-    /// Start monitoring for emergency keyboard shortcut (Cmd+Option+Escape held for 2 seconds)
+    /// Start monitoring for ESC key presses (5 consecutive presses within 2 seconds to unlock)
     private func startEmergencyShortcutMonitoring() {
-        // Monitor key down events for Escape with modifiers
-        let eventMask: NSEvent.EventTypeMask = [.keyDown, .keyUp, .flagsChanged]
+        // Reset ESC counter state
+        escPressCount = 0
+        lastEscPressTime = nil
+
+        // Monitor key down events for Escape
+        let eventMask: NSEvent.EventTypeMask = [.keyDown]
         localEventMonitor = NSEvent.addLocalMonitorForEvents(matching: eventMask) { [weak self] event in
             self?.handleEmergencyShortcutEvent(event)
             return event
         }
     }
 
-    /// Stop monitoring for emergency shortcut
+    /// Stop monitoring for emergency shortcut and reset state
     private func stopEmergencyShortcutMonitoring() {
         if let monitor = localEventMonitor {
             NSEvent.removeMonitor(monitor)
             localEventMonitor = nil
         }
-        cancelEmergencyShortcutTimer()
+        escPressCount = 0
+        lastEscPressTime = nil
     }
 
-    /// Handle keyboard events to detect emergency shortcut
+    /// Handle keyboard events to detect ESC key presses for emergency unlock
     private func handleEmergencyShortcutEvent(_ event: NSEvent) {
-        // Check for Escape key (keyCode 53) with Command+Option modifiers
         let escapeKeyCode: UInt16 = 53
-        let requiredModifiers: NSEvent.ModifierFlags = [.command, .option]
 
-        if event.type == .keyDown && event.keyCode == escapeKeyCode {
-            // Check if Command+Option are held
-            let currentModifiers = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
-            if currentModifiers.contains(requiredModifiers) {
-                // Start timer if not already running
-                if emergencyShortcutTask == nil {
-                    startEmergencyShortcutTimer()
+        if event.type == .keyDown {
+            if event.keyCode == escapeKeyCode {
+                // ESC key pressed
+                let now = Date()
+
+                // Check if within timeout from last ESC press
+                if let lastTime = lastEscPressTime,
+                   now.timeIntervalSince(lastTime) <= escTimeoutSeconds {
+                    // Within timeout - increment counter
+                    escPressCount += 1
+                } else {
+                    // Timeout expired or first press - reset counter to 1
+                    escPressCount = 1
                 }
-            }
-        } else if event.type == .keyUp && event.keyCode == escapeKeyCode {
-            // Escape released, cancel timer
-            cancelEmergencyShortcutTimer()
-        } else if event.type == .flagsChanged {
-            // Modifier keys changed, check if Command+Option are still held
-            let currentModifiers = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
-            if !currentModifiers.contains(requiredModifiers) {
-                cancelEmergencyShortcutTimer()
+
+                lastEscPressTime = now
+
+                // Check if we've reached the required number of presses
+                if escPressCount >= requiredEscPresses {
+                    handleDismiss()
+                }
+            } else {
+                // Non-ESC key pressed - reset counter
+                escPressCount = 0
+                lastEscPressTime = nil
             }
         }
-    }
-
-    /// Start the 2-second timer for emergency unlock
-    private func startEmergencyShortcutTimer() {
-        emergencyShortcutTask = Task { @MainActor [weak self] in
-            guard let self = self else { return }
-
-            do {
-                try await Task.sleep(nanoseconds: UInt64(self.emergencyHoldDuration * 1_000_000_000))
-
-                // Timer completed - trigger emergency unlock
-                if !Task.isCancelled {
-                    self.handleDismiss()
-                }
-            } catch {
-                // Task was cancelled, do nothing
-            }
-        }
-    }
-
-    /// Cancel the emergency shortcut timer
-    private func cancelEmergencyShortcutTimer() {
-        emergencyShortcutTask?.cancel()
-        emergencyShortcutTask = nil
     }
 
     /// Determine the active screen where the user is working

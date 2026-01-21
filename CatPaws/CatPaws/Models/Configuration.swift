@@ -22,6 +22,7 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         static let playSoundOnLock = "catpaws.playSoundOnLock"
         static let playSoundOnUnlock = "catpaws.playSoundOnUnlock"
         static let debugLoggingEnabled = "catpaws.debugLogging"
+        static let detectionTimeWindowMs = "catpaws.detectionTimeWindowMs"
     }
 
     // MARK: - Defaults
@@ -35,6 +36,7 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         static let playSoundOnLock = true
         static let playSoundOnUnlock = true
         static let debugLoggingEnabled = false
+        static let detectionTimeWindowMs = 300  // 300ms default for cat paw detection window
     }
 
     // MARK: - Ranges
@@ -43,6 +45,7 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         static let debounceMs = 200...500
         static let cooldownSec = 5.0...10.0
         static let minimumKeyCount = 3...5
+        static let detectionTimeWindowMs = 100...500
     }
 
     // MARK: - Initialization
@@ -61,7 +64,8 @@ final class Configuration: ConfigurationProviding, ObservableObject {
             Keys.minimumKeyCount: Defaults.minimumKeyCount,
             Keys.playSoundOnLock: Defaults.playSoundOnLock,
             Keys.playSoundOnUnlock: Defaults.playSoundOnUnlock,
-            Keys.debugLoggingEnabled: Defaults.debugLoggingEnabled
+            Keys.debugLoggingEnabled: Defaults.debugLoggingEnabled,
+            Keys.detectionTimeWindowMs: Defaults.detectionTimeWindowMs
         ])
     }
 
@@ -151,6 +155,18 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         }
     }
 
+    var detectionTimeWindowMs: Int {
+        get {
+            let value = defaults.integer(forKey: Keys.detectionTimeWindowMs)
+            return Ranges.detectionTimeWindowMs.contains(value) ? value : Defaults.detectionTimeWindowMs
+        }
+        set {
+            objectWillChange.send()
+            let clamped = min(max(newValue, Ranges.detectionTimeWindowMs.lowerBound), Ranges.detectionTimeWindowMs.upperBound)
+            defaults.set(clamped, forKey: Keys.detectionTimeWindowMs)
+        }
+    }
+
     func resetToDefaults() {
         isEnabled = Defaults.isEnabled
         debounceMs = Defaults.debounceMs
@@ -158,6 +174,7 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         minimumKeyCount = Defaults.minimumKeyCount
         playSoundOnLock = Defaults.playSoundOnLock
         playSoundOnUnlock = Defaults.playSoundOnUnlock
+        detectionTimeWindowMs = Defaults.detectionTimeWindowMs
     }
 
     /// Resets ALL app settings to factory defaults, including onboarding state.

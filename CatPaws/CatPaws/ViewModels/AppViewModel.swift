@@ -64,7 +64,7 @@ final class AppViewModel: ObservableObject {
 
     // MARK: - Private
 
-    private var keyboardState = KeyboardState()
+    private var keyboardState: KeyboardState
     private var cancellables = Set<AnyCancellable>()
     private var permissionPollingTimer: Timer?
     private static let permissionPollingInterval: TimeInterval = 2.0
@@ -83,6 +83,10 @@ final class AppViewModel: ObservableObject {
         self.notificationController = NotificationWindowController()
         self.statisticsService = StatisticsService()
         self.permissionService = PermissionService.shared
+
+        // Initialize KeyboardState with time window from configuration
+        let timeWindowSeconds = TimeInterval(configuration.detectionTimeWindowMs) / 1000.0
+        self.keyboardState = KeyboardState(timeWindowSeconds: timeWindowSeconds)
 
         // Wire up services
         setupServices()
@@ -190,7 +194,21 @@ final class AppViewModel: ObservableObject {
         configuration.objectWillChange
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                self?.catDetectionService.minimumKeyCount = self?.configuration.minimumKeyCount ?? 3
+                guard let self = self else { return }
+                self.catDetectionService.minimumKeyCount = self.configuration.minimumKeyCount
+
+                // Update KeyboardState time window if it changed
+                let newTimeWindowSeconds = TimeInterval(self.configuration.detectionTimeWindowMs) / 1000.0
+                if self.keyboardState.timeWindowSeconds != newTimeWindowSeconds {
+                    // Reinitialize KeyboardState with new time window, preserving current state
+                    self.keyboardState = KeyboardState(
+                        pressedKeys: self.keyboardState.pressedKeys,
+                        activeModifiers: self.keyboardState.activeModifiers,
+                        lastKeyEventTime: self.keyboardState.lastKeyEventTime,
+                        recentKeyPresses: [],  // Clear recent presses as window changed
+                        timeWindowSeconds: newTimeWindowSeconds
+                    )
+                }
             }
             .store(in: &cancellables)
     }
@@ -333,14 +351,15 @@ final class AppViewModel: ObservableObject {
     }
 
     private func analyzeCurrentKeys() {
-        // Filter non-modifier keys
-        let nonModifierKeys = keyboardState.nonModifierKeys
+        // Use keysForDetection which combines currently pressed keys with keys pressed
+        // within the time window, enabling detection of rapid sequential cat paw presses
+        let keysForDetection = keyboardState.keysForDetection
 
         // Run detection
-        if let detection = catDetectionService.analyzePattern(pressedKeys: nonModifierKeys) {
+        if let detection = catDetectionService.analyzePattern(pressedKeys: keysForDetection) {
             lockStateManager.handleDetection(detection)
         } else if lockStateManager.state.status == .debouncing &&
-                    nonModifierKeys.count < configuration.minimumKeyCount {
+                    keysForDetection.count < configuration.minimumKeyCount {
             // Not enough keys anymore, cancel debounce
             lockStateManager.handleKeysReleased()
         }
@@ -352,7 +371,7 @@ final class AppViewModel: ObservableObject {
 extension AppViewModel: KeyboardMonitorDelegate {
     nonisolated func keyDidPress(_ keyCode: UInt16, at timestamp: Date) {
         Task { @MainActor in
-            keyboardState.keyPressed(keyCode)
+            keyboardState.keyPressed(keyCode, at: timestamp)
             analyzeCurrentKeys()
         }
     }

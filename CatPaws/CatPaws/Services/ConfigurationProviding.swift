@@ -27,6 +27,9 @@ protocol ConfigurationProviding {
     /// Play sound when keyboard unlocks
     var playSoundOnUnlock: Bool { get set }
 
+    /// Detection time window in milliseconds for aggregating rapid sequential key presses (100-500)
+    var detectionTimeWindowMs: Int { get set }
+
     /// Reset all settings to defaults
     func resetToDefaults()
 }

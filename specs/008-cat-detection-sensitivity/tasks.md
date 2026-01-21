@@ -21,7 +21,7 @@ Based on plan.md structure:
 
 **Purpose**: No new setup required - working within existing project structure
 
-- [ ] T001 Verify current branch is `008-cat-detection-sensitivity` and project builds cleanly
+- [X] T001 Verify current branch is `008-cat-detection-sensitivity` and project builds cleanly
 
 ---
 
@@ -31,9 +31,9 @@ Based on plan.md structure:
 
 **⚠️ CRITICAL**: User stories cannot begin until detectionTimeWindowMs is available in Configuration
 
-- [ ] T002 Add `detectionTimeWindowMs` property to ConfigurationProviding protocol in CatPaws/CatPaws/Services/ConfigurationProviding.swift
-- [ ] T003 Implement `detectionTimeWindowMs` property in Configuration class (key, default 300, range 100-500) in CatPaws/CatPaws/Models/Configuration.swift
-- [ ] T004 Add `detectionTimeWindowMs` to `resetToDefaults()` method in CatPaws/CatPaws/Models/Configuration.swift
+- [X] T002 Add `detectionTimeWindowMs` property to ConfigurationProviding protocol in CatPaws/CatPaws/Services/ConfigurationProviding.swift
+- [X] T003 Implement `detectionTimeWindowMs` property in Configuration class (key, default 300, range 100-500) in CatPaws/CatPaws/Models/Configuration.swift
+- [X] T004 Add `detectionTimeWindowMs` to `resetToDefaults()` method in CatPaws/CatPaws/Models/Configuration.swift
 
 **Checkpoint**: Configuration ready - user story implementation can now begin
 
@@ -47,23 +47,23 @@ Based on plan.md structure:
 
 ### Implementation for User Story 1
 
-- [ ] T005 [US1] Create `TimestampedKeyEvent` struct in CatPaws/CatPaws/Models/KeyboardState.swift
-- [ ] T006 [US1] Add `recentKeyPresses: [TimestampedKeyEvent]` property to KeyboardState in CatPaws/CatPaws/Models/KeyboardState.swift
-- [ ] T007 [US1] Add `timeWindowSeconds: TimeInterval` property to KeyboardState in CatPaws/CatPaws/Models/KeyboardState.swift
-- [ ] T008 [US1] Update KeyboardState initializer to accept timeWindowSeconds parameter in CatPaws/CatPaws/Models/KeyboardState.swift
-- [ ] T009 [US1] Add `keysInTimeWindow` computed property returning Set<UInt16> from recentKeyPresses in CatPaws/CatPaws/Models/KeyboardState.swift
-- [ ] T010 [US1] Add `keysForDetection` computed property returning union of pressedKeys and keysInTimeWindow (minus modifiers) in CatPaws/CatPaws/Models/KeyboardState.swift
-- [ ] T011 [US1] Modify `keyPressed(_:at:)` to prune old entries and add TimestampedKeyEvent in CatPaws/CatPaws/Models/KeyboardState.swift
-- [ ] T012 [US1] Update `clearAll()` to also clear recentKeyPresses in CatPaws/CatPaws/Models/KeyboardState.swift
-- [ ] T013 [US1] Initialize KeyboardState with timeWindowSeconds from Configuration in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T014 [US1] Update `keyDidPress` delegate method to pass timestamp to keyboardState in CatPaws/CatPaws/ViewModels/AppViewModel.swift
-- [ ] T015 [US1] Update `analyzeCurrentKeys()` to use `keysForDetection` instead of `nonModifierKeys` in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T005 [US1] Create `TimestampedKeyEvent` struct in CatPaws/CatPaws/Models/KeyboardState.swift
+- [X] T006 [US1] Add `recentKeyPresses: [TimestampedKeyEvent]` property to KeyboardState in CatPaws/CatPaws/Models/KeyboardState.swift
+- [X] T007 [US1] Add `timeWindowSeconds: TimeInterval` property to KeyboardState in CatPaws/CatPaws/Models/KeyboardState.swift
+- [X] T008 [US1] Update KeyboardState initializer to accept timeWindowSeconds parameter in CatPaws/CatPaws/Models/KeyboardState.swift
+- [X] T009 [US1] Add `keysInTimeWindow` computed property returning Set<UInt16> from recentKeyPresses in CatPaws/CatPaws/Models/KeyboardState.swift
+- [X] T010 [US1] Add `keysForDetection` computed property returning union of pressedKeys and keysInTimeWindow (minus modifiers) in CatPaws/CatPaws/Models/KeyboardState.swift
+- [X] T011 [US1] Modify `keyPressed(_:at:)` to prune old entries and add TimestampedKeyEvent in CatPaws/CatPaws/Models/KeyboardState.swift
+- [X] T012 [US1] Update `clearAll()` to also clear recentKeyPresses in CatPaws/CatPaws/Models/KeyboardState.swift
+- [X] T013 [US1] Initialize KeyboardState with timeWindowSeconds from Configuration in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T014 [US1] Update `keyDidPress` delegate method to pass timestamp to keyboardState in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T015 [US1] Update `analyzeCurrentKeys()` to use `keysForDetection` instead of `nonModifierKeys` in CatPaws/CatPaws/ViewModels/AppViewModel.swift
 
 ### Unit Tests for User Story 1 (Constitution III Compliance)
 
-- [ ] T036 [P] [US1] Add unit tests for `keysInTimeWindow` computed property (returns correct keys within window) in CatPaws/CatPawsTests/ModelTests/KeyboardStateTests.swift
-- [ ] T037 [P] [US1] Add unit tests for `keysForDetection` computed property (union of pressed + windowed keys, excludes modifiers) in CatPaws/CatPawsTests/ModelTests/KeyboardStateTests.swift
-- [ ] T038 [P] [US1] Add unit tests for time window pruning in `keyPressed(_:at:)` (old entries removed) in CatPaws/CatPawsTests/ModelTests/KeyboardStateTests.swift
+- [X] T036 [P] [US1] Add unit tests for `keysInTimeWindow` computed property (returns correct keys within window) in CatPaws/CatPawsTests/ModelTests/KeyboardStateTests.swift
+- [X] T037 [P] [US1] Add unit tests for `keysForDetection` computed property (union of pressed + windowed keys, excludes modifiers) in CatPaws/CatPawsTests/ModelTests/KeyboardStateTests.swift
+- [X] T038 [P] [US1] Add unit tests for time window pruning in `keyPressed(_:at:)` (old entries removed) in CatPaws/CatPawsTests/ModelTests/KeyboardStateTests.swift
 
 **Checkpoint**: User Story 1 complete - rapid sequential key presses should now trigger detection
 
@@ -77,21 +77,21 @@ Based on plan.md structure:
 
 ### Implementation for User Story 2
 
-- [ ] T016 [US2] Remove `emergencyShortcutTask` property from NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T017 [US2] Remove `emergencyHoldDuration` property from NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T018 [US2] Add `escPressCount: Int` property to NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T019 [US2] Add `lastEscPressTime: Date?` property to NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T020 [US2] Add `escTimeoutSeconds` and `requiredEscPresses` constants to NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T021 [US2] Replace `handleEmergencyShortcutEvent(_:)` implementation with ESC counting logic in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T022 [US2] Remove `startEmergencyShortcutTimer()` method from NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T023 [US2] Remove `cancelEmergencyShortcutTimer()` method from NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
-- [ ] T024 [US2] Update `stopEmergencyShortcutMonitoring()` to reset ESC counter state in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T016 [US2] Remove `emergencyShortcutTask` property from NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T017 [US2] Remove `emergencyHoldDuration` property from NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T018 [US2] Add `escPressCount: Int` property to NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T019 [US2] Add `lastEscPressTime: Date?` property to NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T020 [US2] Add `escTimeoutSeconds` and `requiredEscPresses` constants to NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T021 [US2] Replace `handleEmergencyShortcutEvent(_:)` implementation with ESC counting logic in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T022 [US2] Remove `startEmergencyShortcutTimer()` method from NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T023 [US2] Remove `cancelEmergencyShortcutTimer()` method from NotificationWindowController in CatPaws/CatPaws/Services/NotificationWindowController.swift
+- [X] T024 [US2] Update `stopEmergencyShortcutMonitoring()` to reset ESC counter state in CatPaws/CatPaws/Services/NotificationWindowController.swift
 
 ### Unit Tests for User Story 2 (Constitution III Compliance)
 
-- [ ] T039 [P] [US2] Add unit tests for ESC counter increment on ESC press in CatPaws/CatPawsTests/ServiceTests/NotificationWindowControllerTests.swift
-- [ ] T040 [P] [US2] Add unit tests for ESC counter reset on timeout (>2 seconds since last press) in CatPaws/CatPawsTests/ServiceTests/NotificationWindowControllerTests.swift
-- [ ] T041 [P] [US2] Add unit tests for ESC counter reset on non-ESC key press in CatPaws/CatPawsTests/ServiceTests/NotificationWindowControllerTests.swift
+- [X] T039 [P] [US2] Add unit tests for ESC counter increment on ESC press in CatPaws/CatPawsTests/ServiceTests/NotificationWindowControllerTests.swift
+- [X] T040 [P] [US2] Add unit tests for ESC counter reset on timeout (>2 seconds since last press) in CatPaws/CatPawsTests/ServiceTests/NotificationWindowControllerTests.swift
+- [X] T041 [P] [US2] Add unit tests for ESC counter reset on non-ESC key press in CatPaws/CatPawsTests/ServiceTests/NotificationWindowControllerTests.swift
 
 **Checkpoint**: User Story 2 complete - ESC x5 should now unlock the keyboard
 
@@ -105,9 +105,9 @@ Based on plan.md structure:
 
 ### Implementation for User Story 3
 
-- [ ] T025 [US3] Update emergency shortcut hint text from "Or hold ⌘⌥⎋ for 2 seconds" to "Or press ESC 5 times to unlock" in CatPaws/CatPaws/Views/CatLockPopupView.swift
-- [ ] T026 [US3] Update accessibility label for emergency unlock instructions in CatPaws/CatPaws/Views/CatLockPopupView.swift
-- [ ] T027 [US3] Update Localizable.strings if emergency shortcut text is localized in CatPaws/CatPaws/Resources/Localizable.strings
+- [X] T025 [US3] Update emergency shortcut hint text from "Or hold ⌘⌥⎋ for 2 seconds" to "Or press ESC 5 times to unlock" in CatPaws/CatPaws/Views/CatLockPopupView.swift
+- [X] T026 [US3] Update accessibility label for emergency unlock instructions in CatPaws/CatPaws/Views/CatLockPopupView.swift
+- [X] T027 [US3] Update Localizable.strings if emergency shortcut text is localized in CatPaws/CatPaws/Resources/Localizable.strings
 
 **Checkpoint**: User Story 3 complete - popup shows updated instructions
 
@@ -121,10 +121,10 @@ Based on plan.md structure:
 
 ### Implementation for User Story 4
 
-- [ ] T042 [US4] Add time window slider/stepper control (100-500ms range) to settings view in CatPaws/CatPaws/Views/SettingsView.swift
-- [ ] T043 [US4] Bind time window control to `configuration.detectionTimeWindowMs` in CatPaws/CatPaws/Views/SettingsView.swift
-- [ ] T044 [US4] Add descriptive label explaining what the time window setting does in CatPaws/CatPaws/Views/SettingsView.swift
-- [ ] T045 [US4] Update KeyboardState timeWindowSeconds when configuration changes in CatPaws/CatPaws/ViewModels/AppViewModel.swift
+- [X] T042 [US4] Add time window slider/stepper control (100-500ms range) to settings view in CatPaws/CatPaws/Views/SettingsView.swift
+- [X] T043 [US4] Bind time window control to `configuration.detectionTimeWindowMs` in CatPaws/CatPaws/Views/SettingsView.swift
+- [X] T044 [US4] Add descriptive label explaining what the time window setting does in CatPaws/CatPaws/Views/SettingsView.swift
+- [X] T045 [US4] Update KeyboardState timeWindowSeconds when configuration changes in CatPaws/CatPaws/ViewModels/AppViewModel.swift
 
 **Checkpoint**: User Story 4 complete - time window is user-configurable via settings
 
@@ -134,8 +134,8 @@ Based on plan.md structure:
 
 **Purpose**: Final verification and cleanup
 
-- [ ] T028 Run SwiftLint and fix any violations
-- [ ] T029 Build and run full test suite with `xcodebuild -scheme CatPaws -configuration Debug test`
+- [X] T028 Run SwiftLint and fix any violations
+- [X] T029 Build and run full test suite with `xcodebuild -scheme CatPaws -configuration Debug test`
 - [ ] T030 Manual test: rapid 3-key press triggers lock (US1 validation)
 - [ ] T031 Manual test: normal typing does NOT trigger lock (US1 validation)
 - [ ] T032 Manual test: ESC x5 unlocks keyboard (US2 validation)
