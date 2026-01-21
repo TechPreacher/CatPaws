@@ -103,11 +103,10 @@ final class NotificationWindowController: NotificationPresenting {
         escPressCount = 0
         lastEscPressTime = nil
 
-        // Monitor key down events for Escape
+        // Monitor key down events for Escape globally (since our panel doesn't take focus)
         let eventMask: NSEvent.EventTypeMask = [.keyDown]
-        localEventMonitor = NSEvent.addLocalMonitorForEvents(matching: eventMask) { [weak self] event in
+        localEventMonitor = NSEvent.addGlobalMonitorForEvents(matching: eventMask) { [weak self] event in
             self?.handleEmergencyShortcutEvent(event)
-            return event
         }
     }
 
