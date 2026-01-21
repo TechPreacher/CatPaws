@@ -252,6 +252,20 @@ private struct AboutView: View {
             Text("Protects your keyboard from curious cats")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
+
+            Divider()
+                .padding(.vertical, 8)
+
+            HStack(spacing: 16) {
+                Link(destination: URL(string: "https://catpaws.corti.com")!) {
+                    Label("Website", systemImage: "globe")
+                }
+
+                Link(destination: URL(string: "https://catpaws.corti.com/privacy-policy.html")!) {
+                    Label("Privacy Policy", systemImage: "hand.raised")
+                }
+            }
+            .font(.subheadline)
         }
         .padding()
     }

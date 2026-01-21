@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - CatPaws</title>
+    <meta name="description" content="CatPaws privacy policy. We don't collect any data - everything stays on your Mac.">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1d1d1f;
+            --secondary-text: #6e6e73;
+            --accent-color: #0071e3;
+            --border-color: #d2d2d7;
+            --card-bg: #f5f5f7;
+            --hero-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #000000;
+                --text-color: #f5f5f7;
+                --secondary-text: #a1a1a6;
+                --accent-color: #2997ff;
+                --border-color: #424245;
+                --card-bg: #1d1d1f;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            nav {
+                background: rgba(0, 0, 0, 0.8);
+            }
+        }
+
+        .nav-brand {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Header */
+        .page-header {
+            background: var(--hero-bg);
+            color: white;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header .updated {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        /* Content */
+        .content {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .summary-box {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .summary-box p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem 0;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .no-data-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .no-data-list li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .no-data-list li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #ff3b30;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            font-weight: 600;
+            background-color: var(--card-bg);
+        }
+
+        code {
+            background-color: var(--card-bg);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.9rem;
+        }
+
+        .rights-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .rights-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .rights-list li:last-child {
+            border-bottom: none;
+        }
+
+        .rights-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #34c759;
+            font-weight: bold;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .github-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            background: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--secondary-text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-copyright {
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-brand">
+            <span>🐱</span> CatPaws
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#how-it-works">How It Works</a></li>
+            <li><a href="index.html#download">Download</a></li>
+            <li><a href="privacy-policy.html">Privacy</a></li>
+            <li><a href="https://github.com/TechPreacher/CatPaws">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>Privacy Policy</h1>
+        <p class="updated">Last Updated: January 21, 2026</p>
+    </header>
+
+    <main class="content">
+        <section>
+            <h2>Overview</h2>
+            <p>CatPaws is a macOS menu bar application designed to detect when a cat is on your keyboard and temporarily lock keyboard input to protect your work.</p>
+            
+            <div class="summary-box">
+                <p>🔒 CatPaws does not collect, store, transmit, or share any personal data.<br>All processing occurs locally on your device.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Data We Access</h2>
+            
+            <h3>Keyboard Input Monitoring</h3>
+            <p>CatPaws requires macOS Input Monitoring permission to function. This permission allows the app to:</p>
+            <ul>
+                <li><strong>Detect key press patterns</strong> — The app monitors for simultaneous multi-key presses that indicate a cat may be on your keyboard</li>
+                <li><strong>Block keyboard input</strong> — When cat-like patterns are detected, the app temporarily prevents keystrokes from reaching applications</li>
+            </ul>
+
+            <h3>What We Do NOT Do</h3>
+            <ul class="no-data-list">
+                <li><strong>We do not record keystrokes</strong> — The app only analyzes press patterns (number of keys, adjacency, timing), not the actual characters typed</li>
+                <li><strong>We do not log or store keyboard data</strong> — No keyboard input is saved to disk or memory beyond immediate pattern detection</li>
+                <li><strong>We do not transmit any data</strong> — The app operates entirely offline with no network communication</li>
+                <li><strong>We do not capture passwords or sensitive input</strong> — The app cannot and does not distinguish or record sensitive information</li>
+                <li><strong>We do not share data with third parties</strong> — There is no data to share</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Data Storage</h2>
+            <p>CatPaws stores only your <strong>preferences and settings</strong> locally on your device using macOS UserDefaults. This includes:</p>
+            <ul>
+                <li>Detection sensitivity settings</li>
+                <li>Lock cooldown duration preferences</li>
+                <li>Launch at login preference</li>
+                <li>App statistics (lock count, detection events) — stored locally only</li>
+            </ul>
+            <p>This configuration data never leaves your device, can be reset at any time by removing the app, and contains no personal or identifying information.</p>
+        </section>
+
+        <section>
+            <h2>Permissions Required</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Permission</th>
+                        <th>Purpose</th>
+                        <th>Data Access</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Input Monitoring</td>
+                        <td>Detect cat-like keyboard patterns</td>
+                        <td>Key press events (not content)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Third-Party Services</h2>
+            <p>CatPaws does not integrate with any third-party services, analytics platforms, or advertising networks. The app contains no tracking mechanisms.</p>
+        </section>
+
+        <section>
+            <h2>Children's Privacy</h2>
+            <p>CatPaws does not collect any personal information from anyone, including children under 13 years of age.</p>
+        </section>
+
+        <section>
+            <h2>Data Security</h2>
+            <p>Since CatPaws does not collect or transmit data, there is no data at risk. All keyboard pattern analysis occurs in real-time in memory and is immediately discarded after processing.</p>
+        </section>
+
+        <section>
+            <h2>Your Rights</h2>
+            <p>You have the right to:</p>
+            <ul class="rights-list">
+                <li><strong>Revoke permissions</strong> at any time through macOS System Settings → Privacy & Security → Input Monitoring</li>
+                <li><strong>Uninstall the app</strong> which removes all locally stored preferences</li>
+                <li><strong>Reset preferences</strong> using: <code>defaults delete com.corti.CatPaws</code></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. We will notify you of any changes by updating the "Last Updated" date at the top of this policy.</p>
+        </section>
+
+        <section>
+            <h2>Open Source</h2>
+            <p>CatPaws is open source software. You can review the complete source code to verify our privacy practices:</p>
+            <p>
+                <a href="https://github.com/TechPreacher/CatPaws" class="github-link">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    View on GitHub
+                </a>
+            </p>
+        </section>
+
+        <section>
+            <h2>Contact</h2>
+            <p>If you have any questions about this Privacy Policy, please contact us by opening an issue on our <a href="https://github.com/TechPreacher/CatPaws/issues">GitHub repository</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-copyright">© 2026 CatPaws. Free and open source.</p>
+            <ul class="footer-links">
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="https://github.com/TechPreacher/CatPaws">GitHub</a></li>
+                <li><a href="https://github.com/TechPreacher/CatPaws/issues">Support</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>
