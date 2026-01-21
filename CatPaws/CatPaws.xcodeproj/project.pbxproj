@@ -7,19 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E200000A001 /* PermissionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000A000 /* PermissionType.swift */; };
-		E200000B001 /* PermissionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000B000 /* PermissionStatus.swift */; };
-		E200000C001 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000C000 /* PermissionService.swift */; };
-		E1000001001 /* AppStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000001000 /* AppStatistics.swift */; };
-		E1000002001 /* OnboardingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000002000 /* OnboardingState.swift */; };
-		E1000003001 /* StatisticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000003000 /* StatisticsService.swift */; };
-		E1000004001 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000004000 /* AppLogger.swift */; };
-		E1000005001 /* LoginItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000005000 /* LoginItemService.swift */; };
-		E1000006001 /* PermissionGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000006000 /* PermissionGuideView.swift */; };
-		E1000007001 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000007000 /* OnboardingViewModel.swift */; };
-		E1000008001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000008000 /* OnboardingView.swift */; };
-		E1000009001 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000009000 /* StatisticsView.swift */; };
-		E100000A001 /* KeyboardLayoutDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100000A000 /* KeyboardLayoutDetector.swift */; };
 		2B1678F52F1A8BA0006BF13A /* CatLockPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */; };
 		2B1678FA2F1A8C1D006BF13A /* KeyboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F82F1A8C1D006BF13A /* KeyboardState.swift */; };
 		2B1678FB2F1A8C1D006BF13A /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F62F1A8C1D006BF13A /* Configuration.swift */; };
@@ -56,15 +43,25 @@
 		B1000001001 /* AppViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000001000 /* AppViewModelTests.swift */; };
 		B1000002001 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000002000 /* AppStateTests.swift */; };
 		C1000001001 /* MenuBarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000001000 /* MenuBarUITests.swift */; };
-		F1000001001 /* OnboardingStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001000 /* OnboardingStateTests.swift */; };
-		F1000002001 /* OnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000002000 /* OnboardingViewModelTests.swift */; };
-		F1000003001 /* OnboardingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000003000 /* OnboardingUITests.swift */; };
+		E1000001001 /* AppStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000001000 /* AppStatistics.swift */; };
+		E1000002001 /* OnboardingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000002000 /* OnboardingState.swift */; };
+		E1000003001 /* StatisticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000003000 /* StatisticsService.swift */; };
+		E1000004001 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000004000 /* AppLogger.swift */; };
+		E1000005001 /* LoginItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000005000 /* LoginItemService.swift */; };
+		E1000006001 /* PermissionGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000006000 /* PermissionGuideView.swift */; };
+		E1000007001 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000007000 /* OnboardingViewModel.swift */; };
+		E1000008001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000008000 /* OnboardingView.swift */; };
+		E1000009001 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000009000 /* StatisticsView.swift */; };
+		E100000A001 /* KeyboardLayoutDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100000A000 /* KeyboardLayoutDetector.swift */; };
 		E200000A001 /* PermissionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000A000 /* PermissionType.swift */; };
 		E200000B001 /* PermissionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000B000 /* PermissionStatus.swift */; };
 		E200000C001 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000C000 /* PermissionService.swift */; };
 		E200000D001 /* PermissionTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000D000 /* PermissionTypeTests.swift */; };
 		E200000E001 /* PermissionStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000E000 /* PermissionStatusTests.swift */; };
 		E200000F001 /* PermissionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000F000 /* PermissionServiceTests.swift */; };
+		F1000001001 /* OnboardingStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001000 /* OnboardingStateTests.swift */; };
+		F1000002001 /* OnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000002000 /* OnboardingViewModelTests.swift */; };
+		F1000003001 /* OnboardingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000003000 /* OnboardingUITests.swift */; };
 		G1000001001 /* StatisticsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = G1000001000 /* StatisticsServiceTests.swift */; };
 		G1000002001 /* LoginItemServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = G1000002000 /* LoginItemServiceTests.swift */; };
 		G1000003001 /* MockKeyboardLocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = G1000003000 /* MockKeyboardLocking.swift */; };
@@ -90,19 +87,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E1000001000 /* AppStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStatistics.swift; sourceTree = "<group>"; };
-		E1000002000 /* OnboardingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingState.swift; sourceTree = "<group>"; };
-		E200000A000 /* PermissionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionType.swift; sourceTree = "<group>"; };
-		E200000B000 /* PermissionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatus.swift; sourceTree = "<group>"; };
-		E200000C000 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
-		E1000003000 /* StatisticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsService.swift; sourceTree = "<group>"; };
-		E1000004000 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
-		E1000005000 /* LoginItemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemService.swift; sourceTree = "<group>"; };
-		E1000006000 /* PermissionGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionGuideView.swift; sourceTree = "<group>"; };
-		E1000007000 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
-		E1000008000 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		E1000009000 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
-		E100000A000 /* KeyboardLayoutDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutDetector.swift; sourceTree = "<group>"; };
 		2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatLockPopupView.swift; sourceTree = "<group>"; };
 		2B1678F62F1A8C1D006BF13A /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		2B1678F72F1A8C1D006BF13A /* DetectionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionEvent.swift; sourceTree = "<group>"; };
@@ -144,12 +128,25 @@
 		B1000002000 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 		C1000000001 /* CatPawsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatPawsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1000001000 /* MenuBarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarUITests.swift; sourceTree = "<group>"; };
-		F1000001000 /* OnboardingStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStateTests.swift; sourceTree = "<group>"; };
-		F1000002000 /* OnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModelTests.swift; sourceTree = "<group>"; };
-		F1000003000 /* OnboardingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUITests.swift; sourceTree = "<group>"; };
+		E1000001000 /* AppStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStatistics.swift; sourceTree = "<group>"; };
+		E1000002000 /* OnboardingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingState.swift; sourceTree = "<group>"; };
+		E1000003000 /* StatisticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsService.swift; sourceTree = "<group>"; };
+		E1000004000 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
+		E1000005000 /* LoginItemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemService.swift; sourceTree = "<group>"; };
+		E1000006000 /* PermissionGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionGuideView.swift; sourceTree = "<group>"; };
+		E1000007000 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		E1000008000 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		E1000009000 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
+		E100000A000 /* KeyboardLayoutDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutDetector.swift; sourceTree = "<group>"; };
+		E200000A000 /* PermissionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionType.swift; sourceTree = "<group>"; };
+		E200000B000 /* PermissionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatus.swift; sourceTree = "<group>"; };
+		E200000C000 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
 		E200000D000 /* PermissionTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionTypeTests.swift; sourceTree = "<group>"; };
 		E200000E000 /* PermissionStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatusTests.swift; sourceTree = "<group>"; };
 		E200000F000 /* PermissionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionServiceTests.swift; sourceTree = "<group>"; };
+		F1000001000 /* OnboardingStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStateTests.swift; sourceTree = "<group>"; };
+		F1000002000 /* OnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModelTests.swift; sourceTree = "<group>"; };
+		F1000003000 /* OnboardingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUITests.swift; sourceTree = "<group>"; };
 		G1000001000 /* StatisticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsServiceTests.swift; sourceTree = "<group>"; };
 		G1000002000 /* LoginItemServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemServiceTests.swift; sourceTree = "<group>"; };
 		G1000003000 /* MockKeyboardLocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockKeyboardLocking.swift; sourceTree = "<group>"; };
@@ -407,28 +404,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		D1000000001 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if command -v swiftlint >/dev/null 2>&1; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		A1000000000 /* CatPaws */ = {
 			isa = PBXNativeTarget;
@@ -552,6 +527,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D1000000001 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if command -v swiftlint >/dev/null 2>&1; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A1000000003 /* Sources */ = {
@@ -783,7 +780,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = M9Y77E7ZX5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -794,7 +791,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.corti.CatPaws;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -812,7 +809,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = M9Y77E7ZX5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -824,7 +821,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.corti.CatPaws;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
