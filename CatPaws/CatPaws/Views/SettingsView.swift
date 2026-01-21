@@ -169,14 +169,40 @@ private struct DetectionSettingsView: View {
                 HStack {
                     Text("Debounce time:")
                     Spacer()
-                    Slider(value: Binding(
-                        get: { Double(configuration.debounceMs) },
-                        set: { configuration.debounceMs = Int($0) }
-                    ), in: 200...500, step: 50)
+                    Slider(
+                        value: Binding(
+                            get: { Double(configuration.debounceMs) },
+                            set: { configuration.debounceMs = Int($0) }
+                        ),
+                        in: 100...500,
+                        step: 50
+                    )
                     .frame(width: 150)
                     Text("\(configuration.debounceMs)ms")
                         .frame(width: 60, alignment: .trailing)
                         .monospacedDigit()
+                }
+
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Text("Detection time window:")
+                        Spacer()
+                        Slider(
+                            value: Binding(
+                                get: { Double(configuration.detectionTimeWindowMs) },
+                                set: { configuration.detectionTimeWindowMs = Int($0) }
+                            ),
+                            in: 100...500,
+                            step: 50
+                        )
+                        .frame(width: 150)
+                        Text("\(configuration.detectionTimeWindowMs)ms")
+                            .frame(width: 60, alignment: .trailing)
+                            .monospacedDigit()
+                    }
+                    Text("Time window for detecting rapid sequential key presses (e.g., cat paw)")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                 }
             }
 

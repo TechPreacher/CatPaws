@@ -42,10 +42,10 @@ struct CatLockPopupView: View {
             .accessibilityHint("Double tap to unlock the keyboard")
 
             // Emergency shortcut hint
-            Text("Or hold ⌘⌥⎋ for 2 seconds")
+            Text("Or press ESC 5 times to unlock")
                 .font(.caption)
                 .foregroundColor(.secondary)
-                .accessibilityLabel("Emergency unlock shortcut: hold Command, Option, and Escape keys for 2 seconds")
+                .accessibilityLabel("Emergency unlock: press the Escape key 5 times quickly")
         }
         .padding(24)
         .frame(width: 280)

@@ -65,7 +65,7 @@ final class LockStateManager: LockStateManaging {
             // Start debouncing
             pendingDetection = detection
             state.beginDebounce(for: detection)
-            AppLogger.logStateTransition(from: previousStatus, to: String(describing: state.status))
+            AppLogger.logStateTransition(fromState: previousStatus, toState: String(describing: state.status))
             AppLogger.logDebounce()
             startDebounceTimer()
 
@@ -99,7 +99,7 @@ final class LockStateManager: LockStateManaging {
 
         let previousStatus = String(describing: state.status)
         state.manualUnlock(cooldownDuration: cooldownSec)
-        AppLogger.logStateTransition(from: previousStatus, to: String(describing: state.status))
+        AppLogger.logStateTransition(fromState: previousStatus, toState: String(describing: state.status))
         AppLogger.logUnlock(reason: "manual dismiss")
         AppLogger.logCooldown(duration: cooldownSec)
         lockService?.unlock()
@@ -149,7 +149,7 @@ final class LockStateManager: LockStateManaging {
 
         let previousStatus = String(describing: state.status)
         state.lock(reason: detection)
-        AppLogger.logStateTransition(from: previousStatus, to: String(describing: state.status))
+        AppLogger.logStateTransition(fromState: previousStatus, toState: String(describing: state.status))
         AppLogger.logLock()
         pendingDetection = nil
         lockService?.lock()
@@ -190,7 +190,7 @@ final class LockStateManager: LockStateManaging {
         guard state.status == .cooldown else { return }
         let previousStatus = String(describing: state.status)
         state.endCooldown()
-        AppLogger.logStateTransition(from: previousStatus, to: String(describing: state.status))
+        AppLogger.logStateTransition(fromState: previousStatus, toState: String(describing: state.status))
     }
 
     // MARK: - Sound Effects

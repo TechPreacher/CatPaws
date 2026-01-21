@@ -11,9 +11,4 @@ import Foundation
 struct AppState {
     /// Whether the app functionality is currently active
     var isActive: Bool = false
-
-    /// Create a new app state with default values
-    init(isActive: Bool = false) {
-        self.isActive = isActive
-    }
 }

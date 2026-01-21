@@ -171,20 +171,23 @@ private func keyboardCallback(
     let keyCode = UInt16(event.getIntegerValueField(.keyboardEventKeycode))
     let flags = event.flags
 
+    // ESC key code - always allow through for emergency unlock
+    let escapeKeyCode: UInt16 = 53
+
     switch type {
     case .keyDown:
         monitor.handleKeyDown(keyCode)
 
-        // Block event if keyboard is locked
-        if monitor.shouldBlockEvent() {
+        // Block event if keyboard is locked (but allow ESC for emergency unlock)
+        if monitor.shouldBlockEvent() && keyCode != escapeKeyCode {
             return nil
         }
 
     case .keyUp:
         monitor.handleKeyUp(keyCode)
 
-        // Block event if keyboard is locked
-        if monitor.shouldBlockEvent() {
+        // Block event if keyboard is locked (but allow ESC for emergency unlock)
+        if monitor.shouldBlockEvent() && keyCode != escapeKeyCode {
             return nil
         }
 
