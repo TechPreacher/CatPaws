@@ -77,15 +77,6 @@ final class KeyboardLayoutDetector: KeyboardLayoutDetecting {
         }
     }
 
-    /// Manually refresh the current layout detection
-    func refreshLayout() {
-        let newLayout = detectCurrentLayout()
-        if newLayout != currentLayout {
-            currentLayout = newLayout
-            layoutChangedSubject.send(newLayout)
-        }
-    }
-
     // MARK: - Private Methods
 
     /// Handle layout change notification

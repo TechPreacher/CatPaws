@@ -44,12 +44,6 @@ final class KeyboardMonitor: KeyboardMonitoring {
         CGRequestListenEventAccess()
     }
 
-    func openPermissionSettings() {
-        if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent") {
-            NSWorkspace.shared.open(url)
-        }
-    }
-
     func startMonitoring() throws {
         guard !isMonitoring else { return }
 

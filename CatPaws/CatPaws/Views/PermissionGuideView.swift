@@ -112,27 +112,6 @@ private struct PermissionStatusRow: View {
     }
 }
 
-/// A row showing a numbered step in the permission guide
-private struct PermissionStepRow: View {
-    let number: Int
-    let text: String
-
-    var body: some View {
-        HStack(alignment: .top, spacing: 12) {
-            Text("\(number)")
-                .font(.caption)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .frame(width: 20, height: 20)
-                .background(Circle().fill(Color.accentColor))
-
-            Text(text)
-                .font(.subheadline)
-                .foregroundColor(.primary)
-        }
-    }
-}
-
 #Preview {
     let state = PermissionState(
         accessibility: PermissionStatus(type: .accessibility, isGranted: true),

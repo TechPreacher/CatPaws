@@ -12,14 +12,6 @@ final class AppStateTests: XCTestCase {
     func testDefaultInitialization() {
         let state = AppState()
         XCTAssertFalse(state.isActive)
-        XCTAssertNil(state.lastActivityDate)
-    }
-
-    func testCustomInitialization() {
-        let date = Date()
-        let state = AppState(isActive: true, lastActivityDate: date)
-        XCTAssertTrue(state.isActive)
-        XCTAssertEqual(state.lastActivityDate, date)
     }
 
     func testIsActiveMutation() {

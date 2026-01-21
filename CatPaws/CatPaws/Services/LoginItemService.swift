@@ -12,8 +12,6 @@ import ServiceManagement
 final class LoginItemService: ObservableObject {
     static let shared = LoginItemService()
 
-    @Published private(set) var lastError: Error?
-
     private init() {}
 
     // MARK: - Status
@@ -23,11 +21,6 @@ final class LoginItemService: ObservableObject {
         SMAppService.mainApp.status == .enabled
     }
 
-    /// The current status of the login item registration
-    var status: SMAppService.Status {
-        SMAppService.mainApp.status
-    }
-
     // MARK: - Registration
 
     /// Register the app as a login item
@@ -35,10 +28,8 @@ final class LoginItemService: ObservableObject {
     func register() throws {
         do {
             try SMAppService.mainApp.register()
-            lastError = nil
             objectWillChange.send()
         } catch {
-            lastError = error
             objectWillChange.send()
             throw error
         }
@@ -49,10 +40,8 @@ final class LoginItemService: ObservableObject {
     func unregister() throws {
         do {
             try SMAppService.mainApp.unregister()
-            lastError = nil
             objectWillChange.send()
         } catch {
-            lastError = error
             objectWillChange.send()
             throw error
         }

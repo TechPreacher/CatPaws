@@ -28,7 +28,4 @@ protocol KeyboardMonitoring: AnyObject {
 
     /// Request Input Monitoring permission (shows system dialog)
     func requestPermission()
-
-    /// Open System Settings to Input Monitoring pane
-    func openPermissionSettings()
 }

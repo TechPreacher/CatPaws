@@ -17,7 +17,6 @@ final class LockStateTests: XCTestCase {
         XCTAssertNil(state.lockedAt)
         XCTAssertNil(state.lockReason)
         XCTAssertNil(state.cooldownUntil)
-        XCTAssertNil(state.lastRecheckAt)
     }
 
     // MARK: - T031: State Transitions
@@ -71,19 +70,6 @@ final class LockStateTests: XCTestCase {
 
         XCTAssertEqual(state.status, .monitoring)
         XCTAssertNil(state.cooldownUntil)
-    }
-
-    // MARK: - Recheck Tracking
-
-    func testRecheckTracking() {
-        let detection = DetectionEvent(type: .paw, keyCount: 3)
-        var state = LockState(status: .locked, lockedAt: Date(), lockReason: detection)
-
-        XCTAssertNil(state.lastRecheckAt)
-
-        state.recordRecheck()
-
-        XCTAssertNotNil(state.lastRecheckAt)
     }
 
     // MARK: - Validation Rules

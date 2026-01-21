@@ -54,7 +54,7 @@ final class OnboardingViewModel: ObservableObject {
         // Check initial permission status
         hasAccessibility = AXIsProcessTrusted()
         // Accessibility permission includes Input Monitoring capabilities
-        hasInputMonitoring = hasAccessibility || Self.checkInputMonitoringPermission()
+        hasInputMonitoring = hasAccessibility || PermissionService.shared.checkInputMonitoring()
 
         // Restore persisted step
         let restoredStep = onboardingState.currentStep
@@ -209,14 +209,8 @@ final class OnboardingViewModel: ObservableObject {
 
     /// Check if Input Monitoring permission is granted
     func checkPermission() -> Bool {
-        hasInputMonitoring = Self.checkInputMonitoringPermission()
+        hasInputMonitoring = PermissionService.shared.checkInputMonitoring()
         return hasInputMonitoring
-    }
-
-    /// Check if Accessibility permission is granted
-    func checkAccessibilityPermission() -> Bool {
-        hasAccessibility = AXIsProcessTrusted()
-        return hasAccessibility
     }
 
     // MARK: - Detection Test
@@ -293,31 +287,10 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     private func pollInputMonitoringStatus() {
-        let newStatus = Self.checkInputMonitoringPermission()
+        let newStatus = PermissionService.shared.checkInputMonitoring()
         if newStatus != hasInputMonitoring {
             hasInputMonitoring = newStatus
         }
-    }
-
-    /// Reliably check Input Monitoring permission by attempting to create an event tap
-    /// CGPreflightListenEventAccess() is unreliable and can return true before permission is granted
-    private static func checkInputMonitoringPermission() -> Bool {
-        let eventMask: CGEventMask = 1 << CGEventType.keyDown.rawValue
-
-        guard let tap = CGEvent.tapCreate(
-            tap: .cgSessionEventTap,
-            place: .headInsertEventTap,
-            options: .listenOnly,
-            eventsOfInterest: eventMask,
-            callback: { _, _, event, _ in Unmanaged.passUnretained(event) },
-            userInfo: nil
-        ) else {
-            return false
-        }
-
-        // Clean up the test tap immediately
-        CFMachPortInvalidate(tap)
-        return true
     }
 
     // MARK: - Test Monitoring

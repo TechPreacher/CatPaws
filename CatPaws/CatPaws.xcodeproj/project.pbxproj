@@ -47,9 +47,6 @@
 		2B1679252F1A8CBB006BF13A /* MockNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1679242F1A8CBB006BF13A /* MockNotificationPresenter.swift */; };
 		A1000001001 /* CatPawsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001000 /* CatPawsApp.swift */; };
 		A1000002001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000 /* AppDelegate.swift */; };
-		A1000003001 /* StatusItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003000 /* StatusItemManager.swift */; };
-		A1000004001 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004000 /* MenuBarView.swift */; };
-		A1000005001 /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005000 /* PopoverView.swift */; };
 		A1000006001 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006000 /* SettingsView.swift */; };
 		A1000007001 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000007000 /* AppViewModel.swift */; };
 		A1000008001 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000008000 /* AppState.swift */; };
@@ -68,6 +65,11 @@
 		E200000D001 /* PermissionTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000D000 /* PermissionTypeTests.swift */; };
 		E200000E001 /* PermissionStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000E000 /* PermissionStatusTests.swift */; };
 		E200000F001 /* PermissionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000F000 /* PermissionServiceTests.swift */; };
+		G1000001001 /* StatisticsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = G1000001000 /* StatisticsServiceTests.swift */; };
+		G1000002001 /* LoginItemServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = G1000002000 /* LoginItemServiceTests.swift */; };
+		G1000003001 /* MockKeyboardLocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = G1000003000 /* MockKeyboardLocking.swift */; };
+		G1000004001 /* MockCatDetecting.swift in Sources */ = {isa = PBXBuildFile; fileRef = G1000004000 /* MockCatDetecting.swift */; };
+		G1000005001 /* MockConfigurationProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = G1000005000 /* MockConfigurationProviding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,9 +131,6 @@
 		A1000000001 /* CatPaws.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatPaws.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000001000 /* CatPawsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatPawsApp.swift; sourceTree = "<group>"; };
 		A1000002000 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A1000003000 /* StatusItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemManager.swift; sourceTree = "<group>"; };
-		A1000004000 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
-		A1000005000 /* PopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
 		A1000006000 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A1000007000 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		A1000008000 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -151,6 +150,11 @@
 		E200000D000 /* PermissionTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionTypeTests.swift; sourceTree = "<group>"; };
 		E200000E000 /* PermissionStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatusTests.swift; sourceTree = "<group>"; };
 		E200000F000 /* PermissionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionServiceTests.swift; sourceTree = "<group>"; };
+		G1000001000 /* StatisticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsServiceTests.swift; sourceTree = "<group>"; };
+		G1000002000 /* LoginItemServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemServiceTests.swift; sourceTree = "<group>"; };
+		G1000003000 /* MockKeyboardLocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockKeyboardLocking.swift; sourceTree = "<group>"; };
+		G1000004000 /* MockCatDetecting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCatDetecting.swift; sourceTree = "<group>"; };
+		G1000005000 /* MockConfigurationProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConfigurationProviding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +186,9 @@
 			isa = PBXGroup;
 			children = (
 				2B1679242F1A8CBB006BF13A /* MockNotificationPresenter.swift */,
+				G1000003000 /* MockKeyboardLocking.swift */,
+				G1000004000 /* MockCatDetecting.swift */,
+				G1000005000 /* MockConfigurationProviding.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -234,8 +241,6 @@
 		A1000012000 /* MenuBar */ = {
 			isa = PBXGroup;
 			children = (
-				A1000003000 /* StatusItemManager.swift */,
-				A1000004000 /* MenuBarView.swift */,
 				A100000C000 /* MenuBarContentView.swift */,
 			);
 			path = MenuBar;
@@ -244,7 +249,6 @@
 		A1000013000 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A1000005000 /* PopoverView.swift */,
 				A1000006000 /* SettingsView.swift */,
 				2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */,
 				E1000006000 /* PermissionGuideView.swift */,
@@ -370,6 +374,8 @@
 				2B16791F2F1A8C97006BF13A /* KeyboardLockServiceTests.swift */,
 				2B1679202F1A8C97006BF13A /* LockStateManagerTests.swift */,
 				E200000F000 /* PermissionServiceTests.swift */,
+				G1000001000 /* StatisticsServiceTests.swift */,
+				G1000002000 /* LoginItemServiceTests.swift */,
 			);
 			path = ServiceTests;
 			sourceTree = "<group>";
@@ -554,14 +560,11 @@
 			files = (
 				A1000001001 /* CatPawsApp.swift in Sources */,
 				A1000002001 /* AppDelegate.swift in Sources */,
-				A1000003001 /* StatusItemManager.swift in Sources */,
-				A1000004001 /* MenuBarView.swift in Sources */,
 				A100000C001 /* MenuBarContentView.swift in Sources */,
 				2B1678FA2F1A8C1D006BF13A /* KeyboardState.swift in Sources */,
 				2B1678FB2F1A8C1D006BF13A /* Configuration.swift in Sources */,
 				2B1678FC2F1A8C1D006BF13A /* DetectionEvent.swift in Sources */,
 				2B1678FD2F1A8C1D006BF13A /* LockState.swift in Sources */,
-				A1000005001 /* PopoverView.swift in Sources */,
 				A1000006001 /* SettingsView.swift in Sources */,
 				A1000007001 /* AppViewModel.swift in Sources */,
 				A1000008001 /* AppState.swift in Sources */,
@@ -613,6 +616,11 @@
 				E200000D001 /* PermissionTypeTests.swift in Sources */,
 				E200000E001 /* PermissionStatusTests.swift in Sources */,
 				E200000F001 /* PermissionServiceTests.swift in Sources */,
+				G1000001001 /* StatisticsServiceTests.swift in Sources */,
+				G1000002001 /* LoginItemServiceTests.swift in Sources */,
+				G1000003001 /* MockKeyboardLocking.swift in Sources */,
+				G1000004001 /* MockCatDetecting.swift in Sources */,
+				G1000005001 /* MockConfigurationProviding.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
