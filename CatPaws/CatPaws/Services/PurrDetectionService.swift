@@ -197,11 +197,13 @@ final class PurrDetectionService: PurrDetecting {
 
         // Calculate envelope using windowed means
         var envelopeValues = [Float](repeating: 0, count: envelopeCount)
-        for windowIndex in 0..<envelopeCount {
-            let startIndex = windowIndex * hopSize
-            var windowMean: Float = 0
-            vDSP_meanv(absValues.advanced(by: startIndex), 1, &windowMean, vDSP_Length(windowSize))
-            envelopeValues[windowIndex] = windowMean
+        absValues.withUnsafeBufferPointer { bufferPointer in
+            for windowIndex in 0..<envelopeCount {
+                let startIndex = windowIndex * hopSize
+                var windowMean: Float = 0
+                vDSP_meanv(bufferPointer.baseAddress! + startIndex, 1, &windowMean, vDSP_Length(windowSize))
+                envelopeValues[windowIndex] = windowMean
+            }
         }
 
         // Calculate mean of envelope
