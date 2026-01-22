@@ -27,7 +27,12 @@ struct StatisticsView: View {
 
             Divider()
 
-            // Statistics grid
+            // Keyboard detection statistics grid
+            Text("Keyboard Detection")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
             HStack(spacing: 20) {
                 StatisticCard(
                     title: "Today",
@@ -51,6 +56,33 @@ struct StatisticsView: View {
                 )
             }
 
+            // Purr detection statistics
+            if statisticsService.statistics.totalPurrDetections > 0 ||
+               hasPurrDetectionEnabled {
+                Divider()
+
+                Text("Purr Detection")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                HStack(spacing: 20) {
+                    StatisticCard(
+                        title: "Today",
+                        value: statisticsService.statistics.todayPurrDetections,
+                        icon: "waveform",
+                        color: .green
+                    )
+
+                    StatisticCard(
+                        title: "All Time",
+                        value: statisticsService.statistics.totalPurrDetections,
+                        icon: "waveform.circle.fill",
+                        color: .teal
+                    )
+                }
+            }
+
             // Last block info
             if let lastBlock = statisticsService.statistics.lastBlockDate {
                 HStack {
@@ -71,6 +103,11 @@ struct StatisticsView: View {
             }
         }
         .padding()
+    }
+
+    /// Check if purr detection is enabled in configuration
+    private var hasPurrDetectionEnabled: Bool {
+        Configuration().purrDetectionEnabled
     }
 }
 

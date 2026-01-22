@@ -24,6 +24,17 @@ struct AppStatistics: Codable, Equatable {
     /// Date counters were last reset
     var lastResetDate = Date()
 
+    // MARK: - Purr Detection Statistics
+
+    /// All-time count of purr detections
+    var totalPurrDetections: Int = 0
+
+    /// Purr detections today
+    var todayPurrDetections: Int = 0
+
+    /// Timestamp of most recent purr detection
+    var lastPurrDetectionDate: Date?
+
     // MARK: - State Transitions
 
     /// Records a new block event
@@ -34,9 +45,17 @@ struct AppStatistics: Codable, Equatable {
         lastBlockDate = Date()
     }
 
+    /// Records a new purr detection event
+    mutating func recordPurrDetection() {
+        totalPurrDetections += 1
+        todayPurrDetections += 1
+        lastPurrDetectionDate = Date()
+    }
+
     /// Resets daily counter (called at midnight)
     mutating func resetDaily() {
         todayBlocks = 0
+        todayPurrDetections = 0
     }
 
     /// Resets weekly counter (called at start of new week)
@@ -51,5 +70,8 @@ struct AppStatistics: Codable, Equatable {
         weekBlocks = 0
         lastBlockDate = nil
         lastResetDate = Date()
+        totalPurrDetections = 0
+        todayPurrDetections = 0
+        lastPurrDetectionDate = nil
     }
 }

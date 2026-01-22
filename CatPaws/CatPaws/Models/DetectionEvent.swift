@@ -17,6 +17,9 @@ enum DetectionType: Equatable {
 
     /// 10+ keys pressed (cat sitting or lying on keyboard)
     case sitting
+
+    /// Audio-based purr detection via microphone
+    case purr
 }
 
 /// Represents a detected cat pattern event

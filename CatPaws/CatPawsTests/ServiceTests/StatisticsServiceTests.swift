@@ -168,4 +168,89 @@ final class StatisticsServiceTests: XCTestCase {
         let newService = StatisticsService(defaults: testDefaults)
         XCTAssertEqual(newService.statistics.totalBlocks, 0)
     }
+
+    // MARK: - Purr Detection Statistics Tests (T031)
+
+    func testRecordPurrDetectionIncrementsCounter() {
+        XCTAssertEqual(sut.statistics.totalPurrDetections, 0)
+        XCTAssertEqual(sut.statistics.todayPurrDetections, 0)
+
+        sut.recordPurrDetection()
+
+        XCTAssertEqual(sut.statistics.totalPurrDetections, 1)
+        XCTAssertEqual(sut.statistics.todayPurrDetections, 1)
+    }
+
+    func testRecordPurrDetectionMultipleTimes() {
+        sut.recordPurrDetection()
+        sut.recordPurrDetection()
+        sut.recordPurrDetection()
+
+        XCTAssertEqual(sut.statistics.totalPurrDetections, 3)
+        XCTAssertEqual(sut.statistics.todayPurrDetections, 3)
+    }
+
+    func testRecordPurrDetectionUpdatesLastDate() {
+        XCTAssertNil(sut.statistics.lastPurrDetectionDate)
+
+        sut.recordPurrDetection()
+
+        XCTAssertNotNil(sut.statistics.lastPurrDetectionDate)
+    }
+
+    func testRecordPurrDetectionPersistsToUserDefaults() {
+        sut.recordPurrDetection()
+        sut.recordPurrDetection()
+
+        // Create new instance to verify persistence
+        let newService = StatisticsService(defaults: testDefaults)
+        XCTAssertEqual(newService.statistics.totalPurrDetections, 2)
+    }
+
+    func testResetAllClearsPurrStatistics() {
+        sut.recordPurrDetection()
+        sut.recordPurrDetection()
+        XCTAssertEqual(sut.statistics.totalPurrDetections, 2)
+
+        sut.resetAll()
+
+        XCTAssertEqual(sut.statistics.totalPurrDetections, 0)
+        XCTAssertEqual(sut.statistics.todayPurrDetections, 0)
+        XCTAssertNil(sut.statistics.lastPurrDetectionDate)
+    }
+
+    func testDailyResetResetsTodayPurrDetections() {
+        // Simulate yesterday's date
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        var stats = AppStatistics()
+        stats.totalPurrDetections = 5
+        stats.todayPurrDetections = 3
+        stats.lastPurrDetectionDate = yesterday
+
+        // Encode and save to defaults
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(stats) {
+            testDefaults.set(data, forKey: "catpaws.statistics")
+        }
+
+        // Create new service to load the data
+        let service = StatisticsService(defaults: testDefaults)
+
+        // Record a block today - this triggers checkAndResetCounters
+        service.recordBlock()
+
+        // Today purr detections should have been reset (it checks at recordBlock)
+        XCTAssertEqual(service.statistics.todayPurrDetections, 0)
+        // Total should remain
+        XCTAssertEqual(service.statistics.totalPurrDetections, 5)
+    }
+
+    func testPurrAndBlockCountersAreIndependent() {
+        sut.recordBlock()
+        sut.recordBlock()
+        sut.recordPurrDetection()
+
+        XCTAssertEqual(sut.statistics.totalBlocks, 2)
+        XCTAssertEqual(sut.statistics.totalPurrDetections, 1)
+    }
 }

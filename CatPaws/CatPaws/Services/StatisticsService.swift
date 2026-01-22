@@ -61,6 +61,13 @@ final class StatisticsService: ObservableObject {
         save()
     }
 
+    /// Records a purr detection event and persists to storage
+    func recordPurrDetection() {
+        checkAndResetCounters()
+        statistics.recordPurrDetection()
+        save()
+    }
+
     /// Resets all statistics to zero
     func resetAll() {
         statistics.resetAll()

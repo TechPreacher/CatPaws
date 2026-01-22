@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		H1000001001 /* PurrDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = H1000001000 /* PurrDetectionService.swift */; };
+		H1000002001 /* AudioMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = H1000002000 /* AudioMonitor.swift */; };
+		H1000003001 /* PurrDetectionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = H1000003000 /* PurrDetectionResult.swift */; };
+		H1000006001 /* PurrDetectionSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = H1000006000 /* PurrDetectionSettingsView.swift */; };
+		H1000004001 /* PurrDetectionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = H1000004000 /* PurrDetectionServiceTests.swift */; };
+		H1000005001 /* AudioMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = H1000005000 /* AudioMonitorTests.swift */; };
 		2B1678F52F1A8BA0006BF13A /* CatLockPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */; };
 		2B1678FA2F1A8C1D006BF13A /* KeyboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F82F1A8C1D006BF13A /* KeyboardState.swift */; };
 		2B1678FB2F1A8C1D006BF13A /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1678F62F1A8C1D006BF13A /* Configuration.swift */; };
@@ -87,6 +93,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		H1000001000 /* PurrDetectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurrDetectionService.swift; sourceTree = "<group>"; };
+		H1000002000 /* AudioMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMonitor.swift; sourceTree = "<group>"; };
+		H1000003000 /* PurrDetectionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurrDetectionResult.swift; sourceTree = "<group>"; };
+		H1000004000 /* PurrDetectionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurrDetectionServiceTests.swift; sourceTree = "<group>"; };
+		H1000005000 /* AudioMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMonitorTests.swift; sourceTree = "<group>"; };
+		H1000006000 /* PurrDetectionSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurrDetectionSettingsView.swift; sourceTree = "<group>"; };
 		2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatLockPopupView.swift; sourceTree = "<group>"; };
 		2B1678F62F1A8C1D006BF13A /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		2B1678F72F1A8C1D006BF13A /* DetectionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionEvent.swift; sourceTree = "<group>"; };
@@ -250,6 +262,7 @@
 				2B1678F42F1A8BA0006BF13A /* CatLockPopupView.swift */,
 				E1000006000 /* PermissionGuideView.swift */,
 				E1000008000 /* OnboardingView.swift */,
+				H1000006000 /* PurrDetectionSettingsView.swift */,
 				E1000009000 /* StatisticsView.swift */,
 			);
 			path = Views;
@@ -276,6 +289,7 @@
 				E1000002000 /* OnboardingState.swift */,
 				E200000B000 /* PermissionStatus.swift */,
 				E200000A000 /* PermissionType.swift */,
+				H1000003000 /* PurrDetectionResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -284,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				E1000004000 /* AppLogger.swift */,
+				H1000002000 /* AudioMonitor.swift */,
 				2B1678FE2F1A8C5C006BF13A /* CatDetecting.swift */,
 				E1000005000 /* LoginItemService.swift */,
 				2B1678FF2F1A8C5C006BF13A /* CatDetectionService.swift */,
@@ -301,6 +316,7 @@
 				2B16790A2F1A8C5C006BF13A /* NotificationWindowController.swift */,
 				2B16790B2F1A8C5C006BF13A /* PermissionError.swift */,
 				E200000C000 /* PermissionService.swift */,
+				H1000001000 /* PurrDetectionService.swift */,
 				E1000003000 /* StatisticsService.swift */,
 			);
 			path = Services;
@@ -367,10 +383,12 @@
 		B1000013000 /* ServiceTests */ = {
 			isa = PBXGroup;
 			children = (
+				H1000005000 /* AudioMonitorTests.swift */,
 				2B16791E2F1A8C97006BF13A /* CatDetectionServiceTests.swift */,
 				2B16791F2F1A8C97006BF13A /* KeyboardLockServiceTests.swift */,
 				2B1679202F1A8C97006BF13A /* LockStateManagerTests.swift */,
 				E200000F000 /* PermissionServiceTests.swift */,
+				H1000004000 /* PurrDetectionServiceTests.swift */,
 				G1000001000 /* StatisticsServiceTests.swift */,
 				G1000002000 /* LoginItemServiceTests.swift */,
 			);
@@ -593,6 +611,10 @@
 				E1000008001 /* OnboardingView.swift in Sources */,
 				E1000009001 /* StatisticsView.swift in Sources */,
 				E100000A001 /* KeyboardLayoutDetector.swift in Sources */,
+				H1000001001 /* PurrDetectionService.swift in Sources */,
+				H1000002001 /* AudioMonitor.swift in Sources */,
+				H1000003001 /* PurrDetectionResult.swift in Sources */,
+				H1000006001 /* PurrDetectionSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,6 +640,8 @@
 				G1000003001 /* MockKeyboardLocking.swift in Sources */,
 				G1000004001 /* MockCatDetecting.swift in Sources */,
 				G1000005001 /* MockConfigurationProviding.swift in Sources */,
+				H1000004001 /* PurrDetectionServiceTests.swift in Sources */,
+				H1000005001 /* AudioMonitorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,6 +23,10 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         static let playSoundOnUnlock = "catpaws.playSoundOnUnlock"
         static let debugLoggingEnabled = "catpaws.debugLogging"
         static let detectionTimeWindowMs = "catpaws.detectionTimeWindowMs"
+        // Purr detection settings
+        static let purrDetectionEnabled = "catpaws.purrDetectionEnabled"
+        static let purrSensitivity = "catpaws.purrSensitivity"
+        static let purrSoundThreshold = "catpaws.purrSoundThreshold"
     }
 
     // MARK: - Defaults
@@ -37,6 +41,10 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         static let playSoundOnUnlock = true
         static let debugLoggingEnabled = false
         static let detectionTimeWindowMs = 300  // 300ms default for cat paw detection window
+        // Purr detection defaults
+        static let purrDetectionEnabled = false  // Opt-in feature
+        static let purrSensitivity = 0.5  // Medium sensitivity (0.0-1.0)
+        static let purrSoundThreshold = 0.01  // RMS wake threshold
     }
 
     // MARK: - Ranges
@@ -46,6 +54,9 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         static let cooldownSec = 5.0...10.0
         static let minimumKeyCount = 3...5
         static let detectionTimeWindowMs = 100...500
+        // Purr detection ranges
+        static let purrSensitivity = 0.0...1.0
+        static let purrSoundThreshold = 0.001...0.1
     }
 
     // MARK: - Initialization
@@ -65,7 +76,10 @@ final class Configuration: ConfigurationProviding, ObservableObject {
             Keys.playSoundOnLock: Defaults.playSoundOnLock,
             Keys.playSoundOnUnlock: Defaults.playSoundOnUnlock,
             Keys.debugLoggingEnabled: Defaults.debugLoggingEnabled,
-            Keys.detectionTimeWindowMs: Defaults.detectionTimeWindowMs
+            Keys.detectionTimeWindowMs: Defaults.detectionTimeWindowMs,
+            Keys.purrDetectionEnabled: Defaults.purrDetectionEnabled,
+            Keys.purrSensitivity: Defaults.purrSensitivity,
+            Keys.purrSoundThreshold: Defaults.purrSoundThreshold
         ])
     }
 
@@ -168,6 +182,45 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         }
     }
 
+    // MARK: - Purr Detection Settings
+
+    /// Whether purr detection is enabled (opt-in feature)
+    var purrDetectionEnabled: Bool {
+        get { defaults.bool(forKey: Keys.purrDetectionEnabled) }
+        set {
+            objectWillChange.send()
+            defaults.set(newValue, forKey: Keys.purrDetectionEnabled)
+        }
+    }
+
+    /// Purr detection sensitivity (0.0 = low, 1.0 = high)
+    var purrSensitivity: Double {
+        get {
+            let value = defaults.double(forKey: Keys.purrSensitivity)
+            return Ranges.purrSensitivity.contains(value) ? value : Defaults.purrSensitivity
+        }
+        set {
+            objectWillChange.send()
+            let range = Ranges.purrSensitivity
+            let clamped = min(max(newValue, range.lowerBound), range.upperBound)
+            defaults.set(clamped, forKey: Keys.purrSensitivity)
+        }
+    }
+
+    /// Wake-on-sound RMS threshold for audio monitoring
+    var purrSoundThreshold: Double {
+        get {
+            let value = defaults.double(forKey: Keys.purrSoundThreshold)
+            return Ranges.purrSoundThreshold.contains(value) ? value : Defaults.purrSoundThreshold
+        }
+        set {
+            objectWillChange.send()
+            let range = Ranges.purrSoundThreshold
+            let clamped = min(max(newValue, range.lowerBound), range.upperBound)
+            defaults.set(clamped, forKey: Keys.purrSoundThreshold)
+        }
+    }
+
     func resetToDefaults() {
         isEnabled = Defaults.isEnabled
         debounceMs = Defaults.debounceMs
@@ -176,6 +229,9 @@ final class Configuration: ConfigurationProviding, ObservableObject {
         playSoundOnLock = Defaults.playSoundOnLock
         playSoundOnUnlock = Defaults.playSoundOnUnlock
         detectionTimeWindowMs = Defaults.detectionTimeWindowMs
+        purrDetectionEnabled = Defaults.purrDetectionEnabled
+        purrSensitivity = Defaults.purrSensitivity
+        purrSoundThreshold = Defaults.purrSoundThreshold
     }
 
     /// Resets ALL app settings to factory defaults, including onboarding state.

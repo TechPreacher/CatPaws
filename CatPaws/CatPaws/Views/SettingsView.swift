@@ -153,7 +153,7 @@ private struct DetectionSettingsView: View {
 
     var body: some View {
         Form {
-            Section("Detection Sensitivity") {
+            Section("Keyboard Detection Sensitivity") {
                 HStack {
                     Text("Minimum keys to trigger:")
                     Spacer()
@@ -222,6 +222,9 @@ private struct DetectionSettingsView: View {
                 Toggle("Play sound when locked", isOn: $configuration.playSoundOnLock)
                 Toggle("Play sound when unlocked", isOn: $configuration.playSoundOnUnlock)
             }
+
+            // Purr Detection Section
+            PurrDetectionSettingsView(configuration: configuration)
 
             Section {
                 Button("Reset to Defaults") {

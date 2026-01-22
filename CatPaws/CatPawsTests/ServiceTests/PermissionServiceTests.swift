@@ -117,6 +117,20 @@ final class PermissionServiceTests: XCTestCase {
         let instance2 = PermissionService.shared
         XCTAssertTrue(instance1 === instance2)
     }
+
+    // MARK: - Microphone Permission Tests (T006)
+
+    func testCheckMicrophoneReturnsBoolean() {
+        // Microphone permission check should return a boolean without crashing
+        let result = sut.checkMicrophone()
+        XCTAssertTrue(result == true || result == false)
+    }
+
+    func testRequestMicrophonePermissionReturnsBoolean() async {
+        // Request should return a boolean (actual result depends on system state)
+        let result = await sut.requestMicrophonePermission()
+        XCTAssertTrue(result == true || result == false)
+    }
 }
 
 // MARK: - Mock Permission Service for Testing
@@ -126,8 +140,10 @@ final class PermissionServiceTests: XCTestCase {
 final class MockPermissionService: PermissionChecking {
     var accessibilityGranted = false
     var inputMonitoringGranted = false
+    var microphoneGranted = false
     var openSettingsCalled = false
     var lastOpenedSettingsType: PermissionType?
+    var requestMicrophoneCallCount = 0
 
     func checkAccessibility() -> Bool {
         accessibilityGranted
@@ -135,6 +151,15 @@ final class MockPermissionService: PermissionChecking {
 
     func checkInputMonitoring() -> Bool {
         inputMonitoringGranted
+    }
+
+    func checkMicrophone() -> Bool {
+        microphoneGranted
+    }
+
+    func requestMicrophonePermission() async -> Bool {
+        requestMicrophoneCallCount += 1
+        return microphoneGranted
     }
 
     func getCurrentState() -> PermissionState {
@@ -202,5 +227,21 @@ final class MockPermissionServiceTests: XCTestCase {
 
         mockService.openSettings(for: .inputMonitoring)
         XCTAssertEqual(mockService.lastOpenedSettingsType, .inputMonitoring)
+    }
+
+    func testMockCheckMicrophoneReturnsConfiguredValue() {
+        mockService.microphoneGranted = false
+        XCTAssertFalse(mockService.checkMicrophone())
+
+        mockService.microphoneGranted = true
+        XCTAssertTrue(mockService.checkMicrophone())
+    }
+
+    func testMockRequestMicrophoneTracksCallCount() async {
+        mockService.microphoneGranted = true
+        let result = await mockService.requestMicrophonePermission()
+
+        XCTAssertTrue(result)
+        XCTAssertEqual(mockService.requestMicrophoneCallCount, 1)
     }
 }

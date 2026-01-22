@@ -66,6 +66,8 @@ struct CatLockPopupView: View {
             return "pawprint.circle.fill"
         case .sitting:
             return "cat.fill"
+        case .purr:
+            return "waveform"
         }
     }
 
@@ -77,6 +79,8 @@ struct CatLockPopupView: View {
             return "Multiple cat paws detected"
         case .sitting:
             return "Cat sitting on keyboard"
+        case .purr:
+            return "Cat purring detected"
         }
     }
 
@@ -88,6 +92,8 @@ struct CatLockPopupView: View {
             return "Multiple Paws Detected!"
         case .sitting:
             return "Cat on Keyboard!"
+        case .purr:
+            return "Cat Purring Nearby!"
         }
     }
 
@@ -99,6 +105,8 @@ struct CatLockPopupView: View {
             return "Multiple paw prints detected. Keyboard locked for safety."
         case .sitting:
             return "Your cat appears to be sitting on the keyboard. Input blocked."
+        case .purr:
+            return "Cat purring detected nearby. Keyboard locked preemptively."
         }
     }
 }
