@@ -32,6 +32,12 @@ struct AppLogger {
     /// Logger for statistics events
     static let statistics = Logger(subsystem: subsystem, category: "statistics")
 
+    /// Logger for purr detection events
+    static let purr = Logger(subsystem: subsystem, category: "purr")
+
+    /// Logger for audio monitoring events
+    static let audio = Logger(subsystem: subsystem, category: "audio")
+
     // MARK: - Debug Logging Check
 
     /// Check if debug logging is enabled
@@ -117,5 +123,65 @@ struct AppLogger {
     static func logStatistics(_ message: String) {
         guard isDebugEnabled else { return }
         statistics.info("\(message)")
+    }
+
+    // MARK: - Purr Detection Logging
+
+    /// Logs audio monitoring start
+    static func logAudioMonitoringStarted() {
+        guard isDebugEnabled else { return }
+        audio.info("Audio monitoring started")
+    }
+
+    /// Logs audio monitoring stop
+    static func logAudioMonitoringStopped() {
+        guard isDebugEnabled else { return }
+        audio.info("Audio monitoring stopped")
+    }
+
+    /// Logs audio level threshold exceeded
+    /// - Parameter level: The RMS level that was detected
+    static func logAudioThresholdExceeded(level: Float) {
+        guard isDebugEnabled else { return }
+        audio.debug("Audio threshold exceeded: RMS=\(level, format: .fixed(precision: 4))")
+    }
+
+    /// Logs purr detection initialization
+    static func logPurrDetectionInitialized() {
+        guard isDebugEnabled else { return }
+        purr.info("Purr detection service initialized")
+    }
+
+    /// Logs purr detection result
+    /// - Parameters:
+    ///   - detected: Whether a purr was detected
+    ///   - confidence: The confidence score
+    static func logPurrDetectionResult(detected: Bool, confidence: Float) {
+        guard isDebugEnabled else { return }
+        if detected {
+            purr.info("Cat purr DETECTED with confidence: \(confidence, format: .fixed(precision: 2))")
+        } else {
+            purr.debug("No purr detected, confidence: \(confidence, format: .fixed(precision: 2))")
+        }
+    }
+
+    /// Logs purr sensitivity change
+    /// - Parameter sensitivity: The new sensitivity value
+    static func logPurrSensitivityChanged(sensitivity: Float) {
+        guard isDebugEnabled else { return }
+        purr.info("Purr detection sensitivity changed to: \(sensitivity, format: .fixed(precision: 2))")
+    }
+
+    /// Logs microphone permission status
+    /// - Parameter granted: Whether microphone permission is granted
+    static func logMicrophonePermission(granted: Bool) {
+        guard isDebugEnabled else { return }
+        permission.info("Microphone permission: \(granted ? "granted" : "denied")")
+    }
+
+    /// Logs purr-triggered keyboard lock
+    static func logPurrTriggeredLock() {
+        guard isDebugEnabled else { return }
+        purr.info("Keyboard locked due to cat purr detection")
     }
 }
