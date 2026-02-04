@@ -84,7 +84,8 @@ struct KeyboardState {
         // This prevents false positives from fast sequential typing where only 1 key
         // is pressed at a time, while still catching cat paws that press multiple keys.
         if currentNonModifierKeys.count >= 2 {
-            return currentNonModifierKeys.union(keysInTimeWindow)
+            let timeWindowNonModifierKeys = keysInTimeWindow.subtracting(KeyboardAdjacencyMap.modifierKeyCodes)
+            return currentNonModifierKeys.union(timeWindowNonModifierKeys)
         } else {
             return currentNonModifierKeys
         }
