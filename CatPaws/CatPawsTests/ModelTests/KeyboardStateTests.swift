@@ -181,14 +181,14 @@ final class KeyboardStateTests: XCTestCase {
     }
 
     func testKeysForDetectionReturnsUnionOfPressedAndWindowed() {
-        // Given: A KeyboardState with pressed keys and different windowed keys
+        // Given: A KeyboardState with 2+ pressed keys (simultaneous press) and different windowed keys
         let now = Date()
         let recentPresses = [
             TimestampedKeyEvent(keyCode: 0x02, timestamp: now.addingTimeInterval(-0.1)),  // D - in window
             TimestampedKeyEvent(keyCode: 0x03, timestamp: now.addingTimeInterval(-0.2))   // F - in window
         ]
         let state = KeyboardState(
-            pressedKeys: [0x00, 0x01],  // A, S currently pressed
+            pressedKeys: [0x00, 0x01],  // A, S currently pressed (2 keys = simultaneous)
             recentKeyPresses: recentPresses,
             timeWindowSeconds: 0.3
         )
@@ -197,6 +197,7 @@ final class KeyboardStateTests: XCTestCase {
         let keysForDetection = state.keysForDetection
 
         // Then: Union of pressed (A, S) and windowed (D, F) should be returned
+        // because 2+ keys are currently pressed (cat paw behavior)
         XCTAssertEqual(keysForDetection.count, 4)
         XCTAssertTrue(keysForDetection.contains(0x00))  // A
         XCTAssertTrue(keysForDetection.contains(0x01))  // S
@@ -204,15 +205,16 @@ final class KeyboardStateTests: XCTestCase {
         XCTAssertTrue(keysForDetection.contains(0x03))  // F
     }
 
-    func testKeysForDetectionExcludesModifiers() {
-        // Given: A KeyboardState with modifier keys in both pressed and windowed
+    func testKeysForDetectionExcludesTimeWindowWhenOnlyOneKeyPressed() {
+        // Given: A KeyboardState with only 1 pressed key (sequential typing) and windowed keys
+        // This simulates fast human typing where keys are pressed one at a time
         let now = Date()
         let recentPresses = [
-            TimestampedKeyEvent(keyCode: 0x00, timestamp: now.addingTimeInterval(-0.1)),  // A
-            TimestampedKeyEvent(keyCode: 0x37, timestamp: now.addingTimeInterval(-0.15))  // Command (modifier)
+            TimestampedKeyEvent(keyCode: 0x00, timestamp: now.addingTimeInterval(-0.1)),  // A - in window
+            TimestampedKeyEvent(keyCode: 0x02, timestamp: now.addingTimeInterval(-0.2))   // D - in window
         ]
         let state = KeyboardState(
-            pressedKeys: [0x01, 0x38],  // S + Shift (modifier)
+            pressedKeys: [0x01],  // Only S currently pressed (sequential typing)
             recentKeyPresses: recentPresses,
             timeWindowSeconds: 0.3
         )
@@ -220,12 +222,114 @@ final class KeyboardStateTests: XCTestCase {
         // When: Getting keys for detection
         let keysForDetection = state.keysForDetection
 
-        // Then: Only non-modifier keys should be returned
-        XCTAssertEqual(keysForDetection.count, 2)
+        // Then: Only the currently pressed key should be returned, NOT the windowed keys
+        // This prevents false positives from fast sequential typing
+        XCTAssertEqual(keysForDetection.count, 1)
+        XCTAssertTrue(keysForDetection.contains(0x01))   // S (currently pressed)
+        XCTAssertFalse(keysForDetection.contains(0x00))  // A excluded (only in window)
+        XCTAssertFalse(keysForDetection.contains(0x02))  // D excluded (only in window)
+    }
+
+    func testKeysForDetectionExcludesModifiers() {
+        // Given: A KeyboardState with 2+ non-modifier keys pressed and modifier keys
+        let now = Date()
+        let recentPresses = [
+            TimestampedKeyEvent(keyCode: 0x02, timestamp: now.addingTimeInterval(-0.1)),  // D
+            TimestampedKeyEvent(keyCode: 0x37, timestamp: now.addingTimeInterval(-0.15))  // Command (modifier)
+        ]
+        let state = KeyboardState(
+            pressedKeys: [0x00, 0x01, 0x38],  // A, S + Shift (modifier) - 2 non-modifier keys
+            recentKeyPresses: recentPresses,
+            timeWindowSeconds: 0.3
+        )
+
+        // When: Getting keys for detection
+        let keysForDetection = state.keysForDetection
+
+        // Then: Only non-modifier keys should be returned (A, S from pressed + D from window)
+        XCTAssertEqual(keysForDetection.count, 3)
         XCTAssertTrue(keysForDetection.contains(0x00))   // A
         XCTAssertTrue(keysForDetection.contains(0x01))   // S
+        XCTAssertTrue(keysForDetection.contains(0x02))   // D (from window, included because 2+ pressed)
         XCTAssertFalse(keysForDetection.contains(0x37))  // Command excluded
         XCTAssertFalse(keysForDetection.contains(0x38))  // Shift excluded
+    }
+
+    func testKeysForDetectionWithOnlyModifiersPressedReturnsEmpty() {
+        // Given: Only modifier keys pressed with non-modifier keys in window
+        let now = Date()
+        let recentPresses = [
+            TimestampedKeyEvent(keyCode: 0x00, timestamp: now.addingTimeInterval(-0.1)),  // A
+            TimestampedKeyEvent(keyCode: 0x01, timestamp: now.addingTimeInterval(-0.15))  // S
+        ]
+        let state = KeyboardState(
+            pressedKeys: [0x37, 0x38],  // Command + Shift (only modifiers)
+            recentKeyPresses: recentPresses,
+            timeWindowSeconds: 0.3
+        )
+
+        // When: Getting keys for detection
+        let keysForDetection = state.keysForDetection
+
+        // Then: Should return empty (no non-modifier keys currently pressed)
+        XCTAssertTrue(keysForDetection.isEmpty)
+    }
+
+    func testKeysForDetectionSimulatesFastTypingScenario() {
+        // Given: Simulate fast typing "wer " - pressing keys sequentially
+        // At any point, only 1 key is pressed (released before next is pressed)
+        let now = Date()
+
+        // User has typed W, E, R and space is currently being pressed
+        // All previous keys are in the time window but released
+        let recentPresses = [
+            TimestampedKeyEvent(keyCode: 0x0D, timestamp: now.addingTimeInterval(-0.25)),  // W - 250ms ago
+            TimestampedKeyEvent(keyCode: 0x0E, timestamp: now.addingTimeInterval(-0.15)),  // E - 150ms ago
+            TimestampedKeyEvent(keyCode: 0x0F, timestamp: now.addingTimeInterval(-0.08))   // R - 80ms ago
+        ]
+        let state = KeyboardState(
+            pressedKeys: [0x31],  // Only Space currently pressed
+            recentKeyPresses: recentPresses,
+            timeWindowSeconds: 0.3
+        )
+
+        // When: Getting keys for detection
+        let keysForDetection = state.keysForDetection
+
+        // Then: Only space should be returned (single key = sequential typing, not cat paw)
+        XCTAssertEqual(keysForDetection.count, 1)
+        XCTAssertTrue(keysForDetection.contains(0x31))   // Space
+        XCTAssertFalse(keysForDetection.contains(0x0D))  // W excluded
+        XCTAssertFalse(keysForDetection.contains(0x0E))  // E excluded
+        XCTAssertFalse(keysForDetection.contains(0x0F))  // R excluded
+    }
+
+    func testKeysForDetectionSimulatesCatPawScenario() {
+        // Given: Simulate cat paw - multiple keys pressed simultaneously
+        let now = Date()
+
+        // Cat stepped on keyboard, pressing multiple keys at once
+        // Some keys from the initial impact are in the time window
+        let recentPresses = [
+            TimestampedKeyEvent(keyCode: 0x0D, timestamp: now.addingTimeInterval(-0.05)),  // W - 50ms ago
+            TimestampedKeyEvent(keyCode: 0x0E, timestamp: now.addingTimeInterval(-0.04)),  // E - 40ms ago
+            TimestampedKeyEvent(keyCode: 0x0F, timestamp: now.addingTimeInterval(-0.03))   // R - 30ms ago
+        ]
+        let state = KeyboardState(
+            pressedKeys: [0x0E, 0x0F, 0x11],  // E, R, T still held down (3 keys = cat paw)
+            recentKeyPresses: recentPresses,
+            timeWindowSeconds: 0.3
+        )
+
+        // When: Getting keys for detection
+        let keysForDetection = state.keysForDetection
+
+        // Then: All keys (pressed + windowed) should be returned for proper detection
+        XCTAssertEqual(keysForDetection.count, 4)
+        XCTAssertTrue(keysForDetection.contains(0x0D))  // W (from window)
+        XCTAssertTrue(keysForDetection.contains(0x0E))  // E (pressed + window)
+        XCTAssertTrue(keysForDetection.contains(0x0F))  // R (pressed + window)
+        XCTAssertTrue(keysForDetection.contains(0x11))  // T (pressed)
     }
 
     func testKeyPressedPrunesOldEntries() {

@@ -28,6 +28,8 @@ final class StatisticsService: ObservableObject {
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         self.statistics = Self.load(from: defaults)
+        checkAndResetCounters()
+        save()
     }
 
     // MARK: - Persistence

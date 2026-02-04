@@ -91,6 +91,58 @@ final class StatisticsServiceTests: XCTestCase {
 
     // MARK: - Daily Reset Logic Tests (T048)
 
+    func testInitializationResetsDailyCounterOnNewDay() {
+        // Simulate yesterday's date with stale counters
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        var stats = AppStatistics()
+        stats.totalBlocks = 5
+        stats.todayBlocks = 3
+        stats.weekBlocks = 5
+        stats.lastBlockDate = yesterday
+
+        // Encode and save to defaults
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(stats) {
+            testDefaults.set(data, forKey: "catpaws.statistics")
+        }
+
+        // Create new service - should reset daily counter on init
+        let service = StatisticsService(defaults: testDefaults)
+
+        // Daily counter should be reset to 0 without needing recordBlock()
+        XCTAssertEqual(service.statistics.todayBlocks, 0)
+        // Weekly counter should NOT be reset (same week)
+        XCTAssertEqual(service.statistics.weekBlocks, 5)
+        // Total should remain unchanged
+        XCTAssertEqual(service.statistics.totalBlocks, 5)
+    }
+
+    func testInitializationResetsWeeklyCounterOnNewWeek() {
+        // Get a date from last week
+        let lastWeek = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!
+
+        var stats = AppStatistics()
+        stats.totalBlocks = 10
+        stats.todayBlocks = 3
+        stats.weekBlocks = 7
+        stats.lastBlockDate = lastWeek
+
+        // Encode and save to defaults
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(stats) {
+            testDefaults.set(data, forKey: "catpaws.statistics")
+        }
+
+        // Create new service - should reset both counters on init
+        let service = StatisticsService(defaults: testDefaults)
+
+        // Both counters should be reset without needing recordBlock()
+        XCTAssertEqual(service.statistics.todayBlocks, 0)
+        XCTAssertEqual(service.statistics.weekBlocks, 0)
+        // Total should remain unchanged
+        XCTAssertEqual(service.statistics.totalBlocks, 10)
+    }
+
     func testCheckAndResetCountersResetsDailyOnNewDay() {
         // Simulate yesterday's date
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!

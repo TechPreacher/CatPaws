@@ -1,36 +1,75 @@
 # CatPaws Development Guidelines
 
-Auto-generated from all feature plans. Last updated: 2026-01-15
+A macOS menu bar app that detects when cats walk on your keyboard and temporarily locks input.
 
-## Active Technologies
-- Swift 5.9+, Xcode 15+ + SwiftUI, AppKit (NSEvent for global keyboard monitoring), Accessibility APIs (CGEvent) (002-cat-keyboard-lock)
-- UserDefaults (configuration only - debounce timing, cooldown duration) (002-cat-keyboard-lock)
-- Swift 5.9+, Xcode 15+ + SwiftUI (UI), AppKit (NSStatusItem, NSPanel, NSEvent for global monitoring), ServiceManagement (SMAppService for login items), Carbon (TISGetInputSourceProperty for keyboard layout detection) (003-app-polish-improvements)
-- UserDefaults (configuration and statistics persistence) (003-app-polish-improvements)
-- Swift 5.9+, Xcode 15+ + SwiftUI, AppKit (NSWindow, NSStatusItem) (004-onboarding-ui-fixes)
-- UserDefaults (configuration/state persistence) (004-onboarding-ui-fixes)
+## Technologies
 
-- Swift 5.9+, Xcode 15+ + SwiftUI, AppKit (for NSStatusItem/menu bar), XCTes (001-swift-project-structure)
+- **Swift 5.9+** with **Xcode 15+**
+- **SwiftUI** for UI views
+- **AppKit**: NSEvent (global keyboard monitoring), NSStatusItem (menu bar), NSPanel (floating notifications), NSWindow
+- **Accessibility APIs (CGEvent)** for input blocking
+- **ServiceManagement (SMAppService)** for launch at login
+- **Carbon (TISGetInputSourceProperty)** for keyboard layout detection
+- **UserDefaults** for configuration and statistics persistence
+- **XCTest** for unit, integration, and UI tests
 
 ## Project Structure
 
 ```text
-src/
-tests/
+CatPaws/
+├── CatPaws/                    # Xcode project
+│   ├── CatPaws/                # Source code
+│   │   ├── App/                # App entry point, AppDelegate
+│   │   ├── Models/             # Data models (AppState, Configuration, etc.)
+│   │   ├── Services/           # Core services (detection, locking, monitoring)
+│   │   ├── Views/              # SwiftUI views
+│   │   ├── ViewModels/         # MVVM view models
+│   │   ├── MenuBar/            # Menu bar UI
+│   │   └── Configuration/      # Info.plist, entitlements
+│   ├── CatPawsTests/           # Unit & integration tests
+│   └── CatPawsUITests/         # UI tests
+├── CatPaws_Website/            # Landing page website
+├── scripts/                    # Build scripts
+└── specs/                      # Feature specifications
 ```
 
 ## Commands
 
-# Add commands for Swift 5.9+, Xcode 15+
+```bash
+# Build (from CatPaws/ directory)
+xcodebuild -project CatPaws.xcodeproj -scheme CatPaws -configuration Debug build
+
+# Run tests
+xcodebuild -project CatPaws.xcodeproj -scheme CatPaws test
+
+# Build release DMG (signed & notarized)
+./scripts/build-release.sh
+
+# Lint
+swiftlint --config CatPaws/.swiftlint.yml
+```
+
+## Architecture
+
+The app uses **MVVM** architecture:
+- **Models**: Pure data types (`AppState`, `Configuration`, `KeyboardState`, `LockState`)
+- **Services**: Business logic with protocols for testability (`CatDetectionService`, `KeyboardMonitor`, `KeyboardLockService`, `LockStateManager`)
+- **ViewModels**: `AppViewModel`, `OnboardingViewModel` bridge services to views
+- **Views**: SwiftUI views (`SettingsView`, `OnboardingView`, `CatLockPopupView`, `StatisticsView`)
 
 ## Code Style
 
-Swift 5.9+, Xcode 15+: Follow standard conventions
+- SwiftLint configured in `CatPaws/.swiftlint.yml`
+- Protocol-based design for testability (services implement protocols like `CatDetecting`, `KeyboardLocking`, `KeyboardMonitoring`)
+- Test mocks in `CatPawsTests/Mocks/`
 
-## Recent Changes
-- 004-onboarding-ui-fixes: Added Swift 5.9+, Xcode 15+ + SwiftUI, AppKit (NSWindow, NSStatusItem)
-- 003-app-polish-improvements: Added Swift 5.9+, Xcode 15+ + SwiftUI (UI), AppKit (NSStatusItem, NSPanel, NSEvent for global monitoring), ServiceManagement (SMAppService for login items), Carbon (TISGetInputSourceProperty for keyboard layout detection)
-- 002-cat-keyboard-lock: Added Swift 5.9+, Xcode 15+ + SwiftUI, AppKit (NSEvent for global keyboard monitoring), Accessibility APIs (CGEvent)
+## Key Files
+
+- `CatPaws/CatPaws/Services/CatDetectionService.swift` - Cat detection algorithm
+- `CatPaws/CatPaws/Services/KeyboardMonitor.swift` - Global keyboard event capture
+- `CatPaws/CatPaws/Services/KeyboardLockService.swift` - Input blocking via CGEvent
+- `CatPaws/CatPaws/Services/LockStateManager.swift` - Lock state coordination
+- `CatPaws/CatPaws/ViewModels/AppViewModel.swift` - Main app state management
 
 
 <!-- MANUAL ADDITIONS START -->

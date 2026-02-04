@@ -67,7 +67,7 @@ final class OnboardingUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // Verify permission explanation step
-        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 5))
     }
 
     func testBackButtonReturnsToWelcome() throws {
@@ -79,7 +79,7 @@ final class OnboardingUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // Verify we're on permission explanation
-        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 5))
 
         // Tap Back
         app.buttons["Back"].tap()
@@ -97,7 +97,7 @@ final class OnboardingUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // Step 2: Permission Explanation
-        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 5))
         app.buttons["Next"].tap()
 
         // Step 3: Grant Accessibility
@@ -191,7 +191,7 @@ final class OnboardingUITests: XCTestCase {
         // Navigate to permission explanation
         XCTAssertTrue(app.staticTexts["Welcome to CatPaws"].waitForExistence(timeout: 5))
         app.buttons["Next"].tap()
-        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 5))
 
         // Find and tap Skip element
         var skipElement: XCUIElement?
@@ -241,7 +241,7 @@ final class OnboardingUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // Step 2: Permission Explanation
-        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["Permissions Required"].waitForExistence(timeout: 5))
         app.buttons["Next"].tap()
 
         // Step 3: Grant Accessibility

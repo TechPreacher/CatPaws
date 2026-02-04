@@ -74,10 +74,20 @@ struct KeyboardState {
         return Set(recentKeyPresses.filter { $0.timestamp >= cutoff }.map { $0.keyCode })
     }
 
-    /// Returns the union of currently pressed keys and keys pressed within the time window,
-    /// excluding modifier keys. Used for cat paw detection to capture rapid sequential presses.
+    /// Returns keys for cat paw detection, excluding modifier keys.
+    /// Only includes keys from the time window if multiple keys are currently held simultaneously,
+    /// which distinguishes cat paws (simultaneous presses) from fast human typing (sequential presses).
     var keysForDetection: Set<UInt16> {
-        pressedKeys.union(keysInTimeWindow).subtracting(KeyboardAdjacencyMap.modifierKeyCodes)
+        let currentNonModifierKeys = pressedKeys.subtracting(KeyboardAdjacencyMap.modifierKeyCodes)
+
+        // Only expand to time window if 2+ non-modifier keys are currently held down.
+        // This prevents false positives from fast sequential typing where only 1 key
+        // is pressed at a time, while still catching cat paws that press multiple keys.
+        if currentNonModifierKeys.count >= 2 {
+            return currentNonModifierKeys.union(keysInTimeWindow)
+        } else {
+            return currentNonModifierKeys
+        }
     }
 
     // MARK: - Mutation Methods
